@@ -1,3 +1,31 @@
+# latex temporary files
+*.aux
+*.bbl
+*.blg
+*.tex.backup
+*.synctex.gz
+
+data/
+*.pyc
+*.*~
+.*
+!.gitignore
+!.travis.yml
+!.codeclimate.yml
+
+# binaries
+*alignAudioScore*
+*extractTonicTempoTuning*
+*phraseSeg*
+*MusikiToMusicXml*
+
+# score outputs
+*.svg
+*.xml
+*.ly
+
+*.pkl
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -20,6 +48,8 @@ parts/
 sdist/
 var/
 wheels/
+pip-wheel-metadata/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
@@ -38,23 +68,20 @@ pip-delete-this-directory.txt
 # Unit test / coverage reports
 htmlcov/
 .tox/
+.nox/
 .coverage
 .coverage.*
 .cache
 nosetests.xml
 coverage.xml
 *.cover
+*.py,cover
 .hypothesis/
 .pytest_cache/
 
 # Translations
 *.mo
 *.pot
-
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
 
 # Flask stuff:
 instance/
@@ -72,14 +99,12 @@ target/
 # Jupyter Notebook
 .ipynb_checkpoints
 
+# IPython
+profile_default/
+ipython_config.py
+
 # pyenv
 .python-version
-
-# celery beat schedule file
-celerybeat-schedule
-
-# SageMath parsed files
-*.sage.py
 
 # Environments
 .env
@@ -89,16 +114,15 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
+venv-dev/
 
 # mkdocs documentation
 /site
 
 # mypy
 .mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
