@@ -1,8 +1,39 @@
 version: '3'
 services:
-  notebook:
+  jupyter:
     build:
-      context: ./jupyter-notebook-docker
+      context: ./docker/jupyter
     ports:
       - "8888:8888"
+    depends_on: 
+      - mlflow
+    environment: 
+      MLFLOW_TRACKING_URI: 'http://mlflow:5000'
+    volumes: 
+      - ./:/home/jovyan/work
+      - ./mlflow:/mlflow
+  mlflow:
+    build:
+      context: ./docker/mlflow
+    expose: 
+      - "5000"
+    ports:
+      - "5000:5000"
+    depends_on: 
+      - postgres
+    volumes:
+      - ./mlflow:/mlflow
+  postgres:
+    build:
+      context: ./docker/postgres
+    restart: always
+    environment:
+      POSTGRES_USER: 'admin'
+      POSTGRES_PASSWORD: 'secret'
+    ports: 
+      - "5432:5432"
+    volumes:
+      - ./postgres-store:/var/lib/postgresql/data
 
+volumes:
+  postgres-store:
