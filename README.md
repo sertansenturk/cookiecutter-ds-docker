@@ -43,7 +43,7 @@ make run
 
 Once the service is running, you will see a link, e.g. http://127.0.0.1:8888/?token=3c321..., which you can follow to access the notebook from your browser.
 
-You can access the mlflow UI at [http://localhost:5000](http://localhost:5000). For an simple example on how to track a "run," please refer to [notebooks/mlflow_test.py](#notebooks/mlflow_test.py)
+You can access the mlflow UI at [http://localhost:5000](http://localhost:5000). For an simple example on how to track a "run," please refer to [notebooks/mlflow_test.py](notebooks/mlflow_test.ipynb)
 
 ## License
 
