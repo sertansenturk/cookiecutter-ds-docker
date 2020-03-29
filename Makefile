@@ -2,7 +2,7 @@
 SHELL := /bin/bash
 .DEFAULT_GOAL := default
 .PHONY: \
-	help default all all-no-cache \
+	help default run all all-no-cache \
 	purge clean clean-all clean-stores \
 	prune build build-no-cache up down down-all 
 
@@ -12,7 +12,7 @@ sgr0 := $(shell tput sgr0)
 padded_str := %-$(HELP_PADDING)s
 pretty_command := $(bold)$(padded_str)$(sgr0)
 
-include .env  # environment variables used in docker
+include .env  # environment variables used in docker-compose stack
 
 PRUNE_OPTS = -f
 

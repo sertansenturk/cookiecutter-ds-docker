@@ -3,6 +3,7 @@ services:
   jupyter:
     build:
       context: ./docker/jupyter
+    image: sertansenturk/jupyter:${VERSION}
     ports:
       - "${JUPYTER_PORT}:${JUPYTER_PORT}"
     depends_on: 
@@ -15,6 +16,7 @@ services:
   mlflow:
     build:
       context: ./docker/mlflow
+    image: sertansenturk/mlflow:${VERSION}
     expose: 
       - "${MLFLOW_TRACKING_SERVER_PORT}"
     ports:
@@ -28,6 +30,7 @@ services:
   postgres:
     build:
       context: ./docker/postgres
+    image: sertansenturk/postgres:${VERSION}
     restart: always
     env_file: 
       - .env
