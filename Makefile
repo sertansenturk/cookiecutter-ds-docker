@@ -12,7 +12,7 @@ sgr0 := $(shell tput sgr0)
 padded_str := %-$(HELP_PADDING)s
 pretty_command := $(bold)$(padded_str)$(sgr0)
 
-include ./docker/.env  # environmen variables used in docker
+include .env  # environment variables used in docker
 
 PRUNE_OPTS = -f
 
@@ -67,8 +67,8 @@ build-no-cache: BUILD_OPTS:=$(BUILD_ALL_OPTS)
 build-no-cache: build
 
 up: 
-	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}; \
 	docker-compose up ${UP_OPTS}
+	# mkdir -p .${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE};
 
 down:
 	docker-compose down ${DOWN_OPTS}
