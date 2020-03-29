@@ -1,3 +1,4 @@
+#!make
 SHELL := /bin/bash
 .DEFAULT_GOAL := default
 .PHONY: \
@@ -11,8 +12,7 @@ sgr0 := $(shell tput sgr0)
 padded_str := %-$(HELP_PADDING)s
 pretty_command := $(bold)$(padded_str)$(sgr0)
 
-MLFLOW_ARTIFACT_STORE = mlflow/
-POSTGRES_STORE = postgres-store/
+include ./docker/.env  # environmen variables used in docker
 
 PRUNE_OPTS = -f
 
