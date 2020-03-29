@@ -4,39 +4,34 @@ services:
     build:
       context: ./docker/jupyter
     ports:
-      - "8888:8888"
+      - "${JUPYTER_PORT}:${JUPYTER_PORT}"
     depends_on: 
       - mlflow
     env_file: 
-      - ./docker/jupyter/jupyter.env
+      - .env
     volumes: 
       - ./:/home/jovyan/work
-      - ./mlflow:/mlflow
+      - ./${MLFLOW_ARTIFACT_STORE}:/${MLFLOW_ARTIFACT_STORE}
   mlflow:
     build:
       context: ./docker/mlflow
     expose: 
-      - "5000"
+      - "${MLFLOW_TRACKING_SERVER_PORT}"
     ports:
       - "${MLFLOW_TRACKING_SERVER_PORT}:${MLFLOW_TRACKING_SERVER_PORT}"
     depends_on: 
       - postgres
     env_file: 
-      - ./docker/mlflow/mlflow.env
       - .env
     volumes:
-      - ./mlflow:/mlflow
+      - ./${MLFLOW_ARTIFACT_STORE}:/${MLFLOW_ARTIFACT_STORE}
   postgres:
     build:
       context: ./docker/postgres
     restart: always
     env_file: 
-      - ./docker/postgres/postgres.env
       - .env
     ports: 
-      - "5432:5432"
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     volumes:
-      - ./postgres-store:/var/lib/postgresql/data
-
-volumes:
-  postgres-store:
+      - ./${POSTGRES_STORE}:/var/lib/postgresql/data

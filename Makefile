@@ -55,7 +55,7 @@ purge: clean-all
 clean-all: down-all prune clean-store
 clean: down prune clean-store 
 clean-store:
-	rm -rf ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
+	rm -rf .${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
 
 prune:
 	docker system prune ${PRUNE_OPTS}
@@ -67,8 +67,8 @@ build-no-cache: BUILD_OPTS:=$(BUILD_ALL_OPTS)
 build-no-cache: build
 
 up: 
+	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE};
 	docker-compose up ${UP_OPTS}
-	# mkdir -p .${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE};
 
 down:
 	docker-compose down ${DOWN_OPTS}
