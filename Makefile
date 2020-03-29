@@ -3,7 +3,7 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := default
 .PHONY: \
 	help default all all-no-cache \
-	purge clean clean-all clean-store \
+	purge clean clean-all clean-stores \
 	prune build build-no-cache up down down-all 
 
 HELP_PADDING = 28
@@ -26,36 +26,40 @@ UP_OPTS =
 
 help:
 	@printf "======= General ======\n"
-	@printf "$(pretty_command): run \"all\" (see below)\n" \(default\)
-	@printf "$(pretty_command): run \"clean\", \"build\", and \"up\"\n" all
-	@printf "$(pretty_command): run \"clean-all\", \"build-no-cache\", and \"up\"\n" all-no-cache
+	@printf "$(pretty_command): run \"run\" (see below)\n" \(default\)
+	@printf "$(pretty_command): run \"clean\", \"build\" and \"up\"\n" run
+	@printf "$(pretty_command): run \"clean\", \"clean-stores\", \"build\" and \"up\"\n" all
+	@printf "$(pretty_command): run \"clean-all\", \"build-no-cache\" and \"up\"\n" all-no-cache
 	@printf "\n"
 	@printf "======= Cleanup ======\n"
-	@printf "$(pretty_command): run \"down\", \"prune\", and \"clean-store\"\n" clean
-	@printf "$(pretty_command): run \"down-all\", \"prune\", and \"clean-store\"\n" clean-all
-	@printf "$(pretty_command): remove local folders mounted as volumes in docker-compose\n" clean-store
+	@printf "$(pretty_command): run \"down\" and \"prune\"\n" clean
+	@printf "$(pretty_command): run \"down-all\", \"prune\" and \"clean-stores\"\n" clean-all
+	@printf "$(pretty_command): remove local folders mounted as volumes in docker-compose\n" clean-stores
 	@printf "$(pretty_command): alias of \"clean-all\"\n" purge
 	@printf "\n"
 	@printf "======= Docker =======\n"
+	@printf "$(pretty_command): Remove all unused docker containers, networks and images \n" prune
+	@printf "$(padded_str)PRUNE_OPTS, \"docker system prune\" options (default: $(PRUNE_OPTS))\n"
 	@printf "$(pretty_command): build the docker-compose stack\n" build
 	@printf "$(padded_str)BUILD_OPTS, \"docker-compose build\" options (default: $(BUILD_OPTS))\n"
-	@printf "$(pretty_command): build docker-compose stack with ${BUILD_ALL_OPTS} option(s)\n" build-no-cache
+	@printf "$(pretty_command): build docker-compose stack with \"${BUILD_ALL_OPTS}\"\n" build-no-cache
 	@printf "$(pretty_command): start the docker-compose stack\n" up
 	@printf "$(padded_str)UP_OPTS, \"docker-compose up\" options (default: $(UP_OPTS))\n"
 	@printf "$(pretty_command): stop the docker-compose stack and remove artifacts created by \"up\"\n" down
 	@printf "$(padded_str)DOWN_OPTS, \"docker-compose down\" options (default: $(DOWN_OPTS))\n"
-	@printf "$(pretty_command): build docker-compose stack with ${DOWN_ALL_OPTS} option(s)\n" down-all
+	@printf "$(pretty_command): build docker-compose stack with \"${DOWN_ALL_OPTS}\"\n" down-all
 
-default: all
+default: run
 
-all: clean build up
+run: clean build up
+all: clean clean-stores build up
 all-no-cache: clean-all build-no-cache up
 
 purge: clean-all
-clean-all: down-all prune clean-store
-clean: down prune clean-store 
-clean-store:
-	rm -rf .${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
+clean-all: down-all prune clean-stores
+clean: down prune
+clean-stores:
+	sudo rm -rf .${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
 
 prune:
 	docker system prune ${PRUNE_OPTS}
