@@ -1,0 +1,37 @@
+version: '3'
+services:
+  jupyter:
+    build:
+      context: ./docker/jupyter
+    ports:
+      - "${JUPYTER_PORT}:${JUPYTER_PORT}"
+    depends_on: 
+      - mlflow
+    env_file: 
+      - .env
+    volumes: 
+      - ./:/home/jovyan/work
+      - ./${MLFLOW_ARTIFACT_STORE}:/${MLFLOW_ARTIFACT_STORE}
+  mlflow:
+    build:
+      context: ./docker/mlflow
+    expose: 
+      - "${MLFLOW_TRACKING_SERVER_PORT}"
+    ports:
+      - "${MLFLOW_TRACKING_SERVER_PORT}:${MLFLOW_TRACKING_SERVER_PORT}"
+    depends_on: 
+      - postgres
+    env_file: 
+      - .env
+    volumes:
+      - ./${MLFLOW_ARTIFACT_STORE}:/${MLFLOW_ARTIFACT_STORE}
+  postgres:
+    build:
+      context: ./docker/postgres
+    restart: always
+    env_file: 
+      - .env
+    ports: 
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    volumes:
+      - ./${POSTGRES_STORE}:/var/lib/postgresql/data
