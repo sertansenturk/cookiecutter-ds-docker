@@ -3,9 +3,8 @@ SHELL := /bin/bash
 .PHONY: \
 	help default run all all-no-cache \
 	purge clean clean-all clean-stores \
-	clean-python clean-$(DEV_VENV) clean-pyc clean-build clean-test \
 	prune build build-no-cache up down down-all \
-	tox
+	python-dev-build tox
 
 HELP_PADDING = 28
 bold := $(shell tput bold)
@@ -14,6 +13,8 @@ padded_str := %-$(HELP_PADDING)s
 pretty_command := $(bold)$(padded_str)$(sgr0)
 
 include .env  # environment variables used in docker-compose stack
+
+MAKEFILE_DIR = $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
 PRUNE_OPTS = -f
 
@@ -24,11 +25,6 @@ DOWN_OPTS = --remove-orphans
 DOWN_ALL_OPTS = ${DOWN_OPTS} --rmi all -v
 
 UP_OPTS =
-
-VENV_INTERP = python3.7
-DEV_VENV ?= venv
-
-DEV_REQUIREMENTS_FILE = requirements.dev.txt
 
 help:
 	@printf "======= General ======\n"
@@ -54,6 +50,8 @@ help:
 	@printf "$(pretty_command): stop the docker-compose stack and remove artifacts created by \"up\"\n" down
 	@printf "$(padded_str)DOWN_OPTS, \"docker-compose down\" options (default: $(DOWN_OPTS))\n"
 	@printf "$(pretty_command): build docker-compose stack with \"${DOWN_ALL_OPTS}\"\n" down-all
+	@printf "$(pretty_command): build \"python-dev\" image\n" python-dev-build
+	@printf "$(pretty_command): run automated checks inside \"python-dev\" using tox\n" tox
 
 default: run
 
@@ -66,27 +64,6 @@ clean-all: down-all prune clean-stores clean-python
 clean: down prune
 clean-stores:
 	sudo rm -rf .${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
-
-clean-python: clean-$(DEV_VENV) clean-pyc clean-build clean-test
-clean-$(DEV_VENV):
-	rm -rf $(DEV_VENV)
-clean-pyc:
-	find . -path ./data -prune -o -name '*.pyc' -exec rm -f {} +
-	find . -path ./data -prune -o -name '*.pyo' -exec rm -f {} +
-	find . -path ./data -prune -o -name '*~' -exec rm -f {} +
-	find . -path ./data -prune -o -name '__pycache__' -exec rm -fr {} +
-clean-build:
-	rm -rf build/
-	rm -rf dist/
-	rm -rf .eggs/
-	rm -rf .pytest_cache
-	find . -path ./data -prune -o -name '.eggs' -type d -exec rm -rf {} +
-	find . -path ./data -prune -o -name '*.egg-info' -exec rm -rf {} +
-	find . -path ./data -prune -o -name '*.egg' -exec rm -f {} +
-clean-test:
-	rm -fr .tox/
-	rm -f .coverage
-	rm -fr htmlcov/
 
 prune:
 	docker system prune ${PRUNE_OPTS}
@@ -106,11 +83,7 @@ down:
 down-all: DOWN_OPTS := ${DOWN_ALL_OPTS}
 down-all: down
 
-$(DEV_VENV):
-	python3 -m virtualenv -p $(VENV_INTERP) $(DEV_VENV)
-$(DEV_VENV)-install: $(DEV_VENV)
-	source $(DEV_VENV)/bin/activate ; \
-	pip install -r ${DEV_REQUIREMENTS_FILE}
-tox: $(DEV_VENV)-install
-	source $(DEV_VENV)/bin/activate ; \
-	tox
+python-dev-build:	
+	docker build . -f docker/python-dev/Dockerfile -t sertansenturk/python-dev:${VERSION}
+tox: python-dev-build
+	docker run -it -v ${MAKEFILE_DIR}:/code/ sertansenturk/python-dev:${VERSION} tox

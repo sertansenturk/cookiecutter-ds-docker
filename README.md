@@ -10,6 +10,10 @@ Currently, the template consists of a docker-compose stack with the services bel
 2. An [mlflow](https://mlflow.org/) tracking server to store experiments
 3. A [postgresql](https://www.postgresql.org/) database, which stores mlflow tracking information
 
+In addition, we include the Docker images below for utility's sake:
+
+1. A Python development image to facilitate code test and development in Python
+
 The common use cases to interact with template are wrapped in a `Makefile`. Below, we explain the typical operations. For more options, please refer to the help by running on the terminal:
 
 ```bash
@@ -33,7 +37,7 @@ make build
 
 **Note:** You may need to grant sudo permissions for `make clean-all`
 
-## Running
+## Run the Services
 
 To start the stack, run:
 
@@ -44,6 +48,14 @@ make run
 Once the service is running, you will see a link, e.g. http://127.0.0.1:8888/?token=3c321..., which you can follow to access the notebook from your browser.
 
 You can access the mlflow UI at [http://localhost:5000](http://localhost:5000). For an simple example on how to track a "run," please refer to [notebooks/mlflow_test.py](notebooks/mlflow_test.ipynb)
+
+## Test and Development
+
+The repo includes a starting Python package at [src/template_repo](src/template_repo), which has the installation, testing, and linting set. We automate these checks using `tox`, which can be run by:
+
+```bash
+make tox
+```
 
 ## License
 
