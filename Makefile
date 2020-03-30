@@ -26,6 +26,8 @@ DOWN_ALL_OPTS = ${DOWN_OPTS} --rmi all -v
 
 UP_OPTS =
 
+CHK_PORT = ${MLFLOW_TRACKING_SERVER_PORT}
+
 help:
 	@printf "======= General ======\n"
 	@printf "$(pretty_command): run \"run\" (see below)\n" \(default\)
@@ -52,6 +54,10 @@ help:
 	@printf "$(pretty_command): build docker-compose stack with \"${DOWN_ALL_OPTS}\"\n" down-all
 	@printf "$(pretty_command): build \"python-dev\" image\n" python-dev-build
 	@printf "$(pretty_command): run automated checks inside \"python-dev\" using tox\n" tox
+	@printf "\n"
+	@printf "========= Misc =======\n"
+	@printf "$(pretty_command): identify applications, which are bound to the given port. Useful for freeing ports from phantom tasks\n" find_port_usage
+	@printf "$(padded_str)CHK_PORT, Port to check (default: $(CHK_PORT))\n"
 
 default: run
 
@@ -87,3 +93,6 @@ python-dev-build:
 	docker build . -f docker/python-dev/Dockerfile -t sertansenturk/python-dev:${VERSION}
 tox: python-dev-build
 	docker run -it -v ${MAKEFILE_DIR}:/code/ sertansenturk/python-dev:${VERSION} tox
+
+find_port_usage:
+	sudo lsof -i -P -n | grep ${CHK_PORT}
