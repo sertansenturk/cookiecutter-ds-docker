@@ -90,7 +90,7 @@ down-all: DOWN_OPTS := ${DOWN_ALL_OPTS}
 down-all: down
 
 python-dev-build:	
-	docker build . -f docker/python-dev/Dockerfile -t sertansenturk/python-dev:${VERSION}
+	docker build ./docker/python-dev/ -t sertansenturk/python-dev:${VERSION}
 tox: python-dev-build
 	docker run -it -v ${MAKEFILE_DIR}:/code/ sertansenturk/python-dev:${VERSION} tox
 

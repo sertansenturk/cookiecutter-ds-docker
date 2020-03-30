@@ -1,7 +1,7 @@
 FROM python:3.7-slim
 
-COPY ./requirements.dev.txt /code/
+COPY ./requirements.txt /code/
 WORKDIR /code
-RUN pip install -r requirements.dev.txt
+RUN pip install -r requirements.txt
 
 CMD ["tox"]
