@@ -2,8 +2,9 @@
 
 ## v0.2.0
 
-- Added Python template repo and Python `tox` automations
+- Add Python template repo and Python `tox` automations
+- Share host user uid & gid with the Postgres user in docker
 
 ## v0.1.0
 
-- Created initial docker-compose stack with `Jupyter`, `mlflow` and `postgresql` images
+- Create initial docker-compose stack with `Jupyter`, `mlflow` and `postgresql` images
