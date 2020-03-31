@@ -33,10 +33,14 @@ PYTHON_DEV_CMD =
 
 CHK_PORT = ${MLFLOW_TRACKING_SERVER_PORT}
 
+POSTGRES_UID := $(shell id -u)
+POSTGRES_GID := $(shell id -g)
+
 help:
 	@printf "======= General ======\n"
 	@printf "$(pretty_command): run \"run\" (see below)\n" \(default\)
 	@printf "$(pretty_command): run \"clean\", \"build\" and \"up\"\n" run
+	@printf "$(pretty_command): run \"clean\", \"build-no-cache\" and \"up\"\n" run-no-cache
 	@printf "$(pretty_command): run \"clean\", \"build-static\" and \"up\"\n" run
 	@printf "$(pretty_command): run \"clean\", \"clean-stores\", \"build\" and \"up\"\n" all
 	@printf "$(pretty_command): run \"clean-all\", \"build-no-cache\" and \"up\"\n" all-no-cache
@@ -70,6 +74,7 @@ help:
 default: run
 
 run: clean build up
+run-no-cache: clean build-no-cache up
 run-static: clean build-static up
 all: clean clean-stores build up
 all-no-cache: clean-all build-no-cache up
@@ -78,7 +83,7 @@ purge: clean-all
 clean-all: down-all prune clean-stores clean-python
 clean: down prune
 clean-stores:
-	sudo rm -rf .${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
+	rm -rf ./${MLFLOW_ARTIFACT_STORE} ./${POSTGRES_STORE}
 
 clean-python:
 	find . -name '*.pyc' -exec rm -f {} +
@@ -108,8 +113,8 @@ build-no-cache: BUILD_OPTS:=$(BUILD_NO_CACHE_OPT)
 build-no-cache: build
 
 up: 
-	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE};
-	docker-compose up ${UP_OPTS}
+	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
+	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose up ${UP_OPTS}
 
 down:
 	docker-compose down ${DOWN_OPTS}
@@ -117,7 +122,7 @@ down-all: DOWN_OPTS := ${DOWN_ALL_OPTS}
 down-all: down
 
 python-dev-build:	
-	DOCKER_BUILDKIT=${BUILDKIT} docker build . -f ./docker/python-dev/Dockerfile -t sertansenturk/python-dev:${VERSION} ${BUILD_OPTS}
+	DOCKER_BUILDKIT=${BUILDKIT} docker build . -f ./docker/python-dev/Dockerfile -t ${PYTHON_DEV_IMAGE_NAME}:${VERSION} ${BUILD_OPTS}
 
 tox: PYTHON_DEV_CMD := tox
 tox: python-dev-build
