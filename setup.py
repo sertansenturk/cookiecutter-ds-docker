@@ -17,7 +17,7 @@ def get_version():
         str -- value of __version__ as defined in __init__.py
     """
     version_file2 = os.path.join(
-        HERE, EXP_DIR, "template_repo", "__init__.py")
+        HERE, EXP_DIR, "python_package", "__init__.py")
     with open(version_file2) as f:
         init_contents = f.read().strip()
 
@@ -30,7 +30,7 @@ def get_version():
 
 
 setup(
-    name="template_repo",
+    name="python_package",
     version=get_version(),
     author="Sertan Senturk",
     author_email="contact AT sertansenturk DOT com",

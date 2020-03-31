@@ -1,9 +1,11 @@
 SHELL := /bin/bash
 .DEFAULT_GOAL := default
 .PHONY: \
-	help default run all all-no-cache \
-	purge clean clean-all clean-stores \
-	prune build build-no-cache up down down-all \
+	help default run run-static \
+	all all-no-cache \
+	purge clean clean-all clean-stores clean-python \
+	prune build build-static build-no-cache \
+	up down down-all \
 	python-dev-build tox
 
 HELP_PADDING = 28
@@ -18,6 +20,7 @@ MAKEFILE_DIR = $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
 PRUNE_OPTS = -f
 
+BUILDKIT = 1
 BUILD_OPTS = 
 BUILD_ALL_OPTS = --no-cache
 
@@ -26,12 +29,15 @@ DOWN_ALL_OPTS = ${DOWN_OPTS} --rmi all -v
 
 UP_OPTS =
 
+PYTHON_DEV_CMD = 
+
 CHK_PORT = ${MLFLOW_TRACKING_SERVER_PORT}
 
 help:
 	@printf "======= General ======\n"
 	@printf "$(pretty_command): run \"run\" (see below)\n" \(default\)
 	@printf "$(pretty_command): run \"clean\", \"build\" and \"up\"\n" run
+	@printf "$(pretty_command): run \"clean\", \"build-static\" and \"up\"\n" run
 	@printf "$(pretty_command): run \"clean\", \"clean-stores\", \"build\" and \"up\"\n" all
 	@printf "$(pretty_command): run \"clean-all\", \"build-no-cache\" and \"up\"\n" all-no-cache
 	@printf "\n"
@@ -39,13 +45,15 @@ help:
 	@printf "$(pretty_command): run \"down\" and \"prune\"\n" clean
 	@printf "$(pretty_command): run \"down-all\", \"prune\" and \"clean-stores\"\n" clean-all
 	@printf "$(pretty_command): remove local folders mounted as volumes in docker-compose\n" clean-stores
+	@printf "$(pretty_command): clean python-related artifacts\n" clean-python
 	@printf "$(pretty_command): alias of \"clean-all\"\n" purge
 	@printf "\n"
 	@printf "======= Docker =======\n"
 	@printf "$(pretty_command): Remove all unused docker containers, networks and images \n" prune
 	@printf "$(padded_str)PRUNE_OPTS, \"docker system prune\" options (default: $(PRUNE_OPTS))\n"
-	@printf "$(pretty_command): build the docker-compose stack\n" build
+	@printf "$(pretty_command): build the docker-compose stack; python code is installed to the Jupyter service as editable\n" build
 	@printf "$(padded_str)BUILD_OPTS, \"docker-compose build\" options (default: $(BUILD_OPTS))\n"
+	@printf "$(pretty_command): build the docker-compose stack; python code is install to the Jupyter service as static\n" build-static
 	@printf "$(pretty_command): build docker-compose stack with \"${BUILD_ALL_OPTS}\"\n" build-no-cache
 	@printf "$(pretty_command): start the docker-compose stack\n" up
 	@printf "$(padded_str)UP_OPTS, \"docker-compose up\" options (default: $(UP_OPTS))\n"
@@ -62,6 +70,7 @@ help:
 default: run
 
 run: clean build up
+run-static: clean build-static up
 all: clean clean-stores build up
 all-no-cache: clean-all build-no-cache up
 
@@ -71,11 +80,29 @@ clean: down prune
 clean-stores:
 	sudo rm -rf .${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
 
+clean-python:
+	find . -name '*.pyc' -exec rm -f {} +
+	find . -name '*.pyo' -exec rm -f {} +
+	find . -name '*~' -exec rm -f {} +
+	find . -name '__pycache__' -exec rm -fr {} +
+	rm -rf build/
+	rm -rf dist/
+	rm -rf .eggs/
+	rm -rf .pytest_cache
+	find . -name '.eggs' -type d -exec rm -rf {} +
+	find . -name '*.egg-info' -exec rm -rf {} +
+	find . -name '*.egg' -exec rm -f {} +
+	rm -fr .tox/
+	rm -f .coverage
+	rm -fr htmlcov/
+
 prune:
 	docker system prune ${PRUNE_OPTS}
 
 build: 
-	docker-compose build ${BUILD_OPTS}
+	DOCKER_BUILDKIT=${BUILDKIT} JUPYTER_TARGET=${JUPYTER_TARGET} docker-compose build ${BUILD_OPTS}
+build-static: ${JUPYTER_TARGET}:=static
+build-static: JUPYTER_TARGET=${JUPYTER_TARGET} docker-compose build ${BUILD_OPTS}
 
 build-no-cache: BUILD_OPTS:=$(BUILD_ALL_OPTS)
 build-no-cache: build
@@ -90,9 +117,11 @@ down-all: DOWN_OPTS := ${DOWN_ALL_OPTS}
 down-all: down
 
 python-dev-build:	
-	docker build ./docker/python-dev/ -t sertansenturk/python-dev:${VERSION}
+	DOCKER_BUILDKIT=${BUILDKIT} docker build . -f ./docker/python-dev/Dockerfile -t sertansenturk/python-dev:${VERSION} ${BUILD_OPTS}
+
+tox: PYTHON_DEV_CMD := tox
 tox: python-dev-build
-	docker run -it -v ${MAKEFILE_DIR}:/code/ sertansenturk/python-dev:${VERSION} tox
+	docker run -it sertansenturk/python-dev:${VERSION} ${PYTHON_DEV_CMD}
 
 find_port_usage:
 	sudo lsof -i -P -n | grep ${CHK_PORT}

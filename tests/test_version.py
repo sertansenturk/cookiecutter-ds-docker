@@ -1,4 +1,4 @@
-import template_repo
+import python_package
 
 def test_version():
-    assert template_repo.__version__, "version not found"
+    assert python_package.__version__, "version not found"
