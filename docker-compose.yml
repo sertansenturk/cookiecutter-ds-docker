@@ -1,9 +1,11 @@
-version: '3'
+version: '3.7'
 services:
   jupyter:
     build:
-      context: ./docker/jupyter
-    image: sertansenturk/jupyter:${VERSION}
+      context: .
+      dockerfile: ./docker/jupyter/Dockerfile
+      target: ${JUPYTER_TARGET}
+    image: sertansenturk/jupyter-${JUPYTER_TARGET}:${VERSION}
     ports:
       - "${JUPYTER_PORT}:${JUPYTER_PORT}"
     depends_on: 

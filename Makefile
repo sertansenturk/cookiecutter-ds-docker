@@ -22,7 +22,7 @@ PRUNE_OPTS = -f
 
 BUILDKIT = 1
 BUILD_OPTS = 
-BUILD_ALL_OPTS = --no-cache
+BUILD_NO_CACHE_OPT = --no-cache
 
 DOWN_OPTS = --remove-orphans
 DOWN_ALL_OPTS = ${DOWN_OPTS} --rmi all -v
@@ -54,7 +54,7 @@ help:
 	@printf "$(pretty_command): build the docker-compose stack; python code is installed to the Jupyter service as editable\n" build
 	@printf "$(padded_str)BUILD_OPTS, \"docker-compose build\" options (default: $(BUILD_OPTS))\n"
 	@printf "$(pretty_command): build the docker-compose stack; python code is install to the Jupyter service as static\n" build-static
-	@printf "$(pretty_command): build docker-compose stack with \"${BUILD_ALL_OPTS}\"\n" build-no-cache
+	@printf "$(pretty_command): build docker-compose stack with \"${BUILD_NO_CACHE_OPT}\"\n" build-no-cache
 	@printf "$(pretty_command): start the docker-compose stack\n" up
 	@printf "$(padded_str)UP_OPTS, \"docker-compose up\" options (default: $(UP_OPTS))\n"
 	@printf "$(pretty_command): stop the docker-compose stack and remove artifacts created by \"up\"\n" down
@@ -101,10 +101,10 @@ prune:
 
 build: 
 	DOCKER_BUILDKIT=${BUILDKIT} JUPYTER_TARGET=${JUPYTER_TARGET} docker-compose build ${BUILD_OPTS}
-build-static: ${JUPYTER_TARGET}:=static
-build-static: JUPYTER_TARGET=${JUPYTER_TARGET} docker-compose build ${BUILD_OPTS}
+build-static: JUPYTER_TARGET := ${JUPYTER_STATIC_TARGET}
+build-static: build
 
-build-no-cache: BUILD_OPTS:=$(BUILD_ALL_OPTS)
+build-no-cache: BUILD_OPTS:=$(BUILD_NO_CACHE_OPT)
 build-no-cache: build
 
 up: 

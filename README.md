@@ -35,6 +35,14 @@ make clean-all
 make build
 ```
 
+This template repo includes a starting Python package at [src/python_package](src/python_package), which is installed to the Jupyter docker image. By default, the package is "pip installed" in editable mode and the base folder is mounted on the docker container so that you can changes in the code are synchronized.
+
+If you want to install the package statically, instead of `make build`, execute:
+
+```bash
+make build-static
+```
+
 **Note:** You may need to grant sudo permissions for `make clean-all`
 
 ## Run the Services
@@ -45,13 +53,19 @@ To start the stack, run:
 make run
 ```
 
-Once the service is running, you will see a link, e.g. http://127.0.0.1:8888/?token=3c321..., which you can follow to access the notebook from your browser.
+If you want to run the stack with the Python package installed statically, run instead:
 
-You can access the mlflow UI at [http://localhost:5000](http://localhost:5000). For an simple example on how to track a "run," please refer to [notebooks/mlflow_test.py](notebooks/mlflow_test.ipynb)
+```bash
+make run-static
+```
+
+Once the service is running, you will see a link on the terminal, e.g. http://127.0.0.1:8888/?token=3c321..., which you can follow to access the notebook from your browser.
+
+You can reach the mlflow UI at [http://localhost:5000](http://localhost:5000). For an simple example on how to track a run, please refer to [notebooks/mlflow_test.py](notebooks/mlflow_test.ipynb)
 
 ## Test and Development
 
-The repo includes a starting Python package at [src/template_repo](src/template_repo), which has the installation, testing, and linting set. We automate these checks using `tox`, which can be run by:
+We automate build, test, code style and linting checks using `tox` in a docker environment. You can run `tox` locally by:
 
 ```bash
 make tox
