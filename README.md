@@ -2,7 +2,7 @@
 
 A personalized Github template repository for data science projects
 
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-ff69b4.svg)](http://www.gnu.org/licenses/agpl-3.0) [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-ff69b4.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/sertansenturk/ds-template) [![Build Status](https://travis-ci.com/sertansenturk/ds-template.svg?branch=master)](https://travis-ci.com/sertansenturk/ds-template) [![codecov](https://codecov.io/gh/sertansenturk/ds-template/branch/master/graph/badge.svg)](https://codecov.io/gh/sertansenturk/ds-template) [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-ff69b4.svg)](http://www.gnu.org/licenses/agpl-3.0) [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-ff69b4.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 Currently, the template consists of a docker-compose stack with the services below:
 
@@ -14,7 +14,7 @@ In addition, we include the Docker images below for utility's sake:
 
 1. A Python development image to facilitate code test and development in Python
 
-The common use cases to interact with template are wrapped in a `Makefile`. Below, we explain the typical operations. For more options, please refer to the help by running on the terminal:
+Commands to interact with template are wrapped in a `Makefile`. Below, we explain the common operations. For more options, please refer to the help by running on the terminal:
 
 ```bash
 make help
@@ -35,15 +35,13 @@ make clean-all
 make build
 ```
 
-This template repo includes a starting Python package at [src/python_package](src/python_package), which is installed to the Jupyter docker image. By default, the package is "pip installed" in editable mode and the base folder is mounted on the docker container so that you can changes in the code are synchronized.
+This repo also includes a template Python package at [src/python_package](src/python_package), which is installed to the Jupyter docker image. By default, the package is "pip installed" in **editable** mode and the **base folder is mounted** on the docker container so that the changes in the code are synchronized.
 
 If you want to install the package statically, instead of `make build`, execute:
 
 ```bash
 make build-static
 ```
-
-**Note:** You may need to grant sudo permissions for `make clean-all`
 
 ## Run the Services
 
@@ -52,6 +50,8 @@ To start the stack, run:
 ```bash
 make run
 ```
+
+Note that the above command also stops any running stack (if exists), cleans, and rebuilds the services to ensure that all the starting services are up-to-date.
 
 If you want to run the stack with the Python package installed statically, run instead:
 
@@ -70,6 +70,8 @@ We automate build, test, code style and linting checks using `tox` in a docker e
 ```bash
 make tox
 ```
+
+In addition, the repo has Travis CI integration ([link](https://travis-ci.com/github/sertansenturk/ds-template)), where we make the aferomentioned checks automatically after each push. Travis CI also generates unittest code coverage reports, which can be checked on codecov ([link](https://codecov.io/gh/sertansenturk/ds-template/)).
 
 ## License
 

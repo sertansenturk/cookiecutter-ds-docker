@@ -32,7 +32,7 @@ RUN pip install --upgrade pip && \
 COPY ./setup.py /home/jovyan/work/
 COPY ./src/ /home/jovyan/work/src/
 USER root
-RUN chown -R 1000 /home/jovyan/work/src/
+RUN chown -R $NB_UID:$NB_GID /home/jovyan/work/src/
 
 USER $NB_UID
 WORKDIR /home/jovyan/work
