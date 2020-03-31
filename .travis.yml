@@ -3,6 +3,10 @@ os: linux
 dist: bionic
 jobs:
   include:
+    - name: "docker-compose-static"
+      if: branch IN (master, dev)
+      services: docker
+      install: make build-static
     - name: "docker-compose"
       services: docker
     - name: "Python 3.7"
