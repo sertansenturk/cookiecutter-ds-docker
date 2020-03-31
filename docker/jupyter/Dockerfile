@@ -18,3 +18,35 @@ RUN ldconfig && \
     mkdir /mlflow && \
     chown -R $NB_USER:$NB_GID /mlflow
 USER $NB_UID
+
+################# development image ################
+FROM jupyter-custom AS editable
+
+# Install Python dependencies from requirements.txt in advance
+# Useful for development since changes in code will not trigger a layer re-build
+COPY ./requirements.txt ./home/jovyan/work/
+RUN pip install --upgrade pip && \
+    pip install -r ./home/jovyan/work/requirements.txt
+
+# install experiment code in editable mode
+COPY ./setup.py /home/jovyan/work/
+COPY ./src/ /home/jovyan/work/src/
+USER root
+RUN chown -R 1000 /home/jovyan/work/src/
+
+USER $NB_UID
+WORKDIR /home/jovyan/work
+RUN pip install -e .
+
+ENTRYPOINT ["start-notebook.sh"]
+
+################## static image ###################
+FROM jupyter-custom AS static
+
+COPY ./src/ /home/jovyan/work/src/
+COPY ./setup.py /home/jovyan/work/
+
+WORKDIR /home/jovyan/work
+RUN pip install .
+
+ENTRYPOINT ["start-notebook.sh"]

@@ -1,9 +1,11 @@
-version: '3'
+version: '3.7'
 services:
   jupyter:
     build:
-      context: ./docker/jupyter
-    image: sertansenturk/jupyter:${VERSION}
+      context: .
+      dockerfile: ./docker/jupyter/Dockerfile
+      target: ${JUPYTER_TARGET}
+    image: ${JUPYTER_IMAGE_NAME}-${JUPYTER_TARGET}:${VERSION}
     ports:
       - "${JUPYTER_PORT}:${JUPYTER_PORT}"
     depends_on: 
@@ -16,7 +18,7 @@ services:
   mlflow:
     build:
       context: ./docker/mlflow
-    image: sertansenturk/mlflow:${VERSION}
+    image: ${MLFLOW_IMAGE_NAME}:${VERSION}
     expose: 
       - "${MLFLOW_TRACKING_SERVER_PORT}"
     ports:
@@ -28,13 +30,15 @@ services:
     volumes:
       - ./${MLFLOW_ARTIFACT_STORE}:/${MLFLOW_ARTIFACT_STORE}
   postgres:
+    user: "${POSTGRES_UID}:${POSTGRES_GID}"
     build:
       context: ./docker/postgres
-    image: sertansenturk/postgres:${VERSION}
+    image: ${POSTGRES_IMAGE_NAME}:${VERSION}
     restart: always
     env_file: 
       - .env
-    ports: 
+    ports:
       - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     volumes:
       - ./${POSTGRES_STORE}:/var/lib/postgresql/data
+      - /etc/passwd:/etc/passwd:ro  # needed for keeping POSTGRES_STORE owned by the correct user. see: https://github.com/docker-library/docs/tree/master/postgres#arbitrary---user-notes
