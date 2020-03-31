@@ -19,17 +19,6 @@ RUN ldconfig && \
     chown -R $NB_USER:$NB_GID /mlflow
 USER $NB_UID
 
-################## static image ###################
-FROM jupyter-custom AS static
-
-COPY ./src/ /home/jovyan/work/src/
-COPY ./setup.py /home/jovyan/work/
-
-WORKDIR /home/jovyan/work
-RUN pip install .
-
-ENTRYPOINT ["start-notebook.sh"]
-
 ################# development image ################
 FROM jupyter-custom AS editable
 
@@ -48,5 +37,16 @@ RUN chown -R 1000 /home/jovyan/work/src/
 USER $NB_UID
 WORKDIR /home/jovyan/work
 RUN pip install -e .
+
+ENTRYPOINT ["start-notebook.sh"]
+
+################## static image ###################
+FROM jupyter-custom AS static
+
+COPY ./src/ /home/jovyan/work/src/
+COPY ./setup.py /home/jovyan/work/
+
+WORKDIR /home/jovyan/work
+RUN pip install .
 
 ENTRYPOINT ["start-notebook.sh"]
