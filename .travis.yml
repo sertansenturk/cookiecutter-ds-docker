@@ -3,6 +3,16 @@ os: linux
 dist: bionic
 jobs:
   include:
+    - name: "docker-compose"
+      services: docker
+      python: 3.7
+      before_install:
+        - docker --version
+      install: 
+        -
+      script: make build
+      after_success:
+        -
     - name: "Python 3.7"
       python: 3.7
       env: TOX_PYTHON_ENV=py37
@@ -16,4 +26,4 @@ install:
 script:
   - tox -e $TOX_PYTHON_ENV -e lint
 after_success:
-  - codecov # submit coverage to https://codecov.io/gh/sertansenturk/tomato/
+  - codecov # submit coverage to https://codecov.io/gh/sertansenturk/ds-template/
