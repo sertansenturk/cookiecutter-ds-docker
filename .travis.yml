@@ -26,8 +26,8 @@ before_install:
   - ls -la
   - docker --version
 install:
-  - 
-script:
   - make build
+script:
+  - 
 after_success:
   - 
