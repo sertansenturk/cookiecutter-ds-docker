@@ -44,7 +44,9 @@ ENTRYPOINT ["start-notebook.sh"]
 ################## test image ###################
 FROM editable AS test
 
-RUN pip install pytest
+RUN pip install \
+    pytest \
+    pytest-dependency
 
 COPY ./tests/docker /tests/docker
 USER root

@@ -77,7 +77,7 @@ We automate build, test, code style and linting checks of the template Python pa
 make tox
 ```
 
-In addition, the repo has Travis CI integration ([link](https://travis-ci.com/github/sertansenturk/ds-template)), where we make the aferomentioned checks automatically after each push. Travis CI also generates unittest code coverage reports for the Python package, which can be checked on codecov ([link](https://codecov.io/gh/sertansenturk/ds-template/)).
+In addition, the repo has Travis CI integration ([link](https://travis-ci.com/github/sertansenturk/ds-template)), which runs all of the aferomentioned checks automatically after each push. Travis CI also generates code coverage reports for the Python package, which can be inspected on codecov ([link](https://codecov.io/gh/sertansenturk/ds-template/)).
 
 ## License
 
