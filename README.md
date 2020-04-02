@@ -51,7 +51,7 @@ To start the stack, run:
 make
 ```
 
-Note that the above command also stops any running stack (if exists), cleans, and rebuilds the services to ensure that all the starting services are up-to-date.
+Note that the above command also stops running stacks (if exist), cleans, and rebuilds the services to ensure that all everything starts up-to-date.
 
 If you want to run the stack with the Python package installed statically, run instead:
 
@@ -61,11 +61,11 @@ make static
 
 Once the service is running, you will see a link on the terminal, e.g. http://127.0.0.1:8888/?token=3c321..., which you can follow to access the notebook from your browser.
 
-You can reach the mlflow UI at [http://localhost:5000](http://localhost:5000). For an simple example on how to track a run, please refer to [notebooks/mlflow_test.py](notebooks/mlflow_test.ipynb)
+You can reach the mlflow UI at [http://localhost:5000](http://localhost:5000). For an simple example on how to track a run, please refer to [notebooks/mlflow_example.ipynb](notebooks/mlflow_example.ipynb)
 
 ## Test and Development
 
-We test some behaviour of the services (e.g. if `mlflow` correclty handles tracking requests by the Jupyter service) automatically. You can run the tests locally by:
+We can test the functionalities of the services (e.g. if `mlflow` handles logging correctly from the Jupyter service) automatically by running the docker-compose stack in test mode. You can run the test stack locally by:
 
 ```bash
 make test
