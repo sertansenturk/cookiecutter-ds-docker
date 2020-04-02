@@ -16,8 +16,9 @@ USER root
 RUN ldconfig && \
     jupyter nbextension enable toc2/main --sys-prefix && \
     jupyter nbextension enable collapsible_headings/main --sys-prefix && \
-    mkdir /mlflow && \
-    chown -R $NB_USER:$NB_GID /mlflow
+    mkdir -p /data/artifacts && \
+    chown -R $NB_USER:$NB_GID /data/artifacts
+    
 USER $NB_UID
 
 ################# development image ###############
