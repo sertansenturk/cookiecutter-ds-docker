@@ -48,7 +48,7 @@ RUN pip install pytest
 
 COPY ./tests/docker /tests/docker
 USER root
-RUN chown -R $NB_UID:$NB_GID /tests/docker
+RUN chown -R $NB_UID:$NB_GID /tests/
 USER $NB_UID
 
 WORKDIR /tests
