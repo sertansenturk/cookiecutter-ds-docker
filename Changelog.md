@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.3.0
+
+- Add [travis.ci](https://travis-ci.com/github/sertansenturk/ds-template) and [codecov](https://codecov.io/gh/sertansenturk/ds-template/) integration
+
 ## v0.2.0
 
 - Add Python template repo and Python `tox` automations

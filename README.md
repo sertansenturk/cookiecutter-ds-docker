@@ -48,7 +48,7 @@ make build-static
 To start the stack, run:
 
 ```bash
-make run
+make
 ```
 
 Note that the above command also stops any running stack (if exists), cleans, and rebuilds the services to ensure that all the starting services are up-to-date.
@@ -56,7 +56,7 @@ Note that the above command also stops any running stack (if exists), cleans, an
 If you want to run the stack with the Python package installed statically, run instead:
 
 ```bash
-make run-static
+make static
 ```
 
 Once the service is running, you will see a link on the terminal, e.g. http://127.0.0.1:8888/?token=3c321..., which you can follow to access the notebook from your browser.
