@@ -4,16 +4,17 @@ dist: bionic
 jobs:
   include:
     - name: "docker-compose-build"
+      if: branch NOT IN (master, dev)
       services: docker
       script: make build
-    - name: "docker-compose-build-static"
-      if: branch IN (master, dev)
-      services: docker
-      script: make build-static
     - name: "docker-compose-test"
       if: branch IN (master, dev)
       services: docker
       script: make test
+    - name: "docker-compose-build-static"
+      if: branch IN (master, dev)
+      services: docker
+      script: make build-static
     - name: "Python 3.7"
       python: 3.7
       before_install:
