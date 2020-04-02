@@ -4,33 +4,52 @@ import pytest
 
 @pytest.mark.dependency()
 def test_mlflow_log_to_backend():
+    # GIVEN
+    parameters = {
+        "param1": "param1_val",
+        "param2": "param2_val"
+    }
+    metric = {
+        "key": "metric1",
+        "val": list(range(10))
+    }
+    tag = {
+        "key": "tag_key1",
+        "val": "tag_val1"
+    }
+
+    # WHEN
     mlflow.set_experiment('experiment-alpha')
     with mlflow.start_run():
-        mlflow.log_param("param1", "param1_val")
-        mlflow.log_param("param2", "param2_val")
+        mlflow.log_params(parameters)
 
-        for i in range(10):
-            mlflow.log_metric("metric1", i)
+        for vv in metric["val"]:
+            mlflow.log_metric(metric["key"], vv)
 
-        mlflow.set_tag("tag_key", "tag_val")
+        mlflow.set_tag(tag["key"], tag["val"])
 
-    assert True
-
-
-def test_mlflow_log_artifact():
-    with open("dummy.txt", 'w') as f:
-        pass
-
-    mlflow.set_experiment('experiment-alpha')
-    with mlflow.start_run():
-        mlflow.log_artifact("dummy.txt")
-
-    assert True
+    # THEN
+    assert True  # logging succeeded
 
 
 @pytest.mark.dependency(depends=["test_mlflow_log_to_backend"])
 def test_mlflow_get_logs():
     assert True
+
+
+@pytest.mark.dependency()
+def test_mlflow_log_artifact():
+    # GIVEN
+    with open("dummy.txt", 'w'):
+        pass  # create an empty file
+
+    # WHEN
+    mlflow.set_experiment('experiment-alpha')
+    with mlflow.start_run():
+        mlflow.log_artifact("dummy.txt")
+
+    # THEN
+    assert True  # logging succeeded
 
 
 @pytest.mark.dependency(depends=["test_mlflow_log_artifact"])
