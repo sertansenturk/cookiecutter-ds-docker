@@ -42,7 +42,7 @@ RUN pip install -e .
 ENTRYPOINT ["start-notebook.sh"]
 
 ################## test image ###################
-FROM jupyter-custom AS test
+FROM editable AS test
 
 RUN pip install pytest
 
