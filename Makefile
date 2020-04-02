@@ -41,9 +41,9 @@ POSTGRES_GID := $(shell id -g)
 
 help:
 	@printf "======= General ======\n"
-	@printf "$(pretty_command): run \"clean\", \"build\" and \"up\"\n" \(default\)
-	@printf "$(pretty_command): run \"clean\", \"build-static\" and \"up\"\n" static
-	@printf "$(pretty_command): run \"clean\", \"build-test\" and \"up\"\n" test
+	@printf "$(pretty_command): run docker stack with Python repo installed on the Jupyter service as editable\n" \(default\)
+	@printf "$(pretty_command): run docker stack with Python repo installed on the Jupyter service statically\n" static
+	@printf "$(pretty_command): run docker stack with tests executed instead of the Jupyter notebooks\n" test
 	@printf "$(pretty_command): run \"clean\", \"clean-stores\", \"build\" and \"up\"\n" all
 	@printf "$(pretty_command): run \"clean-all\", \"build-no-cache\" and \"up\"\n" all-no-cache
 	@printf "\n"
@@ -57,9 +57,9 @@ help:
 	@printf "======= Docker =======\n"
 	@printf "$(pretty_command): Remove all unused docker containers, networks and images \n" prune
 	@printf "$(padded_str)PRUNE_OPTS, \"docker system prune\" options (default: $(PRUNE_OPTS))\n"
-	@printf "$(pretty_command): build the docker-compose stack; python code is installed to the Jupyter service as editable\n" build
+	@printf "$(pretty_command): build the docker-compose stack; python code is installed on the Jupyter service as editable\n" build
 	@printf "$(padded_str)BUILD_OPTS, \"docker-compose build\" options (default: $(BUILD_OPTS))\n"
-	@printf "$(pretty_command): build the docker-compose stack; python code is install to the Jupyter service as static\n" build-static
+	@printf "$(pretty_command): build the docker-compose stack; python code is install on the Jupyter service as static\n" build-static
 	@printf "$(pretty_command): build docker-compose stack with \"${BUILD_NO_CACHE_OPT}\"\n" build-no-cache
 	@printf "$(pretty_command): start the docker-compose stack\n" up
 	@printf "$(padded_str)UP_OPTS, \"docker-compose up\" options (default: $(UP_OPTS))\n"
@@ -127,7 +127,7 @@ run:
 	JUPYTER_TARGET=${JUPYTER_TARGET} POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose run ${RUN_OPTS}
 
 down:
-	docker-compose down ${DOWN_OPTS}
+	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose down ${DOWN_OPTS}
 down-all: DOWN_OPTS:=${DOWN_ALL_OPTS}
 down-all: down
 
