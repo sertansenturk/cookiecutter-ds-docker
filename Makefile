@@ -1,12 +1,14 @@
 SHELL := /bin/bash
 .DEFAULT_GOAL := default
 .PHONY: \
-	help default run run-static \
+	help \
+	default static test \
 	all all-no-cache \
 	purge clean clean-all clean-stores clean-python \
-	prune build build-static build-no-cache \
-	up down down-all \
-	python-dev-build tox
+	prune build build-no-cache \
+	up run down down-all \
+	python-dev-build tox \
+	find_port_usage
 
 HELP_PADDING = 28
 bold := $(shell tput bold)
@@ -28,6 +30,7 @@ DOWN_OPTS = --remove-orphans
 DOWN_ALL_OPTS = ${DOWN_OPTS} --rmi all -v
 
 UP_OPTS =
+RUN_OPTS =
 
 PYTHON_DEV_CMD = 
 
@@ -38,10 +41,9 @@ POSTGRES_GID := $(shell id -g)
 
 help:
 	@printf "======= General ======\n"
-	@printf "$(pretty_command): run \"run\" (see below)\n" \(default\)
-	@printf "$(pretty_command): run \"clean\", \"build\" and \"up\"\n" run
-	@printf "$(pretty_command): run \"clean\", \"build-no-cache\" and \"up\"\n" run-no-cache
-	@printf "$(pretty_command): run \"clean\", \"build-static\" and \"up\"\n" run
+	@printf "$(pretty_command): run \"clean\", \"build\" and \"up\"\n" \(default\)
+	@printf "$(pretty_command): run \"clean\", \"build-static\" and \"up\"\n" static
+	@printf "$(pretty_command): run \"clean\", \"build-test\" and \"up\"\n" test
 	@printf "$(pretty_command): run \"clean\", \"clean-stores\", \"build\" and \"up\"\n" all
 	@printf "$(pretty_command): run \"clean-all\", \"build-no-cache\" and \"up\"\n" all-no-cache
 	@printf "\n"
@@ -61,6 +63,8 @@ help:
 	@printf "$(pretty_command): build docker-compose stack with \"${BUILD_NO_CACHE_OPT}\"\n" build-no-cache
 	@printf "$(pretty_command): start the docker-compose stack\n" up
 	@printf "$(padded_str)UP_OPTS, \"docker-compose up\" options (default: $(UP_OPTS))\n"
+	@printf "$(pretty_command): run the docker-compose stack\n" run
+	@printf "$(padded_str)RUN_OPTS, \"docker-compose run\" options (default: $(RUN_OPTS))\n"
 	@printf "$(pretty_command): stop the docker-compose stack and remove artifacts created by \"up\"\n" down
 	@printf "$(padded_str)DOWN_OPTS, \"docker-compose down\" options (default: $(DOWN_OPTS))\n"
 	@printf "$(pretty_command): build docker-compose stack with \"${DOWN_ALL_OPTS}\"\n" down-all
@@ -71,11 +75,13 @@ help:
 	@printf "$(pretty_command): identify applications, which are bound to the given port. Useful for freeing ports from phantom tasks\n" find_port_usage
 	@printf "$(padded_str)CHK_PORT, Port to check (default: $(CHK_PORT))\n"
 
-default: run
+default: clean build up
+static: JUPYTER_TARGET:=${JUPYTER_STATIC_TARGET}
+static: clean build up
+test: JUPYTER_TARGET:=${JUPYTER_TEST_TARGET}
+test: UP_OPTS:=--exit-code-from jupyter
+test: clean build up
 
-run: clean build up
-run-no-cache: clean build-no-cache up
-run-static: clean build-static up
 all: clean clean-stores build up
 all-no-cache: clean-all build-no-cache up
 
@@ -105,8 +111,9 @@ prune:
 	docker system prune ${PRUNE_OPTS}
 
 build: 
-	DOCKER_BUILDKIT=${BUILDKIT} JUPYTER_TARGET=${JUPYTER_TARGET} docker-compose build ${BUILD_OPTS}
-build-static: JUPYTER_TARGET := ${JUPYTER_STATIC_TARGET}
+	DOCKER_BUILDKIT=${BUILDKIT} JUPYTER_TARGET=${JUPYTER_TARGET} POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose build ${BUILD_OPTS}
+
+build-static: JUPYTER_TARGET:=${JUPYTER_STATIC_TARGET}
 build-static: build
 
 build-no-cache: BUILD_OPTS:=$(BUILD_NO_CACHE_OPT)
@@ -114,11 +121,14 @@ build-no-cache: build
 
 up: 
 	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
-	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose up ${UP_OPTS}
+	JUPYTER_TARGET=${JUPYTER_TARGET} POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose up ${UP_OPTS}
+run:
+	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
+	JUPYTER_TARGET=${JUPYTER_TARGET} POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose run ${RUN_OPTS}
 
 down:
 	docker-compose down ${DOWN_OPTS}
-down-all: DOWN_OPTS := ${DOWN_ALL_OPTS}
+down-all: DOWN_OPTS:=${DOWN_ALL_OPTS}
 down-all: down
 
 python-dev-build:	

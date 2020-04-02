@@ -3,12 +3,17 @@ os: linux
 dist: bionic
 jobs:
   include:
-    - name: "docker-compose"
+    - name: "docker-compose-build"
       services: docker
-    - name: "docker-compose-static"
+      install: make build
+    - name: "docker-compose-build-static"
       if: branch IN (master, dev)
       services: docker
       install: make build-static
+    - name: "docker-compose-test"
+      if: branch IN (master, dev)
+      services: docker
+      install: make test
     - name: "Python 3.7"
       python: 3.7
       before_install:
@@ -26,7 +31,7 @@ before_install:
   - ls -la
   - docker --version
 install:
-  - make build
+  - 
 script:
   - 
 after_success:

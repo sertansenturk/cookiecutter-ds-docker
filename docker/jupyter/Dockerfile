@@ -1,3 +1,4 @@
+############## custom jupyter image ###############
 FROM jupyter/scipy-notebook:862de146632b AS jupyter-custom
 
 RUN conda install --quiet --yes \
@@ -19,7 +20,7 @@ RUN ldconfig && \
     chown -R $NB_USER:$NB_GID /mlflow
 USER $NB_UID
 
-################# development image ################
+################# development image ###############
 FROM jupyter-custom AS editable
 
 # Install Python dependencies from requirements.txt in advance
@@ -39,6 +40,20 @@ WORKDIR /home/jovyan/work
 RUN pip install -e .
 
 ENTRYPOINT ["start-notebook.sh"]
+
+################## test image ###################
+FROM jupyter-custom AS test
+
+RUN pip install pytest
+
+COPY ./tests/docker /tests/docker
+USER root
+RUN chown -R $NB_UID:$NB_GID /tests/docker
+USER $NB_UID
+
+WORKDIR /tests
+
+ENTRYPOINT sleep 5; pytest ./docker
 
 ################## static image ###################
 FROM jupyter-custom AS static
