@@ -65,13 +65,19 @@ You can reach the mlflow UI at [http://localhost:5000](http://localhost:5000). F
 
 ## Test and Development
 
-We automate build, test, code style and linting checks using `tox` in a docker environment. You can run `tox` locally by:
+We test some behaviour of the services (e.g. if `mlflow` correclty handles tracking requests by the Jupyter service) automatically. You can run the tests locally by:
+
+```bash
+make test
+```
+
+We automate build, test, code style and linting checks of the template Python package using `tox` in a docker environment. You can run `tox` locally by:
 
 ```bash
 make tox
 ```
 
-In addition, the repo has Travis CI integration ([link](https://travis-ci.com/github/sertansenturk/ds-template)), where we make the aferomentioned checks automatically after each push. Travis CI also generates unittest code coverage reports, which can be checked on codecov ([link](https://codecov.io/gh/sertansenturk/ds-template/)).
+In addition, the repo has Travis CI integration ([link](https://travis-ci.com/github/sertansenturk/ds-template)), where we make the aferomentioned checks automatically after each push. Travis CI also generates unittest code coverage reports for the Python package, which can be checked on codecov ([link](https://codecov.io/gh/sertansenturk/ds-template/)).
 
 ## License
 
