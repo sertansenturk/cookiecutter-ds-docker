@@ -5,15 +5,15 @@ jobs:
   include:
     - name: "docker-compose-build"
       services: docker
-      install: make build
+      script: make build
     - name: "docker-compose-build-static"
       if: branch IN (master, dev)
       services: docker
-      install: make build-static
+      script: make build-static
     - name: "docker-compose-test"
       if: branch IN (master, dev)
       services: docker
-      install: make test
+      script: make test
     - name: "Python 3.7"
       python: 3.7
       before_install:
