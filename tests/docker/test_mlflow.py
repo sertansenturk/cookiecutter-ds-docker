@@ -33,21 +33,28 @@ def artifact():
     return dummy_artifact
 
 
-@pytest.mark.dependency()
-def test_mlflow_log_to_backend(logs):
-    # GIVEN
+def mlflow_run(commands):
     experiment_name = 'test_experiment'
     run_name = "test_run"
 
-    # WHEN
     mlflow.set_experiment(experiment_name)
     with mlflow.start_run(run_name=run_name):
+        commands()
+
+
+@pytest.mark.dependency()
+def test_mlflow_log_to_backend(logs):
+    # GIVEN
+    def mlflow_commands():
         mlflow.log_params(logs["parameters"])
 
         for vv in logs["metric"]["val"]:
             mlflow.log_metric(logs["metric"]["key"], vv)
 
         mlflow.set_tag(logs["tag"]["key"], logs["tag"]["val"])
+
+    # WHEN
+    mlflow_run(mlflow_commands)
 
     # THEN
     assert True  # logging succeeded
@@ -61,13 +68,11 @@ def test_mlflow_get_logs():
 @pytest.mark.dependency()
 def test_mlflow_log_artifact(artifact):
     # GIVEN
-    experiment_name = 'test_experiment'
-    run_name = "test_run"
+    def mlflow_commands():
+        mlflow.log_artifact(artifact)
 
     # WHEN
-    mlflow.set_experiment(experiment_name)
-    with mlflow.start_run(run_name=run_name):
-        mlflow.log_artifact(artifact)
+    mlflow_run(mlflow_commands)
 
     # THEN
     assert True  # logging succeeded
