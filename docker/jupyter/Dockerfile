@@ -19,6 +19,8 @@ RUN ldconfig && \
     mkdir -p /data/artifacts && \
     chown -R $NB_USER:$NB_GID /data/artifacts
     
+RUN ls -la /data && \
+    ls -la /data/artifacts
 USER $NB_UID
 
 ################# development image ###############
