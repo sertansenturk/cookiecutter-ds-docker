@@ -1,5 +1,9 @@
 import mlflow
 import pytest
+import os
+
+
+RUN_IDS = {}
 
 
 @pytest.fixture(scope="module")
@@ -26,20 +30,29 @@ def logs():
 
 @pytest.fixture(scope="module")
 def artifact():
-    dummy_artifact = "dummy.txt"
-    with open(dummy_artifact, 'w'):
+    artifact_file = "dummy.txt"
+    with open(artifact_file, 'w'):
         pass  # create an empty file
 
-    return dummy_artifact
+    return artifact_file
 
 
-def mlflow_run(commands):
+def mlflow_start_run(commands):
     experiment_name = 'test_experiment'
     run_name = "test_run"
 
     mlflow.set_experiment(experiment_name)
-    with mlflow.start_run(run_name=run_name):
+    with mlflow.start_run(run_name=run_name) as run:
         commands()
+        return run.info.run_id
+
+
+def mlflow_client():
+    return mlflow.tracking.MlflowClient()
+
+
+def mlflow_get_run(run_id):
+    return mlflow_client().get_run(run_id)
 
 
 @pytest.mark.dependency()
@@ -54,15 +67,35 @@ def test_mlflow_log_to_backend(logs):
         mlflow.set_tag(logs["tag"]["key"], logs["tag"]["val"])
 
     # WHEN
-    mlflow_run(mlflow_commands)
+    RUN_IDS["test_mlflow_log_to_backend"] = mlflow_start_run(mlflow_commands)
 
     # THEN
     assert True  # logging succeeded
 
 
 @pytest.mark.dependency(depends=["test_mlflow_log_to_backend"])
-def test_mlflow_get_logs():
-    assert True
+def test_mlflow_get_params(logs):
+    # GIVEN 
+    run_id = RUN_IDS["test_mlflow_log_to_backend"]
+
+    # WHEN
+    data = mlflow_get_run(run_id).data
+
+    #THEN
+    assert data.params == logs["parameters"]
+
+
+@pytest.mark.dependency(depends=["test_mlflow_log_to_backend"])
+def test_mlflow_get_metric(logs):
+    # GIVEN 
+    run_id = RUN_IDS["test_mlflow_log_to_backend"]
+
+    # WHEN
+    metric = mlflow_client().get_metric_history(run_id, logs["metric"]["key"])
+    metric_vals = [mm.value for mm in metric]
+
+    #THEN
+    assert metric_vals == logs["metric"]["val"]
 
 
 @pytest.mark.dependency()
@@ -72,12 +105,20 @@ def test_mlflow_log_artifact(artifact):
         mlflow.log_artifact(artifact)
 
     # WHEN
-    mlflow_run(mlflow_commands)
+    RUN_IDS["test_mlflow_log_artifact"] = mlflow_start_run(mlflow_commands)
 
     # THEN
     assert True  # logging succeeded
 
 
 @pytest.mark.dependency(depends=["test_mlflow_log_artifact"])
-def test_mlflow_get_artifact():
-    assert True
+def test_mlflow_get_artifact(artifact):
+    # GIVEN 
+    run_id = RUN_IDS["test_mlflow_log_artifact"]
+
+    # WHEN
+    artifact_dir = mlflow_get_run(run_id).info.artifact_uri
+    artifact_file = os.path.join(artifact_dir, artifact)
+
+    #THEN
+    assert os.path.isfile(artifact_file)
