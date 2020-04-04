@@ -3,9 +3,9 @@ FROM jupyter/scipy-notebook:862de146632b AS jupyter-custom
 
 RUN id 
 
-ENV HOME_DIR /home/$NB_USER
-ENV WORK_DIR $HOME_DIR/work
-ENV MLFLOW_ARTIFACT_STORE /data/artifacts
+ENV HOME_DIR=/home/$NB_USER \
+    WORK_DIR=$HOME_DIR/work \
+    MLFLOW_ARTIFACT_STORE=/data/artifacts
 
 RUN conda install --quiet --yes \
     'mlflow=1.7.*' \
@@ -23,7 +23,7 @@ RUN ldconfig && \
     jupyter nbextension enable toc2/main --sys-prefix && \
     jupyter nbextension enable collapsible_headings/main --sys-prefix && \
     mkdir -p $MLFLOW_ARTIFACT_STORE && \
-    chown -R $NB_USER:$NB_GID /data
+    chown -R $NB_USER:$NB_GROUP /data
     
 RUN ls -la /data && \
     ls -la $MLFLOW_ARTIFACT_STORE
