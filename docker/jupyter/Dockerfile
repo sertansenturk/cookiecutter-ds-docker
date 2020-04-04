@@ -1,6 +1,10 @@
 ############## custom jupyter image ###############
 FROM jupyter/scipy-notebook:862de146632b AS jupyter-custom
 
+ENV HOME_DIR /home/$NB_USER
+ENV WORK_DIR $HOME_DIR/work
+ENV MLFLOW_ARTIFACT_STORE /data/artifacts
+
 RUN conda install --quiet --yes \
     'mlflow=1.7.*' \
     'psycopg2=2.8.*' \
@@ -10,17 +14,17 @@ RUN conda install --quiet --yes \
     'jupyter_nbextensions_configurator' && \
     conda build purge-all && \
     fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    fix-permissions $HOME_DIR
 
 USER root
 RUN ldconfig && \
     jupyter nbextension enable toc2/main --sys-prefix && \
     jupyter nbextension enable collapsible_headings/main --sys-prefix && \
-    mkdir -p /data/artifacts && \
-    chown -R $NB_USER:$NB_GID /data/artifacts
+    mkdir -p $MLFLOW_ARTIFACT_STORE && \
+    chown -R $NB_USER:$NB_GID $MLFLOW_ARTIFACT_STORE
     
 RUN ls -la /data && \
-    ls -la /data/artifacts
+    ls -la $MLFLOW_ARTIFACT_STORE
 USER $NB_UID
 
 ################# development image ###############
@@ -28,18 +32,18 @@ FROM jupyter-custom AS editable
 
 # Install Python dependencies from requirements.txt in advance
 # Useful for development since changes in code will not trigger a layer re-build
-COPY ./requirements.txt ./home/jovyan/work/
+COPY ./requirements.txt $WORK_DIR/
 RUN pip install --upgrade pip && \
-    pip install -r ./home/jovyan/work/requirements.txt
+    pip install -r $WORK_DIR/requirements.txt
 
 # install experiment code in editable mode
-COPY ./setup.py /home/jovyan/work/
-COPY ./src/ /home/jovyan/work/src/
+COPY ./setup.py $WORK_DIR/
+COPY ./src/ $WORK_DIR/src/
 USER root
-RUN chown -R $NB_UID:$NB_GID /home/jovyan/work/src/
+RUN chown -R $NB_UID:$NB_GID $WORK_DIR/src/
 
 USER $NB_UID
-WORKDIR /home/jovyan/work
+WORKDIR $WORK_DIR
 RUN pip install -e .
 
 ENTRYPOINT ["start-notebook.sh"]
@@ -58,15 +62,15 @@ USER $NB_UID
 
 WORKDIR /tests
 
-ENTRYPOINT sleep 5; pytest ./docker
+ENTRYPOINT sleep 5; pytest -vv ./docker
 
 ################## static image ###################
 FROM jupyter-custom AS static
 
-COPY ./src/ /home/jovyan/work/src/
-COPY ./setup.py /home/jovyan/work/
+COPY ./src/ $WORK_DIR/src/
+COPY ./setup.py $WORK_DIR/
 
-WORKDIR /home/jovyan/work
+WORKDIR $WORK_DIR
 RUN pip install .
 
 ENTRYPOINT ["start-notebook.sh"]
