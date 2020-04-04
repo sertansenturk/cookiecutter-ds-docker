@@ -1,6 +1,8 @@
 ############## custom jupyter image ###############
 FROM jupyter/scipy-notebook:862de146632b AS jupyter-custom
 
+RUN id 
+
 ENV HOME_DIR /home/$NB_USER
 ENV WORK_DIR $HOME_DIR/work
 ENV MLFLOW_ARTIFACT_STORE /data/artifacts
