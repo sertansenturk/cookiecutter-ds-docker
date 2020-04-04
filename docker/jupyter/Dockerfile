@@ -23,7 +23,7 @@ RUN ldconfig && \
     jupyter nbextension enable toc2/main --sys-prefix && \
     jupyter nbextension enable collapsible_headings/main --sys-prefix && \
     mkdir -p $MLFLOW_ARTIFACT_STORE && \
-    chown -R $NB_USER:$NB_GID $MLFLOW_ARTIFACT_STORE
+    chown -R $NB_USER:$NB_GID /data
     
 RUN ls -la /data && \
     ls -la $MLFLOW_ARTIFACT_STORE
