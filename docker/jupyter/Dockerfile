@@ -1,5 +1,5 @@
 ############## custom jupyter image ###############
-FROM jupyter/base-notebook:latest AS jupyter-custom
+FROM jupyter/scipy-notebook:862de146632b AS jupyter-custom
 
 RUN id 
 
@@ -10,13 +10,18 @@ ENV HOME_DIR=/home/$NB_USER \
 RUN conda install --quiet --yes \
     'mlflow=1.7.*' \
     'psycopg2=2.8.*' \
-    'conda-build' && \
+    'conda-build' \
+    'tqdm' \
+    'jupyter_contrib_nbextensions' \
+    'jupyter_nbextensions_configurator' && \
     conda build purge-all && \
     fix-permissions $CONDA_DIR && \
     fix-permissions $HOME_DIR
 
 USER root
 RUN ldconfig && \
+    jupyter nbextension enable toc2/main --sys-prefix && \
+    jupyter nbextension enable collapsible_headings/main --sys-prefix && \
     mkdir -p $MLFLOW_ARTIFACT_STORE && \
     chown -R $NB_UID:$NB_GID /data
     
@@ -59,9 +64,15 @@ USER $NB_UID
 
 WORKDIR /tests
 
-ENTRYPOINT id; \
-    ls -la /data/artifacts; \
-    mkdir /data/artifacts/1; \
-    ls -la /data/artifacts/1; \
-    sleep 5; \
-    pytest -vv ./docker
+ENTRYPOINT sleep 5; pytest -vv ./docker
+
+################## static image ###################
+FROM jupyter-custom AS static
+
+COPY ./src/ $WORK_DIR/src/
+COPY ./setup.py $WORK_DIR/
+
+WORKDIR $WORK_DIR
+RUN pip install .
+
+ENTRYPOINT ["start-notebook.sh"]
