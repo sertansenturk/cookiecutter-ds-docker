@@ -60,8 +60,9 @@ USER $NB_UID
 WORKDIR /tests
 
 ENTRYPOINT id; \
+    ls -la /data/artifacts; \
     mkdir /data/artifacts/1; \
     ls -la /data/artifacts/1; \
     sleep 5; \
     pytest -vv ./docker; \
-    /data/artifacts/1
+    ls -la /data/artifacts/1
