@@ -1,5 +1,5 @@
 ############## custom jupyter image ###############
-FROM jupyter/scipy-notebook:862de146632b AS jupyter-custom
+FROM jupyter/base-notebook:latest AS jupyter-custom
 
 RUN id 
 
