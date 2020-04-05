@@ -64,6 +64,4 @@ ENTRYPOINT id; \
     mkdir /data/artifacts/1; \
     ls -la /data/artifacts/1; \
     sleep 5; \
-    pytest -vv ./docker; \
-    ls -la /data/artifacts; \
-    ls -la /data/artifacts/1
+    pytest -vv ./docker
