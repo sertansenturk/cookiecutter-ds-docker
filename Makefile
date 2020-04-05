@@ -36,6 +36,8 @@ PYTHON_DEV_CMD =
 
 CHK_PORT = ${MLFLOW_TRACKING_SERVER_PORT}
 
+JUPYTER_UID := $(shell id -u)
+
 POSTGRES_UID := $(shell id -u)
 POSTGRES_GID := $(shell id -g)
 
