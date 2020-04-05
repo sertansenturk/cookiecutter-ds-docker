@@ -10,7 +10,7 @@ ENV HOME_DIR=/home/$NB_USER \
 RUN conda install --quiet --yes \
     'mlflow=1.7.*' \
     'psycopg2=2.8.*' \
-    'conda-build' \
+    'conda-build' && \
     conda build purge-all && \
     fix-permissions $CONDA_DIR && \
     fix-permissions $HOME_DIR
