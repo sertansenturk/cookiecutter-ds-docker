@@ -123,7 +123,6 @@ build-no-cache: build
 
 up: 
 	mkdir -p ./${MLFLOW_ARTIFACT_STORE} ./${POSTGRES_STORE}
-	echo ${JUPYTER_UID}
 	JUPYTER_TARGET=${JUPYTER_TARGET} POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose up ${UP_OPTS}
 run:
 	mkdir -p ./${MLFLOW_ARTIFACT_STORE} ./${POSTGRES_STORE}
