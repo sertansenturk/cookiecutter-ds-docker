@@ -11,8 +11,8 @@ jobs:
       # if: branch IN (master, dev)
       services: docker
       script: 
-        - make test
         - mkdir ./data/artifacts/1
+        - make test
         - ls -la ./data/artifacts/
     # - name: "docker-compose-build-static"
     #   if: branch IN (master, dev)
