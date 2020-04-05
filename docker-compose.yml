@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   jupyter:
-    user: "${JUPYTER_UID}"
+    user: "2000:100"
     build:
       context: .
       dockerfile: ./docker/jupyter/Dockerfile
