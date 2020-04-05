@@ -3,7 +3,7 @@ FROM jupyter/base-notebook:latest AS jupyter-custom
 
 RUN id 
 
-ENV HOME_DIR=/home/$NB_USER \
+ENV HOME_DIR=/home/$JUPYTER_UID \
     WORK_DIR=$HOME_DIR/work \
     MLFLOW_ARTIFACT_STORE=/data/artifacts
 
@@ -18,11 +18,11 @@ RUN conda install --quiet --yes \
 USER root
 RUN ldconfig && \
     mkdir -p $MLFLOW_ARTIFACT_STORE && \
-    chown -R $NB_UID:$NB_GID /data
+    chown -R $JUPYTER_UID:$NB_GID /data
     
 RUN ls -la /data && \
     ls -la $MLFLOW_ARTIFACT_STORE
-USER $NB_UID
+USER $JUPYTER_UID
 
 ################# development image ###############
 FROM jupyter-custom AS editable
@@ -37,9 +37,9 @@ RUN pip install --upgrade pip && \
 COPY ./setup.py $WORK_DIR/
 COPY ./src/ $WORK_DIR/src/
 USER root
-RUN chown -R $NB_UID:$NB_GID $WORK_DIR/src/
+RUN chown -R $JUPYTER_UID:$NB_GID $WORK_DIR/src/
 
-USER $NB_UID
+USER $JUPYTER_UID
 WORKDIR $WORK_DIR
 RUN pip install -e .
 
@@ -54,8 +54,8 @@ RUN pip install \
 
 COPY ./tests/docker /tests/docker
 USER root
-RUN chown -R $NB_UID:$NB_GID /tests/
-USER $NB_UID
+RUN chown -R $JUPYTER_UID:$NB_GID /tests/
+USER $JUPYTER_UID
 
 WORKDIR /tests
 

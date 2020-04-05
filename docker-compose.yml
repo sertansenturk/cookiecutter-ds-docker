@@ -13,6 +13,8 @@ services:
       - mlflow
     env_file: 
       - .env
+    environment:
+      JUPYTER_UID
     volumes: 
       - ./:/home/jovyan/work
       - ./${MLFLOW_ARTIFACT_STORE}:/${MLFLOW_ARTIFACT_STORE}
