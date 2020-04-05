@@ -3,7 +3,7 @@ FROM jupyter/base-notebook:latest AS jupyter-custom
 
 RUN id 
 
-ENV HOME_DIR=/home/$JUPYTER_UID \
+ENV HOME_DIR=/home/$NB_USER \
     WORK_DIR=$HOME_DIR/work \
     MLFLOW_ARTIFACT_STORE=/data/artifacts
 
