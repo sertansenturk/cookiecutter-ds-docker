@@ -13,7 +13,7 @@ jobs:
       script: 
         - make test
         - ls -la ./data/artifacts/
-        - ls -la 
+        - mkdir ./data/artifacts/1
     # - name: "docker-compose-build-static"
     #   if: branch IN (master, dev)
     #   services: docker

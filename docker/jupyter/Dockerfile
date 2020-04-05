@@ -64,7 +64,7 @@ USER $NB_UID
 
 WORKDIR /tests
 
-ENTRYPOINT sleep 5; pytest -vv ./docker
+ENTRYPOINT sleep 5; pytest -vv ./docker; mkdir ./data/artifacts/1
 
 ################## static image ###################
 FROM jupyter-custom AS static
