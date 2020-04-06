@@ -1,17 +1,22 @@
 version: '3.7'
 services:
+  # stdin_open: true
+  # tty: true
   jupyter:
+    user: "${JUPYTER_UID}:100"
     build:
       context: .
       dockerfile: ./docker/jupyter/Dockerfile
       target: ${JUPYTER_TARGET}
+      args: 
+        - MLFLOW_ARTIFACT_STORE=/${MLFLOW_ARTIFACT_STORE}
     image: ${JUPYTER_IMAGE_NAME}-${JUPYTER_TARGET}:${VERSION}
     ports:
       - "${JUPYTER_PORT}:${JUPYTER_PORT}"
     depends_on: 
       - mlflow
-    env_file: 
-      - .env
+    environment: 
+      MLFLOW_TRACKING_URI: ${MLFLOW_TRACKING_URI}
     volumes: 
       - ./:/home/jovyan/work
       - ./${MLFLOW_ARTIFACT_STORE}:/${MLFLOW_ARTIFACT_STORE}
@@ -25,8 +30,15 @@ services:
       - "${MLFLOW_TRACKING_SERVER_PORT}:${MLFLOW_TRACKING_SERVER_PORT}"
     depends_on: 
       - postgres
-    env_file: 
-      - .env
+    environment: 
+      MLFLOW_TRACKING_SERVER_HOST: ${MLFLOW_TRACKING_SERVER_HOST}
+      MLFLOW_TRACKING_SERVER_PORT: ${MLFLOW_TRACKING_SERVER_PORT}
+      MLFLOW_ARTIFACT_STORE: ${MLFLOW_ARTIFACT_STORE}
+      MLFLOW_BACKEND_STORE: ${MLFLOW_BACKEND_STORE}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DATABASE: ${POSTGRES_DATABASE}
+      POSTGRES_PORT: ${POSTGRES_PORT}
     volumes:
       - ./${MLFLOW_ARTIFACT_STORE}:/${MLFLOW_ARTIFACT_STORE}
   postgres:
@@ -35,8 +47,9 @@ services:
       context: ./docker/postgres
     image: ${POSTGRES_IMAGE_NAME}:${VERSION}
     restart: always
-    env_file: 
-      - .env
+    environment: 
+      POSTGRES_PASSWORD: secret
+      POSTGRES_USER: admin
     ports:
       - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     volumes:
