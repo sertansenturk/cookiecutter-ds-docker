@@ -3,8 +3,8 @@ FROM jupyter/scipy-notebook:862de146632b AS jupyter-custom
 
 ARG MLFLOW_ARTIFACT_STORE
 
-ENV HOME_DIR=/home/$NB_USER \
-    WORK_DIR=$HOME_DIR/work
+ENV HOME_DIR=/home/$NB_USER
+ENV WORK_DIR=$HOME_DIR/work
 
 RUN id  && \
     conda install --quiet --yes \
