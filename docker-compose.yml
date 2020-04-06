@@ -1,11 +1,15 @@
 version: '3.7'
 services:
+  # stdin_open: true
+  # tty: true
   jupyter:
     user: "${JUPYTER_UID}:100"
     build:
       context: .
       dockerfile: ./docker/jupyter/Dockerfile
       target: ${JUPYTER_TARGET}
+      args: 
+        - MLFLOW_ARTIFACT_STORE=/${MLFLOW_ARTIFACT_STORE}
     image: ${JUPYTER_IMAGE_NAME}-${JUPYTER_TARGET}:${VERSION}
     ports:
       - "${JUPYTER_PORT}:${JUPYTER_PORT}"

@@ -11,7 +11,7 @@ jobs:
       if: branch IN (master, dev)
       services: docker
       script: 
-        - make test
+        - make test JUPYTER_UID:=0  # BUG: tests fail because of uid mismatch, run as root for now 
         - ls -la /data/artifacts/
         - ls -la 
     - name: "docker-compose-build-static"

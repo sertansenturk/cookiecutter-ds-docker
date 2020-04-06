@@ -1,19 +1,19 @@
 ############## custom jupyter image ###############
 FROM jupyter/scipy-notebook:862de146632b AS jupyter-custom
 
-RUN id 
+ARG MLFLOW_ARTIFACT_STORE
 
 ENV HOME_DIR=/home/$NB_USER \
-    WORK_DIR=$HOME_DIR/work \
-    MLFLOW_ARTIFACT_STORE=/data/artifacts
+    WORK_DIR=$HOME_DIR/work
 
-RUN conda install --quiet --yes \
-    'mlflow=1.7.*' \
-    'psycopg2=2.8.*' \
-    'conda-build' \
-    'tqdm' \
-    'jupyter_contrib_nbextensions' \
-    'jupyter_nbextensions_configurator' && \
+RUN id  && \
+    conda install --quiet --yes \
+        'mlflow=1.7.*' \
+        'psycopg2=2.8.*' \
+        'conda-build' \
+        'tqdm' \
+        'jupyter_contrib_nbextensions' \
+        'jupyter_nbextensions_configurator' && \
     conda build purge-all && \
     fix-permissions $CONDA_DIR && \
     fix-permissions $HOME_DIR
@@ -25,8 +25,6 @@ RUN ldconfig && \
     mkdir -p $MLFLOW_ARTIFACT_STORE && \
     chown -R $NB_UID:$NB_GID /data
     
-RUN ls -la /data && \
-    ls -la $MLFLOW_ARTIFACT_STORE
 USER $NB_UID
 
 ################# development image ###############
