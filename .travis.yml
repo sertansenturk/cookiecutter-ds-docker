@@ -1,0 +1,43 @@
+language: python
+os: linux
+dist: bionic
+jobs:
+  include:
+    - name: "docker-compose-build"
+      if: branch NOT IN (master, dev) # docker-compose-test covers this scenario
+      services: docker
+      script: make build
+    - name: "docker-compose-test"
+      if: branch IN (master, dev)
+      services: docker
+      script: 
+        - make test JUPYTER_UID:=0  # BUG: tests fail because of uid mismatch, run as root for now 
+        - ls -la 
+    - name: "docker-compose-build-static"
+      if: branch IN (master, dev)
+      services: docker
+      script: make build-static
+    - name: "Python 3.7"
+      python: 3.7
+      before_install:
+        - ls -la
+      install:
+        - pip install -U pip
+        - pip install tox-travis
+        - pip install codecov
+      script:
+        - tox -e $TOX_PYTHON_ENV -e lint
+      after_success:
+        - codecov # submit coverage to https://codecov.io/gh/sertansenturk/ds-template/        
+      env: TOX_PYTHON_ENV=py37
+before_install:
+  - pwd
+  - ls -la
+  - id
+  - docker --version
+install:
+  - 
+script:
+  - 
+after_success:
+  - 

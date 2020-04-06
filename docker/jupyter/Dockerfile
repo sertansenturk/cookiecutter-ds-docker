@@ -1,52 +1,76 @@
+############## custom jupyter image ###############
 FROM jupyter/scipy-notebook:862de146632b AS jupyter-custom
 
-RUN conda install --quiet --yes \
-    'mlflow=1.7.*' \
-    'psycopg2=2.8.*' \
-    'conda-build' \
-    'tqdm' \
-    'jupyter_contrib_nbextensions' \
-    'jupyter_nbextensions_configurator' && \
+ARG MLFLOW_ARTIFACT_STORE
+
+ENV HOME_DIR=/home/$NB_USER
+ENV WORK_DIR=$HOME_DIR/work
+
+RUN id  && \
+    conda install --quiet --yes \
+        'mlflow=1.7.*' \
+        'psycopg2=2.8.*' \
+        'conda-build' \
+        'tqdm' \
+        'jupyter_contrib_nbextensions' \
+        'jupyter_nbextensions_configurator' && \
     conda build purge-all && \
     fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    fix-permissions $HOME_DIR
 
 USER root
 RUN ldconfig && \
     jupyter nbextension enable toc2/main --sys-prefix && \
     jupyter nbextension enable collapsible_headings/main --sys-prefix && \
-    mkdir /mlflow && \
-    chown -R $NB_USER:$NB_GID /mlflow
+    mkdir -p $MLFLOW_ARTIFACT_STORE && \
+    chown -R $NB_UID:$NB_GID /data
+    
 USER $NB_UID
 
-################# development image ################
+################# development image ###############
 FROM jupyter-custom AS editable
 
 # Install Python dependencies from requirements.txt in advance
 # Useful for development since changes in code will not trigger a layer re-build
-COPY ./requirements.txt ./home/jovyan/work/
+COPY ./requirements.txt $WORK_DIR/
 RUN pip install --upgrade pip && \
-    pip install -r ./home/jovyan/work/requirements.txt
+    pip install -r $WORK_DIR/requirements.txt
 
 # install experiment code in editable mode
-COPY ./setup.py /home/jovyan/work/
-COPY ./src/ /home/jovyan/work/src/
+COPY ./setup.py $WORK_DIR/
+COPY ./src/ $WORK_DIR/src/
 USER root
-RUN chown -R 1000 /home/jovyan/work/src/
+RUN chown -R $NB_UID:$NB_GID $WORK_DIR/src/
 
 USER $NB_UID
-WORKDIR /home/jovyan/work
+WORKDIR $WORK_DIR
 RUN pip install -e .
 
 ENTRYPOINT ["start-notebook.sh"]
 
+################## test image ###################
+FROM editable AS test
+
+RUN pip install \
+    pytest \
+    pytest-dependency
+
+COPY ./tests/docker /tests/docker
+USER root
+RUN chown -R $NB_UID:$NB_GID /tests/
+USER $NB_UID
+
+WORKDIR /tests
+
+ENTRYPOINT sleep 5; pytest -vv ./docker
+
 ################## static image ###################
 FROM jupyter-custom AS static
 
-COPY ./src/ /home/jovyan/work/src/
-COPY ./setup.py /home/jovyan/work/
+COPY ./src/ $WORK_DIR/src/
+COPY ./setup.py $WORK_DIR/
 
-WORKDIR /home/jovyan/work
+WORKDIR $WORK_DIR
 RUN pip install .
 
 ENTRYPOINT ["start-notebook.sh"]
