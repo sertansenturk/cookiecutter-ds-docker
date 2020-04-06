@@ -43,9 +43,11 @@ POSTGRES_GID := $(shell id -g)
 
 help:
 	@printf "======= General ======\n"
-	@printf "$(pretty_command): run docker stack with Python repo installed on the Jupyter service as editable\n" \(default\)
-	@printf "$(pretty_command): run docker stack with Python repo installed on the Jupyter service statically\n" static
-	@printf "$(pretty_command): run docker stack with tests executed instead of the Jupyter notebooks\n" test
+	@printf "$(pretty_command): alias of \"make lab\"\n" \(default\)
+	@printf "$(pretty_command): run docker stack with Python repo installed as editable on the JupyterLab service\n" lab
+	@printf "$(pretty_command): run docker stack with Python repo installed as editable on the Jupyter notebook service\n" notebook
+	@printf "$(pretty_command): run docker stack with Python repo installed statically on the Jupyter service\n" static
+	@printf "$(pretty_command): run docker stack with tests\n" test
 	@printf "$(pretty_command): run \"clean\", \"clean-stores\", \"build\" and \"up\"\n" all
 	@printf "$(pretty_command): run \"clean-all\", \"build-no-cache\" and \"up\"\n" all-no-cache
 	@printf "\n"
@@ -78,6 +80,9 @@ help:
 	@printf "$(padded_str)CHK_PORT, Port to check (default: $(CHK_PORT))\n"
 
 default: clean build up
+lab: default
+notebook: JUPYTER_ENABLE_LAB:=
+notebook: default
 static: JUPYTER_TARGET:=${JUPYTER_STATIC_TARGET}
 static: clean build up
 test: JUPYTER_TARGET:=${JUPYTER_TEST_TARGET}
@@ -123,10 +128,10 @@ build-no-cache: build
 
 up: 
 	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
-	JUPYTER_UID=${JUPYTER_UID} JUPYTER_TARGET=${JUPYTER_TARGET} POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose up ${UP_OPTS}
+	JUPYTER_UID=${JUPYTER_UID} JUPYTER_TARGET=${JUPYTER_TARGET} JUPYTER_ENABLE_LAB=${JUPYTER_ENABLE_LAB} POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose up ${UP_OPTS}
 run:
 	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
-	JUPYTER_TARGET=${JUPYTER_TARGET} POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose run ${RUN_OPTS}
+	JUPYTER_UID=${JUPYTER_UID} JUPYTER_TARGET=${JUPYTER_TARGET} JUPYTER_ENABLE_LAB=${JUPYTER_ENABLE_LAB} POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose run ${RUN_OPTS}
 
 down:
 	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose down ${DOWN_OPTS}

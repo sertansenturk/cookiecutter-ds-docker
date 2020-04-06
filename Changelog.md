@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.4.0
+- 
+
 ## v0.3.0
 
 - Add [travis.ci](https://travis-ci.com/github/sertansenturk/ds-template) and [codecov](https://codecov.io/gh/sertansenturk/ds-template/) integration

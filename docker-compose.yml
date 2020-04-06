@@ -17,6 +17,7 @@ services:
       - mlflow
     environment: 
       MLFLOW_TRACKING_URI: ${MLFLOW_TRACKING_URI}
+      JUPYTER_ENABLE_LAB: ${JUPYTER_ENABLE_LAB}
     volumes: 
       - ./:/home/jovyan/work
       - ./${MLFLOW_ARTIFACT_STORE}:/${MLFLOW_ARTIFACT_STORE}

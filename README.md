@@ -6,7 +6,7 @@ A personalized Github template repository for data science projects
 
 Currently, the template consists of a docker-compose stack with the services below:
 
-1. A [Jupyter notebook](https://jupyter.org/) with minimal customization
+1. A [Jupyter](https://jupyter.org/) service with minimal customization
 2. An [mlflow](https://mlflow.org/) tracking server to store experiments
 3. A [postgresql](https://www.postgresql.org/) database, which stores mlflow tracking information
 
@@ -45,13 +45,19 @@ make build-static
 
 ## Run the Services
 
-To start the stack, run:
+To start the stack with [JupyterLab](https://jupyterlab.readthedocs.io/en/stable/), run:
 
 ```bash
 make
 ```
 
-Note that the above command also stops running stacks (if exist), cleans, and rebuilds the services to ensure that all everything starts up-to-date.
+Note that the above commands also stops running stacks (if exist), cleans, and rebuilds the services to ensure that all everything starts up-to-date.
+
+If you want to use classic Jupyter notebooks, run instead:
+
+```bash
+make notebook
+```
 
 If you want to run the stack with the Python package installed statically, run instead:
 

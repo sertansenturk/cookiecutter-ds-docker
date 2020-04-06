@@ -24,7 +24,7 @@ RUN ldconfig && \
     jupyter nbextension enable collapsible_headings/main --sys-prefix && \
     mkdir -p $MLFLOW_ARTIFACT_STORE && \
     chown -R $NB_UID:$NB_GID /data
-    
+
 USER $NB_UID
 
 ################# development image ###############
