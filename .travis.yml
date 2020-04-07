@@ -13,7 +13,7 @@ jobs:
       script: 
         - make test
       after_script:
-        - ls -la
+        - ls -la ./data/  # mlflow artifact & tracking data
     - name: "docker-compose-build-static"
       if: branch IN (master, dev)
       services: docker
