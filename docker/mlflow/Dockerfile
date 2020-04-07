@@ -5,7 +5,7 @@ EXPOSE 5000
 RUN pip install mlflow==1.7.* psycopg2==2.8.* && \
     mkdir -p /server
 
-COPY ./scripts/ /server/
+COPY ./scripts/wait-for-it.sh /server/
 RUN chmod +x /server/wait-for-it.sh
 
 WORKDIR /server
