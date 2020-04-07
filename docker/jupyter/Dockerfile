@@ -46,7 +46,7 @@ USER $NB_UID
 WORKDIR $WORK_DIR
 RUN pip install -e .
 
-ENTRYPOINT ["start-notebook.sh"]
+# ENTRYPOINT ["start-notebook.sh"]
 
 ################## test image ###################
 FROM editable AS test
@@ -73,4 +73,4 @@ COPY ./setup.py $WORK_DIR/
 WORKDIR $WORK_DIR
 RUN pip install .
 
-ENTRYPOINT ["start-notebook.sh"]
+# ENTRYPOINT ["start-notebook.sh"]

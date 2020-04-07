@@ -1,7 +1,8 @@
 # Changelog
 
 ## v0.4.0
-- 
+
+- Enabled JupyterLab
 
 ## v0.3.0
 

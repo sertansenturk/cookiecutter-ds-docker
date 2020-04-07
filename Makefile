@@ -37,6 +37,7 @@ PYTHON_DEV_CMD =
 CHK_PORT = ${MLFLOW_TRACKING_SERVER_PORT}
 
 JUPYTER_UID := $(shell id -u)
+JUPYTER_USERNAME := $(shell id -u -n)
 
 POSTGRES_UID := $(shell id -u)
 POSTGRES_GID := $(shell id -g)
@@ -46,7 +47,7 @@ help:
 	@printf "$(pretty_command): alias of \"make lab\"\n" \(default\)
 	@printf "$(pretty_command): run docker stack with Python repo installed as editable on the JupyterLab service\n" lab
 	@printf "$(pretty_command): run docker stack with Python repo installed as editable on the Jupyter notebook service\n" notebook
-	@printf "$(pretty_command): run docker stack with Python repo installed statically on the Jupyter service\n" static
+	@printf "$(pretty_command): run docker stack with Python repo installed statically on the JupyterLab service\n" static
 	@printf "$(pretty_command): run docker stack with tests\n" test
 	@printf "$(pretty_command): run \"clean\", \"clean-stores\", \"build\" and \"up\"\n" all
 	@printf "$(pretty_command): run \"clean-all\", \"build-no-cache\" and \"up\"\n" all-no-cache
@@ -128,10 +129,10 @@ build-no-cache: build
 
 up: 
 	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
-	JUPYTER_UID=${JUPYTER_UID} JUPYTER_TARGET=${JUPYTER_TARGET} JUPYTER_ENABLE_LAB=${JUPYTER_ENABLE_LAB} POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose up ${UP_OPTS}
+	JUPYTER_UID=${JUPYTER_UID} JUPYTER_USERNAME=${JUPYTER_USERNAME} JUPYTER_TARGET=${JUPYTER_TARGET} JUPYTER_ENABLE_LAB=${JUPYTER_ENABLE_LAB} POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose up ${UP_OPTS}
 run:
 	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
-	JUPYTER_UID=${JUPYTER_UID} JUPYTER_TARGET=${JUPYTER_TARGET} JUPYTER_ENABLE_LAB=${JUPYTER_ENABLE_LAB} POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose run ${RUN_OPTS}
+	JUPYTER_UID=${JUPYTER_UID} JUPYTER_USERNAME=${JUPYTER_USERNAME} JUPYTER_TARGET=${JUPYTER_TARGET} JUPYTER_ENABLE_LAB=${JUPYTER_ENABLE_LAB} POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose run ${RUN_OPTS}
 
 down:
 	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose down ${DOWN_OPTS}

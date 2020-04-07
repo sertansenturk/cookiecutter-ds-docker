@@ -3,7 +3,7 @@ services:
   # stdin_open: true
   # tty: true
   jupyter:
-    user: "${JUPYTER_UID}:100"
+    user: root
     build:
       context: .
       dockerfile: ./docker/jupyter/Dockerfile
@@ -18,6 +18,9 @@ services:
     environment: 
       MLFLOW_TRACKING_URI: ${MLFLOW_TRACKING_URI}
       JUPYTER_ENABLE_LAB: ${JUPYTER_ENABLE_LAB}
+      NB_USER: ${JUPYTER_USERNAME}
+      NB_UID: ${JUPYTER_UID}
+      NB_GID: 100 
     volumes: 
       - ./:/home/jovyan/work
       - ./${MLFLOW_ARTIFACT_STORE}:/${MLFLOW_ARTIFACT_STORE}
