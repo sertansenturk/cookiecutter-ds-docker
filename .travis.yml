@@ -4,15 +4,16 @@ dist: bionic
 jobs:
   include:
     - name: "docker-compose-build"
-      if: branch NOT IN (master, dev) # docker-compose-test covers this scenario
+      if: branch NOT IN (master, dev) # already covered by docker-compose-test
       services: docker
       script: make build
     - name: "docker-compose-test"
       if: branch IN (master, dev)
       services: docker
       script: 
-        - make test # JUPYTER_UID:=0  # BUG: tests fail because of uid mismatch, run as root for now 
-        - ls -la 
+        - make test
+      after_script:
+        - ls -la
     - name: "docker-compose-build-static"
       if: branch IN (master, dev)
       services: docker
@@ -20,7 +21,9 @@ jobs:
     - name: "Python 3.7"
       python: 3.7
       before_install:
+        - pwd
         - ls -la
+        - id
       install:
         - pip install -U pip
         - pip install tox-travis
@@ -37,7 +40,11 @@ before_install:
   - docker --version
 install:
   - 
+before_script:
+  -
 script:
   - 
 after_success:
+  - 
+after_script:
   - 

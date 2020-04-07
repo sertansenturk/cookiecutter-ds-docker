@@ -2,12 +2,10 @@
 FROM jupyter/scipy-notebook:862de146632b AS jupyter-custom
 
 ARG MLFLOW_ARTIFACT_STORE
-
 ENV HOME_DIR=/home/$NB_USER
 ENV WORK_DIR=$HOME_DIR/work
 
-RUN id  && \
-    conda install --quiet --yes \
+RUN conda install --quiet --yes \
         'mlflow=1.7.*' \
         'psycopg2=2.8.*' \
         'conda-build' \
@@ -39,10 +37,11 @@ RUN pip install --upgrade pip && \
 # install experiment code in editable mode
 COPY ./setup.py $WORK_DIR/
 COPY ./src/ $WORK_DIR/src/
+
 USER root
 RUN chown -R $NB_UID:$NB_GID $WORK_DIR/src/
-
 USER $NB_UID
+
 WORKDIR $WORK_DIR
 RUN pip install -e .
 
