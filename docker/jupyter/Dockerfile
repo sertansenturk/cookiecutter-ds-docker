@@ -53,13 +53,16 @@ RUN pip install \
     pytest-dependency
 
 COPY ./tests/docker /tests/docker
+COPY ./docker/jupyter/scripts/run_tests.sh /tests 
+
 USER root
 RUN chown -R $NB_UID:$NB_GID /tests/
+RUN chmod +x /tests/run_tests.sh
 USER $NB_UID
 
 WORKDIR /tests
 
-ENTRYPOINT sleep 5; pytest -vv ./docker
+CMD [ "./run_tests.sh" ]
 
 ################## static image ###################
 FROM jupyter-custom AS static
