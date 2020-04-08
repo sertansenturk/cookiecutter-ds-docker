@@ -2,7 +2,9 @@
 
 ## v0.4.0
 
-- Enabled JupyterLab
+- Enable JupyterLab
+- Pass user name and id to the Jupyter service from the host
+- Improve builds and runs
 
 ## v0.3.0
 

@@ -45,10 +45,10 @@ POSTGRES_GID := $(shell id -g)
 help:
 	@printf "======= General ======\n"
 	@printf "$(pretty_command): alias of \"make lab\"\n" \(default\)
-	@printf "$(pretty_command): run docker stack with Python repo installed as editable on the JupyterLab service\n" lab
-	@printf "$(pretty_command): run docker stack with Python repo installed as editable on the Jupyter notebook service\n" notebook
-	@printf "$(pretty_command): run docker stack with Python repo installed statically on the JupyterLab service\n" static
-	@printf "$(pretty_command): run docker stack with tests\n" test
+	@printf "$(pretty_command): start docker stack with JupyterLab with the python repo installed as editable, i.e. run \"clean\", \"build\", \"up\"\n" lab
+	@printf "$(pretty_command): start docker stack with classic Jupyter with the python repo installed as editable\n" notebook
+	@printf "$(pretty_command): start docker stack with JupyterLab with the python repo installed as static\n" static
+	@printf "$(pretty_command): start docker stack with tests\n" test
 	@printf "$(pretty_command): run \"clean\", \"clean-stores\", \"build\" and \"up\"\n" all
 	@printf "$(pretty_command): run \"clean-all\", \"build-no-cache\" and \"up\"\n" all-no-cache
 	@printf "\n"
@@ -62,17 +62,17 @@ help:
 	@printf "======= Docker =======\n"
 	@printf "$(pretty_command): Remove all unused docker containers, networks and images \n" prune
 	@printf "$(padded_str)PRUNE_OPTS, \"docker system prune\" options (default: $(PRUNE_OPTS))\n"
-	@printf "$(pretty_command): build the docker-compose stack; python code is installed on the Jupyter service as editable\n" build
+	@printf "$(pretty_command): build the docker-compose stack; the python code is installed on the Jupyter service as editable\n" build
 	@printf "$(padded_str)BUILD_OPTS, \"docker-compose build\" options (default: $(BUILD_OPTS))\n"
-	@printf "$(pretty_command): build the docker-compose stack; python code is install on the Jupyter service as static\n" build-static
+	@printf "$(pretty_command): build the docker-compose stack; the python code is install on the Jupyter service as static\n" build-static
 	@printf "$(pretty_command): build docker-compose stack with \"${BUILD_NO_CACHE_OPT}\"\n" build-no-cache
-	@printf "$(pretty_command): start the docker-compose stack\n" up
+	@printf "$(pretty_command): docker-compose up\n" up
 	@printf "$(padded_str)UP_OPTS, \"docker-compose up\" options (default: $(UP_OPTS))\n"
-	@printf "$(pretty_command): run the docker-compose stack\n" run
+	@printf "$(pretty_command): docker-compose run\n" run
 	@printf "$(padded_str)RUN_OPTS, \"docker-compose run\" options (default: $(RUN_OPTS))\n"
-	@printf "$(pretty_command): stop the docker-compose stack and remove artifacts created by \"up\"\n" down
+	@printf "$(pretty_command): docker-compose down and remove the created artifacts\n" down
 	@printf "$(padded_str)DOWN_OPTS, \"docker-compose down\" options (default: $(DOWN_OPTS))\n"
-	@printf "$(pretty_command): build docker-compose stack with \"${DOWN_ALL_OPTS}\"\n" down-all
+	@printf "$(pretty_command): docker-compose down with \"${DOWN_ALL_OPTS}\"\n" down-all
 	@printf "$(pretty_command): build \"python-dev\" image\n" python-dev-build
 	@printf "$(pretty_command): run automated checks inside \"python-dev\" using tox\n" tox
 	@printf "\n"
