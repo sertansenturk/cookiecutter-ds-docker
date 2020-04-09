@@ -99,8 +99,6 @@ test:
 	else \
 		exit 0 ; \
 	fi
-	
-# @find data ! -user ${HOST_USERNAME} -printf '%p, '
 
 all: clean clean-stores build up
 all-no-cache: clean-all build-no-cache up

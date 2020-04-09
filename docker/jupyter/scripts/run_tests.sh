@@ -1,4 +1,6 @@
 #!/bin/bash
-id
+set -e
+
 sleep 5
-pytest -vv ./docker
+id
+pytest -vv "$(pwd)/docker"
