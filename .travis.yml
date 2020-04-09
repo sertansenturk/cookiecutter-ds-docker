@@ -12,7 +12,6 @@ jobs:
       services: docker
       script: 
         - make test
-        - rm -rf ./data/  # success if user permissions are correct
       after_script:
         - ls -la ./data/  # mlflow artifact & tracking data
     - name: "docker-compose-build-static"

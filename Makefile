@@ -36,6 +36,8 @@ PYTHON_DEV_CMD =
 
 CHK_PORT = ${MLFLOW_TRACKING_SERVER_PORT}
 
+HOST_USERNAME := $(shell id -u -n)
+
 JUPYTER_UID := $(shell id -u)
 JUPYTER_USERNAME := $(shell id -u -n)
 
@@ -89,6 +91,16 @@ static: clean build up
 test: JUPYTER_TARGET:=${JUPYTER_TEST_TARGET}
 test: UP_OPTS:=--exit-code-from jupyter
 test: clean build up
+test:
+	@if [ $(shell find data ! -user ${HOST_USERNAME} | wc -l) -gt 0 ]; then \
+		echo "Found files and/or folders with wrong permission: " ; \
+		echo "=> $(shell find data ! -user ${HOST_USERNAME} -printf '%p (%u) ')" ; \
+		exit 1 ; \
+	else \
+		exit 0 ; \
+	fi
+	
+# @find data ! -user ${HOST_USERNAME} -printf '%p, '
 
 all: clean clean-stores build up
 all-no-cache: clean-all build-no-cache up
