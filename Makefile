@@ -8,7 +8,7 @@ SHELL := /bin/bash
 	prune build build-no-cache \
 	up run down down-all \
 	python-dev-build tox \
-	find_port_usage
+	find-port-usage
 
 HELP_PADDING = 28
 bold := $(shell tput bold)
@@ -32,17 +32,21 @@ DOWN_ALL_OPTS = ${DOWN_OPTS} --rmi all -v
 UP_OPTS =
 RUN_OPTS =
 
-PYTHON_DEV_CMD = 
+PYTHON_DEV_CMD =
 
 CHK_PORT = ${MLFLOW_TRACKING_SERVER_PORT}
 
 HOST_USERNAME := $(shell id -u -n)
 
+JUPYTER_CHOWN_EXTRA :=
 JUPYTER_UID := $(shell id -u)
 JUPYTER_USERNAME := $(shell id -u -n)
 
 POSTGRES_UID := $(shell id -u)
 POSTGRES_GID := $(shell id -g)
+
+TRAVIS_JOB =
+TRAVIS_TOKEN =
 
 help:
 	@printf "======= General ======\n"
@@ -79,8 +83,11 @@ help:
 	@printf "$(pretty_command): run automated checks inside \"python-dev\" using tox\n" tox
 	@printf "\n"
 	@printf "========= Misc =======\n"
-	@printf "$(pretty_command): identify applications, which are bound to the given port. Useful for freeing ports from phantom tasks\n" find_port_usage
+	@printf "$(pretty_command): identify applications, which are bound to the given port. Useful for freeing ports from phantom tasks\n" find-port-usage
 	@printf "$(padded_str)CHK_PORT, Port to check (default: $(CHK_PORT))\n"
+	@printf "$(pretty_command): send a job debug request to travis\n" debug-travis
+	@printf "$(padded_str)TRAVIS_TOKEN, travis api token (default: $(TRAVIS_TOKEN))\n"
+	@printf "$(padded_str)TRAVIS_JOB, travis job id (default: $(TRAVIS_JOB))\n"
 
 default: clean build up
 lab: default
@@ -93,6 +100,7 @@ static: clean build up
 
 test: JUPYTER_TARGET:=${JUPYTER_TEST_TARGET}
 test: RUN_OPTS:=jupyter start.sh ./run_pytest.sh
+test: JUPYTER_CHOWN_EXTRA:="/tests"
 test: clean build run chk-store-permissions down
 
 chk-store-permissions:
@@ -154,6 +162,7 @@ up:
 run:
 	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
 	JUPYTER_TARGET=${JUPYTER_TARGET} \
+	JUPYTER_CHOWN_EXTRA=${JUPYTER_CHOWN_EXTRA} \
 	JUPYTER_UID=${JUPYTER_UID} JUPYTER_USERNAME=${JUPYTER_USERNAME} \
 	JUPYTER_ENABLE_LAB=${JUPYTER_ENABLE_LAB} \
 	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} \
@@ -176,5 +185,13 @@ tox: PYTHON_DEV_CMD := tox
 tox: python-dev-build
 	docker run -it sertansenturk/python-dev:${VERSION} ${PYTHON_DEV_CMD}
 
-find_port_usage:
+find-port-usage:
 	sudo lsof -i -P -n | grep ${CHK_PORT}
+
+debug-travis:
+	curl -s -X POST \
+		-H "Content-Type: application/json" \
+		-H "Accept: application/json" -H "Travis-API-Version: 3" \
+		-H "Authorization: token ${TRAVIS_TOKEN}" \
+		-d '{ "quiet": true }' \
+		https://api.travis-ci.com/job/${TRAVIS_JOB}/debug
