@@ -20,8 +20,7 @@ USER root
 RUN ldconfig && \
     jupyter nbextension enable toc2/main --sys-prefix && \
     jupyter nbextension enable collapsible_headings/main --sys-prefix && \
-    mkdir -p $MLFLOW_ARTIFACT_STORE && \
-    chown -R $NB_UID:$NB_GID /data
+    mkdir -p $MLFLOW_ARTIFACT_STORE
 
 USER $NB_UID
 
@@ -35,12 +34,8 @@ RUN pip install --upgrade pip && \
     pip install -r $WORK_DIR/requirements.txt
 
 # install experiment code in editable mode
-COPY ./setup.py $WORK_DIR/
-COPY ./src/ $WORK_DIR/src/
-
-USER root
-RUN chown -R $NB_UID:$NB_GID $WORK_DIR/src/
-USER $NB_UID
+COPY --chown=$NB_UID:$NB_GID ./setup.py $WORK_DIR/
+COPY --chown=$NB_UID:$NB_GID ./src/ $WORK_DIR/src/
 
 WORKDIR $WORK_DIR
 RUN pip install -e .

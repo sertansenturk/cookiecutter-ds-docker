@@ -38,7 +38,7 @@ CHK_PORT = ${MLFLOW_TRACKING_SERVER_PORT}
 
 HOST_USERNAME := $(shell id -u -n)
 
-JUPYTER_CHOWN_EXTRA :=
+JUPYTER_CHOWN_EXTRA = "/${DATA_DIR}"
 JUPYTER_UID := $(shell id -u)
 JUPYTER_USERNAME := $(shell id -u -n)
 
@@ -100,7 +100,7 @@ static: clean build up
 
 test: JUPYTER_TARGET:=${JUPYTER_TEST_TARGET}
 test: RUN_OPTS:=jupyter start.sh ./run_pytest.sh
-test: JUPYTER_CHOWN_EXTRA:="/tests"
+test: JUPYTER_CHOWN_EXTRA:="/${DATA_DIR},/tests"
 test: clean build run chk-store-permissions down
 
 chk-store-permissions:
@@ -155,6 +155,7 @@ build-no-cache: build
 up: 
 	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
 	JUPYTER_TARGET=${JUPYTER_TARGET} \
+	JUPYTER_CHOWN_EXTRA=${JUPYTER_CHOWN_EXTRA} \
 	JUPYTER_UID=${JUPYTER_UID} JUPYTER_USERNAME=${JUPYTER_USERNAME} \
 	JUPYTER_ENABLE_LAB=${JUPYTER_ENABLE_LAB} \
 	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} \
