@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.4.0
+
+- Enable JupyterLab
+- Pass username and id to the Jupyter service from the host
+- Build and run improvements
+- Add code of conduct
+
 ## v0.3.0
 
 - Add [travis.ci](https://travis-ci.com/github/sertansenturk/ds-template) and [codecov](https://codecov.io/gh/sertansenturk/ds-template/) integration

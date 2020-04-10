@@ -1,13 +1,13 @@
 ############## custom jupyter image ###############
-FROM jupyter/scipy-notebook:862de146632b AS jupyter-custom
+ARG JUPYTER_IMAGE=scipy-notebook
+ARG JUPYTER_VERSION=862de146632b
+FROM jupyter/${JUPYTER_IMAGE}:${JUPYTER_VERSION} AS jupyter-custom
 
 ARG MLFLOW_ARTIFACT_STORE
-
 ENV HOME_DIR=/home/$NB_USER
 ENV WORK_DIR=$HOME_DIR/work
 
-RUN id  && \
-    conda install --quiet --yes \
+RUN conda install --quiet --yes \
         'mlflow=1.7.*' \
         'psycopg2=2.8.*' \
         'conda-build' \
@@ -22,9 +22,8 @@ USER root
 RUN ldconfig && \
     jupyter nbextension enable toc2/main --sys-prefix && \
     jupyter nbextension enable collapsible_headings/main --sys-prefix && \
-    mkdir -p $MLFLOW_ARTIFACT_STORE && \
-    chown -R $NB_UID:$NB_GID /data
-    
+    mkdir -p $MLFLOW_ARTIFACT_STORE
+
 USER $NB_UID
 
 ################# development image ###############
@@ -39,30 +38,26 @@ RUN pip install --upgrade pip && \
 # install experiment code in editable mode
 COPY ./setup.py $WORK_DIR/
 COPY ./src/ $WORK_DIR/src/
+
 USER root
 RUN chown -R $NB_UID:$NB_GID $WORK_DIR/src/
-
 USER $NB_UID
+
 WORKDIR $WORK_DIR
 RUN pip install -e .
-
-ENTRYPOINT ["start-notebook.sh"]
 
 ################## test image ###################
 FROM editable AS test
 
-RUN pip install \
-    pytest \
-    pytest-dependency
+ARG TEST_DIR=/tests
 
-COPY ./tests/docker /tests/docker
-USER root
-RUN chown -R $NB_UID:$NB_GID /tests/
-USER $NB_UID
+COPY ./docker/jupyter/requirements.test.txt ${TEST_DIR}/
+RUN pip install -r ${TEST_DIR}/requirements.test.txt
 
-WORKDIR /tests
+COPY ./tests/docker ${TEST_DIR}/docker
+COPY ./docker/jupyter/scripts/run_pytest.sh ${TEST_DIR}/
 
-ENTRYPOINT sleep 5; pytest -vv ./docker
+WORKDIR ${TEST_DIR}
 
 ################## static image ###################
 FROM jupyter-custom AS static
@@ -72,5 +67,3 @@ COPY ./setup.py $WORK_DIR/
 
 WORKDIR $WORK_DIR
 RUN pip install .
-
-ENTRYPOINT ["start-notebook.sh"]

@@ -8,7 +8,7 @@ SHELL := /bin/bash
 	prune build build-no-cache \
 	up run down down-all \
 	python-dev-build tox \
-	find_port_usage
+	find-port-usage
 
 HELP_PADDING = 28
 bold := $(shell tput bold)
@@ -32,20 +32,29 @@ DOWN_ALL_OPTS = ${DOWN_OPTS} --rmi all -v
 UP_OPTS =
 RUN_OPTS =
 
-PYTHON_DEV_CMD = 
+PYTHON_DEV_CMD =
 
 CHK_PORT = ${MLFLOW_TRACKING_SERVER_PORT}
 
+HOST_USERNAME := $(shell id -u -n)
+
+JUPYTER_CHOWN_EXTRA = "/${DATA_DIR}"
 JUPYTER_UID := $(shell id -u)
+JUPYTER_USERNAME := $(shell id -u -n)
 
 POSTGRES_UID := $(shell id -u)
 POSTGRES_GID := $(shell id -g)
 
+TRAVIS_JOB =
+TRAVIS_TOKEN =
+
 help:
 	@printf "======= General ======\n"
-	@printf "$(pretty_command): run docker stack with Python repo installed on the Jupyter service as editable\n" \(default\)
-	@printf "$(pretty_command): run docker stack with Python repo installed on the Jupyter service statically\n" static
-	@printf "$(pretty_command): run docker stack with tests executed instead of the Jupyter notebooks\n" test
+	@printf "$(pretty_command): alias of \"make lab\"\n" \(default\)
+	@printf "$(pretty_command): start docker stack with JupyterLab with the python repo installed as editable, i.e. run \"clean\", \"build\", \"up\"\n" lab
+	@printf "$(pretty_command): start docker stack with classic Jupyter with the python repo installed as editable\n" notebook
+	@printf "$(pretty_command): start docker stack with JupyterLab with the python repo installed as static\n" static
+	@printf "$(pretty_command): start docker stack with tests\n" test
 	@printf "$(pretty_command): run \"clean\", \"clean-stores\", \"build\" and \"up\"\n" all
 	@printf "$(pretty_command): run \"clean-all\", \"build-no-cache\" and \"up\"\n" all-no-cache
 	@printf "\n"
@@ -59,30 +68,49 @@ help:
 	@printf "======= Docker =======\n"
 	@printf "$(pretty_command): Remove all unused docker containers, networks and images \n" prune
 	@printf "$(padded_str)PRUNE_OPTS, \"docker system prune\" options (default: $(PRUNE_OPTS))\n"
-	@printf "$(pretty_command): build the docker-compose stack; python code is installed on the Jupyter service as editable\n" build
+	@printf "$(pretty_command): build the docker-compose stack; the python code is installed on the Jupyter service as editable\n" build
 	@printf "$(padded_str)BUILD_OPTS, \"docker-compose build\" options (default: $(BUILD_OPTS))\n"
-	@printf "$(pretty_command): build the docker-compose stack; python code is install on the Jupyter service as static\n" build-static
+	@printf "$(pretty_command): build the docker-compose stack; the python code is install on the Jupyter service as static\n" build-static
 	@printf "$(pretty_command): build docker-compose stack with \"${BUILD_NO_CACHE_OPT}\"\n" build-no-cache
-	@printf "$(pretty_command): start the docker-compose stack\n" up
+	@printf "$(pretty_command): docker-compose up\n" up
 	@printf "$(padded_str)UP_OPTS, \"docker-compose up\" options (default: $(UP_OPTS))\n"
-	@printf "$(pretty_command): run the docker-compose stack\n" run
+	@printf "$(pretty_command): docker-compose run\n" run
 	@printf "$(padded_str)RUN_OPTS, \"docker-compose run\" options (default: $(RUN_OPTS))\n"
-	@printf "$(pretty_command): stop the docker-compose stack and remove artifacts created by \"up\"\n" down
+	@printf "$(pretty_command): docker-compose down and remove the created artifacts\n" down
 	@printf "$(padded_str)DOWN_OPTS, \"docker-compose down\" options (default: $(DOWN_OPTS))\n"
-	@printf "$(pretty_command): build docker-compose stack with \"${DOWN_ALL_OPTS}\"\n" down-all
+	@printf "$(pretty_command): docker-compose down with \"${DOWN_ALL_OPTS}\"\n" down-all
 	@printf "$(pretty_command): build \"python-dev\" image\n" python-dev-build
 	@printf "$(pretty_command): run automated checks inside \"python-dev\" using tox\n" tox
 	@printf "\n"
 	@printf "========= Misc =======\n"
-	@printf "$(pretty_command): identify applications, which are bound to the given port. Useful for freeing ports from phantom tasks\n" find_port_usage
+	@printf "$(pretty_command): identify applications, which are bound to the given port. Useful for freeing ports from phantom tasks\n" find-port-usage
 	@printf "$(padded_str)CHK_PORT, Port to check (default: $(CHK_PORT))\n"
+	@printf "$(pretty_command): send a job debug request to travis\n" debug-travis
+	@printf "$(padded_str)TRAVIS_TOKEN, travis api token (default: $(TRAVIS_TOKEN))\n"
+	@printf "$(padded_str)TRAVIS_JOB, travis job id (default: $(TRAVIS_JOB))\n"
 
 default: clean build up
+lab: default
+
+notebook: JUPYTER_ENABLE_LAB:=
+notebook: default
+
 static: JUPYTER_TARGET:=${JUPYTER_STATIC_TARGET}
 static: clean build up
+
 test: JUPYTER_TARGET:=${JUPYTER_TEST_TARGET}
-test: UP_OPTS:=--exit-code-from jupyter
-test: clean build up
+test: RUN_OPTS:=jupyter start.sh ./run_pytest.sh
+test: JUPYTER_CHOWN_EXTRA:="/${DATA_DIR},/tests"
+test: clean build run chk-store-permissions down
+
+chk-store-permissions:
+	@if [ $(shell find data ! -user ${HOST_USERNAME} | wc -l) -gt 0 ]; then \
+		echo "Found files and/or folders with wrong permission: " ; \
+		echo "=> $(shell find data ! -user ${HOST_USERNAME} -printf '%p (%u) ')" ; \
+		exit 1 ; \
+	else \
+		exit 0 ; \
+	fi
 
 all: clean clean-stores build up
 all-no-cache: clean-all build-no-cache up
@@ -113,7 +141,10 @@ prune:
 	docker system prune ${PRUNE_OPTS}
 
 build: 
-	DOCKER_BUILDKIT=${BUILDKIT} JUPYTER_TARGET=${JUPYTER_TARGET} POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose build ${BUILD_OPTS}
+	DOCKER_BUILDKIT=${BUILDKIT} COMPOSE_DOCKER_CLI_BUILD=${BUILDKIT} \
+	JUPYTER_TARGET=${JUPYTER_TARGET} \
+	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} \
+	docker-compose build ${BUILD_OPTS}
 
 build-static: JUPYTER_TARGET:=${JUPYTER_STATIC_TARGET}
 build-static: build
@@ -123,22 +154,45 @@ build-no-cache: build
 
 up: 
 	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
-	JUPYTER_UID=${JUPYTER_UID} JUPYTER_TARGET=${JUPYTER_TARGET} POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose up ${UP_OPTS}
+	JUPYTER_TARGET=${JUPYTER_TARGET} \
+	JUPYTER_CHOWN_EXTRA=${JUPYTER_CHOWN_EXTRA} \
+	JUPYTER_UID=${JUPYTER_UID} JUPYTER_USERNAME=${JUPYTER_USERNAME} \
+	JUPYTER_ENABLE_LAB=${JUPYTER_ENABLE_LAB} \
+	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} \
+	docker-compose up ${UP_OPTS}
 run:
 	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
-	JUPYTER_TARGET=${JUPYTER_TARGET} POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose run ${RUN_OPTS}
+	JUPYTER_TARGET=${JUPYTER_TARGET} \
+	JUPYTER_CHOWN_EXTRA=${JUPYTER_CHOWN_EXTRA} \
+	JUPYTER_UID=${JUPYTER_UID} JUPYTER_USERNAME=${JUPYTER_USERNAME} \
+	JUPYTER_ENABLE_LAB=${JUPYTER_ENABLE_LAB} \
+	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} \
+	docker-compose run ${RUN_OPTS}
 
 down:
-	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} docker-compose down ${DOWN_OPTS}
+	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} \
+	docker-compose down ${DOWN_OPTS}
 down-all: DOWN_OPTS:=${DOWN_ALL_OPTS}
 down-all: down
 
 python-dev-build:	
-	DOCKER_BUILDKIT=${BUILDKIT} docker build . -f ./docker/python-dev/Dockerfile -t ${PYTHON_DEV_IMAGE_NAME}:${VERSION} ${BUILD_OPTS}
+	DOCKER_BUILDKIT=${BUILDKIT} \
+	docker build . \
+		-f ./docker/python-dev/Dockerfile \
+		-t ${PYTHON_DEV_IMAGE_NAME}:${VERSION} \
+		${BUILD_OPTS}
 
 tox: PYTHON_DEV_CMD := tox
 tox: python-dev-build
 	docker run -it sertansenturk/python-dev:${VERSION} ${PYTHON_DEV_CMD}
 
-find_port_usage:
+find-port-usage:
 	sudo lsof -i -P -n | grep ${CHK_PORT}
+
+debug-travis:
+	curl -s -X POST \
+		-H "Content-Type: application/json" \
+		-H "Accept: application/json" -H "Travis-API-Version: 3" \
+		-H "Authorization: token ${TRAVIS_TOKEN}" \
+		-d '{ "quiet": true }' \
+		https://api.travis-ci.com/job/${TRAVIS_JOB}/debug
