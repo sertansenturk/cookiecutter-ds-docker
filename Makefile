@@ -84,10 +84,13 @@ help:
 
 default: clean build up
 lab: default
+
 notebook: JUPYTER_ENABLE_LAB:=
 notebook: default
+
 static: JUPYTER_TARGET:=${JUPYTER_STATIC_TARGET}
 static: clean build up
+
 test: JUPYTER_TARGET:=${JUPYTER_TEST_TARGET}
 test: UP_OPTS:=--exit-code-from jupyter
 test: JUPYTER_DOCKER_COMPOSE_USER:=${JUPYTER_UID}

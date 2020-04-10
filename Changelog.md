@@ -5,6 +5,7 @@
 - Enable JupyterLab
 - Pass user name and id to the Jupyter service from the host
 - Improve builds and runs
+- Add code of conduct
 
 ## v0.3.0
 
