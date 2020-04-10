@@ -20,7 +20,7 @@ services:
       NB_UID: ${JUPYTER_UID}
       CHOWN_HOME: "yes"
       CHOWN_HOME_OPTS: '-R'
-      CHOWN_EXTRA: 
+      CHOWN_EXTRA: ${JUPYTER_CHOWN_EXTRA}
       CHOWN_EXTRA_OPTS: '-R'
     volumes:
       - ./:/home/${JUPYTER_USERNAME}/work
