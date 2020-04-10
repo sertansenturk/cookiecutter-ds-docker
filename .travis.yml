@@ -11,10 +11,7 @@ jobs:
       if: branch IN (master, dev)
       services: docker
       script: 
-        - make test & # start the stack in the background; runs pytests before Jupyter 
-        - sleep 480 # give 6 min for docker build, pytest & Jupyter idle run
-        - make down # down the stack
-        - make clean-stores # succeeds if the permissions are correct
+        - make test
       after_script:
         - ls -la ./data/ # mlflow artifact & tracking data
     - name: "docker-compose-build-static"
