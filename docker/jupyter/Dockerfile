@@ -54,12 +54,11 @@ COPY ./docker/jupyter/requirements.test.txt ${TEST_DIR}/
 RUN pip install -r ${TEST_DIR}/requirements.test.txt
 
 COPY ./tests/docker ${TEST_DIR}/docker
-# run as a before-notebook hook:
-# https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html#startup-hooks
-COPY ./docker/jupyter/scripts/run_pytest.sh /usr/local/bin/before-notebook.d/
+COPY ./docker/jupyter/scripts/run_pytest.sh ${TEST_DIR}/
 
 USER root
-RUN chown -R $NB_UID:$NB_GID ${TEST_DIR}/
+RUN chown -R $NB_UID:$NB_GID ${TEST_DIR}/ && \
+    chmod +x ${TEST_DIR}/run_pytest.sh
 USER $NB_UID
 
 WORKDIR ${TEST_DIR}

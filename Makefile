@@ -92,9 +92,10 @@ static: JUPYTER_TARGET:=${JUPYTER_STATIC_TARGET}
 static: clean build up
 
 test: JUPYTER_TARGET:=${JUPYTER_TEST_TARGET}
-test: UP_OPTS:=--exit-code-from jupyter
-test: clean build up
-test:
+test: RUN_OPTS:=jupyter start.sh ./run_pytest.sh
+test: clean build run chk-store-permissions down
+
+chk-store-permissions:
 	@if [ $(shell find data ! -user ${HOST_USERNAME} | wc -l) -gt 0 ]; then \
 		echo "Found files and/or folders with wrong permission: " ; \
 		echo "=> $(shell find data ! -user ${HOST_USERNAME} -printf '%p (%u) ')" ; \
