@@ -1,5 +1,7 @@
 ############## custom jupyter image ###############
-FROM jupyter/scipy-notebook:862de146632b AS jupyter-custom
+ARG JUPYTER_IMAGE=scipy-notebook
+ARG JUPYTER_VERSION=862de146632b
+FROM jupyter/${JUPYTER_IMAGE}:${JUPYTER_VERSION} AS jupyter-custom
 
 ARG MLFLOW_ARTIFACT_STORE
 ENV HOME_DIR=/home/$NB_USER
@@ -34,8 +36,12 @@ RUN pip install --upgrade pip && \
     pip install -r $WORK_DIR/requirements.txt
 
 # install experiment code in editable mode
-COPY --chown=$NB_UID:$NB_GID ./setup.py $WORK_DIR/
-COPY --chown=$NB_UID:$NB_GID ./src/ $WORK_DIR/src/
+COPY ./setup.py $WORK_DIR/
+COPY ./src/ $WORK_DIR/src/
+
+USER root
+RUN chown -R $NB_UID:$NB_GID $WORK_DIR/src/
+USER $NB_UID
 
 WORKDIR $WORK_DIR
 RUN pip install -e .
