@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   jupyter:
-    user: ${JUPYTER_DOCKER_COMPOSE_USER}
+    user: root
     build:
       context: .
       dockerfile: ./docker/jupyter/Dockerfile
@@ -20,7 +20,7 @@ services:
       NB_UID: ${JUPYTER_UID}
       CHOWN_HOME: "yes"
       CHOWN_HOME_OPTS: '-R'
-    volumes: 
+    volumes:
       - ./:/home/${JUPYTER_USERNAME}/work
       - ./${MLFLOW_ARTIFACT_STORE}:/${MLFLOW_ARTIFACT_STORE}
   mlflow:

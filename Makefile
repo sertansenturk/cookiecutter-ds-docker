@@ -93,7 +93,6 @@ static: clean build up
 
 test: JUPYTER_TARGET:=${JUPYTER_TEST_TARGET}
 test: UP_OPTS:=--exit-code-from jupyter
-test: JUPYTER_DOCKER_COMPOSE_USER:=${JUPYTER_UID}
 test: clean build up
 test:
 	@if [ $(shell find data ! -user ${HOST_USERNAME} | wc -l) -gt 0 ]; then \
@@ -146,7 +145,6 @@ build-no-cache: build
 
 up: 
 	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
-	JUPYTER_DOCKER_COMPOSE_USER=${JUPYTER_DOCKER_COMPOSE_USER} \
 	JUPYTER_TARGET=${JUPYTER_TARGET} \
 	JUPYTER_UID=${JUPYTER_UID} JUPYTER_USERNAME=${JUPYTER_USERNAME} \
 	JUPYTER_ENABLE_LAB=${JUPYTER_ENABLE_LAB} \

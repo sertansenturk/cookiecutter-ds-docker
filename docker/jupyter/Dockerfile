@@ -48,21 +48,19 @@ RUN pip install -e .
 ################## test image ###################
 FROM editable AS test
 
-RUN pip install \
-    pytest \
-    pytest-dependency
+ARG TEST_DIR=/tests
 
-COPY ./tests/docker /tests/docker
-COPY ./docker/jupyter/scripts/run_tests.sh /tests 
+COPY ./docker/jupyter/requirements.test.txt ${TEST_DIR}/
+RUN pip install -r ${TEST_DIR}/requirements.test.txt
+
+COPY ./tests/docker ${TEST_DIR}/docker
+COPY ./docker/jupyter/scripts/run_tests.sh /usr/local/bin/before-notebook.d/
 
 USER root
-RUN chown -R $NB_UID:$NB_GID /tests/
-RUN chmod +x /tests/run_tests.sh
+RUN chown -R $NB_UID:$NB_GID ${TEST_DIR}/
 USER $NB_UID
 
-WORKDIR /tests
-
-CMD [ "./run_tests.sh" ]
+WORKDIR ${TEST_DIR}
 
 ################## static image ###################
 FROM jupyter-custom AS static
