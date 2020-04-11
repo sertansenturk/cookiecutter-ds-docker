@@ -2,13 +2,13 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := default
 .PHONY: \
 	help \
-	default static test \
+	default static test chk-store-permissions \
 	all all-no-cache \
 	purge clean clean-all clean-stores clean-python \
 	prune build build-no-cache \
 	up run down down-all \
 	python-dev-build tox \
-	find-port-usage
+	find-port-usage debug-travis
 
 HELP_PADDING = 28
 bold := $(shell tput bold)
@@ -59,8 +59,8 @@ help:
 	@printf "$(pretty_command): start docker stack with JupyterLab from ${JUPYTER_TENSORFLOW_IMAGE}\n" tensorflow
 	@printf "$(pretty_command): start docker stack with JupyterLab from ${JUPYTER_PYSPARK_IMAGE}\n" pyspark
 	@printf "$(pretty_command): start docker stack with classic Jupyter notebook interface\n" notebook
-	@printf "$(pretty_command): start docker stack with JupyterLab; the python repo installed as static\n" static
-	@printf "$(pretty_command): start docker stack with tests\n" test
+	@printf "$(pretty_command): start docker stack with JupyterLab; the python repo is installed as static\n" static
+	@printf "$(pretty_command): run docker stack with tests\n" test
 	@printf "$(pretty_command): run \"clean\", \"clean-stores\", \"build\" and \"up\"\n" all
 	@printf "$(pretty_command): run \"clean-all\", \"build-no-cache\" and \"up\"\n" all-no-cache
 	@printf "\n"

@@ -8,8 +8,8 @@
 ## v0.4.0
 
 - Enable JupyterLab
-- Pass user name and id to the Jupyter service from the host
-- Improve builds and runs
+- Pass username and id to the Jupyter service from the host
+- Build and run improvements
 - Add code of conduct
 
 ## v0.3.0
