@@ -35,13 +35,7 @@ make clean-all
 make build
 ```
 
-This repo also includes a template Python package at [src/python_package](src/python_package), which is installed to the Jupyter docker image. By default, the package is "pip installed" in **editable** mode, and the **base folder is mounted** on the docker container. This way, the changes in the repo are synchronized.
-
-If you want to install the package statically, instead of `make build`, execute:
-
-```bash
-make build-static
-```
+This repo also includes a template Python package at [src/python_package](src/python_package), which is installed to the Jupyter docker image. By default, the package is "pip installed" in **editable** mode, and the **base folder is mounted** on the docker container. This way, the changes are synchronized.
 
 ## Run the Services
 
