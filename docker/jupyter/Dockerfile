@@ -1,7 +1,7 @@
 ############## custom jupyter image ###############
-ARG JUPYTER_IMAGE=scipy-notebook
-ARG JUPYTER_VERSION=862de146632b
-FROM jupyter/${JUPYTER_IMAGE}:${JUPYTER_VERSION} AS jupyter-custom
+ARG JUPYTER_BASE_IMAGE
+ARG JUPYTER_BASE_VERSION
+FROM jupyter/${JUPYTER_BASE_IMAGE}:${JUPYTER_BASE_VERSION} AS jupyter-custom
 
 ARG MLFLOW_ARTIFACT_STORE
 ENV HOME_DIR=/home/$NB_USER

@@ -38,7 +38,10 @@ CHK_PORT = ${MLFLOW_TRACKING_SERVER_PORT}
 
 HOST_USERNAME := $(shell id -u -n)
 
-JUPYTER_CHOWN_EXTRA = "/${DATA_DIR}"
+JUPYTER_BASE_IMAGE := ${JUPYTER_SCIPY_IMAGE}
+JUPYTER_BASE_VERSION := ${JUPYTER_SCIPY_VERSION}
+
+JUPYTER_CHOWN_EXTRA := "/${DATA_DIR}"
 JUPYTER_UID := $(shell id -u)
 JUPYTER_USERNAME := $(shell id -u -n)
 
@@ -50,10 +53,13 @@ TRAVIS_TOKEN =
 
 help:
 	@printf "======= General ======\n"
-	@printf "$(pretty_command): alias of \"make lab\"\n" \(default\)
-	@printf "$(pretty_command): start docker stack with JupyterLab with the python repo installed as editable, i.e. run \"clean\", \"build\", \"up\"\n" lab
-	@printf "$(pretty_command): start docker stack with classic Jupyter with the python repo installed as editable\n" notebook
-	@printf "$(pretty_command): start docker stack with JupyterLab with the python repo installed as static\n" static
+	@printf "$(pretty_command): alias of \"make lab\" (see below)\n" \(default\)
+	@printf "$(pretty_command): start docker stack with JupyterLab from ${JUPYTER_BASE_IMAGE}; the python repo is installed as editable\n" lab
+	@printf "$(pretty_command): start docker stack with JupyterLab from ${JUPYTER_SCIPY_IMAGE}\n" scipy
+	@printf "$(pretty_command): start docker stack with JupyterLab from ${JUPYTER_TENSORFLOW_IMAGE}\n" tensorflow
+	@printf "$(pretty_command): start docker stack with JupyterLab from ${JUPYTER_PYSPARK_IMAGE}\n" pyspark
+	@printf "$(pretty_command): start docker stack with classic Jupyter notebook interface\n" notebook
+	@printf "$(pretty_command): start docker stack with JupyterLab; the python repo is installed as static\n" static
 	@printf "$(pretty_command): run docker stack with tests\n" test
 	@printf "$(pretty_command): run \"clean\", \"clean-stores\", \"build\" and \"up\"\n" all
 	@printf "$(pretty_command): run \"clean-all\", \"build-no-cache\" and \"up\"\n" all-no-cache
@@ -91,6 +97,18 @@ help:
 
 default: clean build up
 lab: default
+
+scipy: JUPYTER_BASE_IMAGE=${JUPYTER_SCIPY_IMAGE}
+scipy: JUPYTER_BASE_VERSION=${JUPYTER_SCIPY_VERSION}
+scipy: default
+
+tensorflow: JUPYTER_BASE_IMAGE=${JUPYTER_TENSORFLOW_IMAGE}
+tensorflow: JUPYTER_BASE_VERSION=${JUPYTER_TENSORFLOW_VERSION}
+tensorflow: default
+
+pyspark: JUPYTER_BASE_IMAGE=${JUPYTER_PYSPARK_IMAGE}
+pyspark: JUPYTER_BASE_VERSION=${JUPYTER_PYSPARK_VERSION}
+pyspark: default
 
 notebook: JUPYTER_ENABLE_LAB:=
 notebook: default
@@ -140,8 +158,9 @@ clean-python:
 prune:
 	docker system prune ${PRUNE_OPTS}
 
-build: 
+build:
 	DOCKER_BUILDKIT=${BUILDKIT} COMPOSE_DOCKER_CLI_BUILD=${BUILDKIT} \
+	JUPYTER_BASE_IMAGE=${JUPYTER_BASE_IMAGE} JUPYTER_BASE_VERSION=${JUPYTER_BASE_VERSION} \
 	JUPYTER_TARGET=${JUPYTER_TARGET} \
 	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} \
 	docker-compose build ${BUILD_OPTS}
@@ -154,6 +173,7 @@ build-no-cache: build
 
 up: 
 	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
+	JUPYTER_BASE_IMAGE=${JUPYTER_BASE_IMAGE} JUPYTER_BASE_VERSION=${JUPYTER_BASE_VERSION} \
 	JUPYTER_TARGET=${JUPYTER_TARGET} \
 	JUPYTER_CHOWN_EXTRA=${JUPYTER_CHOWN_EXTRA} \
 	JUPYTER_UID=${JUPYTER_UID} JUPYTER_USERNAME=${JUPYTER_USERNAME} \
@@ -162,6 +182,7 @@ up:
 	docker-compose up ${UP_OPTS}
 run:
 	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
+	JUPYTER_BASE_IMAGE=${JUPYTER_BASE_IMAGE} JUPYTER_BASE_VERSION=${JUPYTER_BASE_VERSION} \
 	JUPYTER_TARGET=${JUPYTER_TARGET} \
 	JUPYTER_CHOWN_EXTRA=${JUPYTER_CHOWN_EXTRA} \
 	JUPYTER_UID=${JUPYTER_UID} JUPYTER_USERNAME=${JUPYTER_USERNAME} \
@@ -179,12 +200,12 @@ python-dev-build:
 	DOCKER_BUILDKIT=${BUILDKIT} \
 	docker build . \
 		-f ./docker/python-dev/Dockerfile \
-		-t ${PYTHON_DEV_IMAGE_NAME}:${VERSION} \
+		-t ${IMAGE_OWNER}/${PYTHON_DEV_IMAGE_NAME}:${VERSION} \
 		${BUILD_OPTS}
 
 tox: PYTHON_DEV_CMD := tox
 tox: python-dev-build
-	docker run -it sertansenturk/python-dev:${VERSION} ${PYTHON_DEV_CMD}
+	docker run -it ${IMAGE_OWNER}/${PYTHON_DEV_IMAGE_NAME}:${VERSION} ${PYTHON_DEV_CMD}
 
 find-port-usage:
 	sudo lsof -i -P -n | grep ${CHK_PORT}
