@@ -2,7 +2,7 @@
 
 ## v0.6.0
 
-- Deprecate static Jupyter build
+- Deprecate static Jupyter and no-cache builds
 
 ## v0.5.0
 
