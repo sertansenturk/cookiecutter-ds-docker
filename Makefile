@@ -53,13 +53,13 @@ TRAVIS_TOKEN =
 
 help:
 	@printf "======= General ======\n"
-	@printf "$(pretty_command): alias of \"make lab\"\n" \(default\)
-	@printf "$(pretty_command): start docker stack with JupyterLab from ${JUPYTER_BASE_IMAGE} with the python repo installed as editable, i.e. run \"clean\", \"build\", \"up\"\n" lab
-	@printf "$(pretty_command): start docker stack with classic Jupyter with the python repo installed as editable\n" notebook
-	@printf "$(pretty_command): start docker stack with JupyterLab with the python repo installed as static\n" static
+	@printf "$(pretty_command): alias of \"make lab\" (see below)\n" \(default\)
+	@printf "$(pretty_command): start docker stack with JupyterLab from ${JUPYTER_BASE_IMAGE}; the python repo is installed as editable\n" lab
 	@printf "$(pretty_command): start docker stack with JupyterLab from ${JUPYTER_SCIPY_IMAGE}\n" scipy
 	@printf "$(pretty_command): start docker stack with JupyterLab from ${JUPYTER_TENSORFLOW_IMAGE}\n" tensorflow
 	@printf "$(pretty_command): start docker stack with JupyterLab from ${JUPYTER_PYSPARK_IMAGE}\n" pyspark
+	@printf "$(pretty_command): start docker stack with classic Jupyter notebook interface\n" notebook
+	@printf "$(pretty_command): start docker stack with JupyterLab; the python repo installed as static\n" static
 	@printf "$(pretty_command): start docker stack with tests\n" test
 	@printf "$(pretty_command): run \"clean\", \"clean-stores\", \"build\" and \"up\"\n" all
 	@printf "$(pretty_command): run \"clean-all\", \"build-no-cache\" and \"up\"\n" all-no-cache
@@ -98,9 +98,6 @@ help:
 default: clean build up
 lab: default
 
-notebook: JUPYTER_ENABLE_LAB:=
-notebook: default
-
 scipy: JUPYTER_BASE_IMAGE=${JUPYTER_SCIPY_IMAGE}
 scipy: JUPYTER_BASE_VERSION=${JUPYTER_SCIPY_VERSION}
 scipy: default
@@ -112,6 +109,9 @@ tensorflow: default
 pyspark: JUPYTER_BASE_IMAGE=${JUPYTER_PYSPARK_IMAGE}
 pyspark: JUPYTER_BASE_VERSION=${JUPYTER_PYSPARK_VERSION}
 pyspark: default
+
+notebook: JUPYTER_ENABLE_LAB:=
+notebook: default
 
 static: JUPYTER_TARGET:=${JUPYTER_STATIC_TARGET}
 static: clean build up
