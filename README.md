@@ -53,6 +53,13 @@ make
 
 Note that the above commands also stops running stacks (if exist), cleans, and rebuilds the services to ensure that all everything starts up-to-date.
 
+By default, we base the Jupyter service on the official [scipy-notebook](https://hub.docker.com/r/jupyter/scipy-notebook/tags) image. You can also build & run from [tensorflow](https://hub.docker.com/r/jupyter/tensorflow-notebook/tags) or [pyspark](https://hub.docker.com/r/jupyter/pyspark-notebook/tags) notebooks by:
+
+```bash
+make tensorflow
+make pyspark
+```
+
 If you want to use classic Jupyter notebooks, run instead:
 
 ```bash
