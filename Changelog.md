@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.6.0
+
+- Deprecate static Jupyter and no-cache builds
+
 ## v0.5.0
 
 - Add `scipy`, `tensorflow` and `pyspark` base image options from Jupyter docker stack

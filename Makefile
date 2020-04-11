@@ -1,11 +1,11 @@
 SHELL := /bin/bash
 .DEFAULT_GOAL := default
 .PHONY: \
-	help \
-	default static test chk-store-permissions \
-	all all-no-cache \
+	help default lab notebook \
+	scipy tensorflow pyspark \
+	test chk-store-permissions all \
 	purge clean clean-all clean-stores clean-python \
-	prune build build-no-cache \
+	prune build \
 	up run down down-all \
 	python-dev-build tox \
 	find-port-usage debug-travis
@@ -24,7 +24,6 @@ PRUNE_OPTS = -f
 
 BUILDKIT = 1
 BUILD_OPTS = 
-BUILD_NO_CACHE_OPT = --no-cache
 
 DOWN_OPTS = --remove-orphans
 DOWN_ALL_OPTS = ${DOWN_OPTS} --rmi all -v
@@ -54,15 +53,13 @@ TRAVIS_TOKEN =
 help:
 	@printf "======= General ======\n"
 	@printf "$(pretty_command): alias of \"make lab\" (see below)\n" \(default\)
-	@printf "$(pretty_command): start docker stack with JupyterLab from ${JUPYTER_BASE_IMAGE}; the python repo is installed as editable\n" lab
+	@printf "$(pretty_command): start docker stack with JupyterLab from ${JUPYTER_BASE_IMAGE} with the python repo installed as editable\n" lab
 	@printf "$(pretty_command): start docker stack with JupyterLab from ${JUPYTER_SCIPY_IMAGE}\n" scipy
 	@printf "$(pretty_command): start docker stack with JupyterLab from ${JUPYTER_TENSORFLOW_IMAGE}\n" tensorflow
 	@printf "$(pretty_command): start docker stack with JupyterLab from ${JUPYTER_PYSPARK_IMAGE}\n" pyspark
 	@printf "$(pretty_command): start docker stack with classic Jupyter notebook interface\n" notebook
-	@printf "$(pretty_command): start docker stack with JupyterLab; the python repo is installed as static\n" static
 	@printf "$(pretty_command): run docker stack with tests\n" test
 	@printf "$(pretty_command): run \"clean\", \"clean-stores\", \"build\" and \"up\"\n" all
-	@printf "$(pretty_command): run \"clean-all\", \"build-no-cache\" and \"up\"\n" all-no-cache
 	@printf "\n"
 	@printf "======= Cleanup ======\n"
 	@printf "$(pretty_command): run \"down\" and \"prune\"\n" clean
@@ -74,10 +71,8 @@ help:
 	@printf "======= Docker =======\n"
 	@printf "$(pretty_command): Remove all unused docker containers, networks and images \n" prune
 	@printf "$(padded_str)PRUNE_OPTS, \"docker system prune\" options (default: $(PRUNE_OPTS))\n"
-	@printf "$(pretty_command): build the docker-compose stack; the python code is installed on the Jupyter service as editable\n" build
+	@printf "$(pretty_command): build the docker-compose stack with the python code is installed on the Jupyter service as editable\n" build
 	@printf "$(padded_str)BUILD_OPTS, \"docker-compose build\" options (default: $(BUILD_OPTS))\n"
-	@printf "$(pretty_command): build the docker-compose stack; the python code is install on the Jupyter service as static\n" build-static
-	@printf "$(pretty_command): build docker-compose stack with \"${BUILD_NO_CACHE_OPT}\"\n" build-no-cache
 	@printf "$(pretty_command): docker-compose up\n" up
 	@printf "$(padded_str)UP_OPTS, \"docker-compose up\" options (default: $(UP_OPTS))\n"
 	@printf "$(pretty_command): docker-compose run\n" run
@@ -98,6 +93,9 @@ help:
 default: clean build up
 lab: default
 
+notebook: JUPYTER_ENABLE_LAB:=
+notebook: default
+
 scipy: JUPYTER_BASE_IMAGE=${JUPYTER_SCIPY_IMAGE}
 scipy: JUPYTER_BASE_VERSION=${JUPYTER_SCIPY_VERSION}
 scipy: default
@@ -109,12 +107,6 @@ tensorflow: default
 pyspark: JUPYTER_BASE_IMAGE=${JUPYTER_PYSPARK_IMAGE}
 pyspark: JUPYTER_BASE_VERSION=${JUPYTER_PYSPARK_VERSION}
 pyspark: default
-
-notebook: JUPYTER_ENABLE_LAB:=
-notebook: default
-
-static: JUPYTER_TARGET:=${JUPYTER_STATIC_TARGET}
-static: clean build up
 
 test: JUPYTER_TARGET:=${JUPYTER_TEST_TARGET}
 test: RUN_OPTS:=jupyter start.sh ./run_pytest.sh
@@ -131,7 +123,6 @@ chk-store-permissions:
 	fi
 
 all: clean clean-stores build up
-all-no-cache: clean-all build-no-cache up
 
 purge: clean-all
 clean-all: down-all prune clean-stores clean-python
@@ -164,12 +155,6 @@ build:
 	JUPYTER_TARGET=${JUPYTER_TARGET} \
 	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} \
 	docker-compose build ${BUILD_OPTS}
-
-build-static: JUPYTER_TARGET:=${JUPYTER_STATIC_TARGET}
-build-static: build
-
-build-no-cache: BUILD_OPTS:=$(BUILD_NO_CACHE_OPT)
-build-no-cache: build
 
 up: 
 	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}

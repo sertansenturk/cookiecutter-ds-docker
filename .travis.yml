@@ -14,10 +14,6 @@ jobs:
         - make test
       after_script:
         - ls -la ./data/ # mlflow artifact & tracking data
-    - name: "docker-compose-build-static"
-      if: branch IN (master, dev)
-      services: docker
-      script: make build-static
     - name: "Python 3.7"
       python: 3.7
       before_install:
