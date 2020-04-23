@@ -3,6 +3,7 @@
 ## v0.6.0
 
 - Deprecate static Jupyter and no-cache builds
+- Added git to python-dev docker image
 
 ## v0.5.0
 
