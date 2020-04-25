@@ -34,7 +34,7 @@ setup(
     version=get_version(),
     author="{{ cookiecutter.author_name }}",
     author_email="{{ cookiecutter.author_email }}",
-    url="https://github.com/{{ cookiecutter.username }}/{{ cookiecutter.repo_name }}",
+    url="https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name }}",
     description="{{ cookiecutter.description }}",
     classifiers=[
         "Development Status :: 4 - Beta",
