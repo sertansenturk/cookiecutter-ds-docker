@@ -1,8 +1,8 @@
-# ds-template
+# {{ cookiecutter.repo_name }}
 
 A personalized Github template repository for data science projects
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/sertansenturk/ds-template) [![Build Status](https://travis-ci.com/sertansenturk/ds-template.svg?branch=master)](https://travis-ci.com/sertansenturk/ds-template) [![codecov](https://codecov.io/gh/sertansenturk/ds-template/branch/master/graph/badge.svg)](https://codecov.io/gh/sertansenturk/ds-template) [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-ff69b4.svg)](http://www.gnu.org/licenses/agpl-3.0) [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-ff69b4.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/{{ cookiecutter.username }}/{{ cookiecutter.repo_name }}) [![Build Status](https://travis-ci.com/{{ cookiecutter.username }}/{{ cookiecutter.repo_name }}.svg?branch=master)](https://travis-ci.com/{{ cookiecutter.username }}/{{ cookiecutter.repo_name }}) [![codecov](https://codecov.io/gh/{{ cookiecutter.username }}/{{ cookiecutter.repo_name }}/branch/master/graph/badge.svg)](https://codecov.io/gh/{{ cookiecutter.username }}/{{ cookiecutter.repo_name }}) [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-ff69b4.svg)](http://www.gnu.org/licenses/agpl-3.0) [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-ff69b4.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 Currently, the template consists of a docker-compose stack with the services below:
 
@@ -35,7 +35,7 @@ make clean-all
 make build
 ```
 
-This repo also includes a template Python package at [src/python_package](src/python_package), which is installed to the Jupyter docker image. By default, the package is "pip installed" in **editable** mode, and the **base folder is mounted** on the docker container. This way, the changes are synchronized.
+This repo also includes a template Python package at [src/{{ cookiecutter.package_name }}](src/{{ cookiecutter.package_name }}), which is installed to the Jupyter docker image. By default, the package is "pip installed" in **editable** mode, and the **base folder is mounted** on the docker container. This way, the changes are synchronized.
 
 ## Run the Services
 
@@ -84,7 +84,7 @@ We automate build, test, code style, and linting checks of the Python package us
 make tox
 ```
 
-In addition, the repo has Travis CI integration ([link](https://travis-ci.com/github/sertansenturk/ds-template)), which runs all of the checks mentioned above automatically after each push. Travis CI also generates code coverage reports for the Python package, which can be viewed on codecov ([link](https://codecov.io/gh/sertansenturk/ds-template/)).
+In addition, the repo has Travis CI integration ([link](https://travis-ci.com/github/{{ cookiecutter.username }}/{{ cookiecutter.repo_name }})), which runs all of the checks mentioned above automatically after each push. Travis CI also generates code coverage reports for the Python package, which can be viewed on codecov ([link](https://codecov.io/gh/{{ cookiecutter.username }}/{{ cookiecutter.repo_name }}/)).
 
 ## License
 
@@ -92,5 +92,5 @@ The source code hosted in this repository is licensed under [Affero GPL version 
 
 ## Authors
 
-Sertan Şentürk
-contact@sertansenturk.com
+{{ cookiecutter.author_name }}
+{{ cookiecutter.author_email }}

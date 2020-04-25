@@ -19,7 +19,7 @@
 
 ## v0.3.0
 
-- Add [travis.ci](https://travis-ci.com/github/sertansenturk/ds-template) and [codecov](https://codecov.io/gh/sertansenturk/ds-template/) integration
+- Add [travis.ci](https://travis-ci.com/github/sertansenturk/cookiecutter-ds-docker) and [codecov](https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/) integration
 
 ## v0.2.0
 

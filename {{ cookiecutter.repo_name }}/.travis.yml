@@ -27,7 +27,7 @@ jobs:
       script:
         - tox -e $TOX_PYTHON_ENV -e lint
       after_success:
-        - codecov # submit coverage to https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/        
+        - codecov # submit coverage to https://codecov.io/gh/{{ cookiecutter.username }}/{{ cookiecutter.repo_name }}/        
       env: TOX_PYTHON_ENV=py37
 before_install:
   - pwd
