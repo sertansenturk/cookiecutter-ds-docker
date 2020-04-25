@@ -2,7 +2,7 @@
     "repo_name": "repo_name",
     "package_name": "{{ cookiecutter.repo_name.lower().replace(' ', '_') }}",
     "author_name": "Name of the authoring organization/company/team)",
-    "author_email": "E-mail of the authoring organization/company/team)",
-    "username": "Username in github, travis.ci and codecov. Must be identical.",
+    "author_email": "author@e-mail.com",
+    "username": "Username in github",
     "description": "A short description of the project"
 }
