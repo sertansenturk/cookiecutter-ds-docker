@@ -60,12 +60,6 @@ If you want to use classic Jupyter notebooks, run instead:
 make notebook
 ```
 
-If you want to run the stack with the Python package installed statically, run instead:
-
-```bash
-make static
-```
-
 Once the service is running, you will see a link on the terminal, e.g., http://127.0.0.1:8888/?token=3c321..., which you can follow to access the notebook from your browser.
 
 You can reach the mlflow UI at [http://localhost:5000](http://localhost:5000). For a simple example on how to track a run, please refer to [notebooks/mlflow_example.ipynb](notebooks/mlflow_example.ipynb)
@@ -92,5 +86,5 @@ The source code hosted in this repository is licensed under [Affero GPL version 
 
 ## Authors
 
-{{ cookiecutter.author_name }}
+{{ cookiecutter.author_name }}  
 {{ cookiecutter.author_email }}

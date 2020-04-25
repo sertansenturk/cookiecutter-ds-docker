@@ -111,7 +111,10 @@ pyspark: default
 test: JUPYTER_TARGET:=${JUPYTER_TEST_TARGET}
 test: RUN_OPTS:=jupyter start.sh ./run_pytest.sh
 test: JUPYTER_CHOWN_EXTRA:="/${DATA_DIR},/tests"
-test: clean build run chk-store-permissions down
+test: clean build run chk-store-permissions
+	$(MAKE) down
+# NOTE: above, `clean` had already called `down` so we had to make
+# an explicit recursive call by `$(MAKE) down` 
 
 chk-store-permissions:
 	@if [ $(shell find data ! -user ${HOST_USERNAME} | wc -l) -gt 0 ]; then \
