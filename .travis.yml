@@ -11,32 +11,32 @@ jobs:
       script: 
         - cookiecutter --no-input ds-template repo_name=test-repo author_name=test_author author_email=test_email github_username=test_user description=test_description
         - ls -la test-repo
-    # - name: "docker-compose-build"
-    #   if: branch NOT IN (master, dev) # already covered by docker-compose-test
-    #   services: docker
-    #   script: make build
-    # - name: "docker-compose-test"
-    #   if: branch IN (master, dev)
-    #   services: docker
-    #   script: 
-    #     - make test
-    #   after_script:
-    #     - ls -la ./data/ # mlflow artifact & tracking data
-    # - name: "Python 3.7"
-    #   python: 3.7
-    #   before_install:
-    #     - pwd
-    #     - ls -la
-    #     - id
-    #   install:
-    #     - pip install -U pip
-    #     - pip install tox-travis
-    #     - pip install codecov
-    #   script:
-    #     - tox -e $TOX_PYTHON_ENV -e lint
-    #   after_success:
-    #     - codecov # submit coverage to https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/        
-    #   env: TOX_PYTHON_ENV=py37
+    - name: "docker-compose-build"
+      if: branch NOT IN (master, dev) # already covered by docker-compose-test
+      services: docker
+      script: make build
+    - name: "docker-compose-test"
+      if: branch IN (master, dev)
+      services: docker
+      script: 
+        - make test
+      after_script:
+        - ls -la ./data/ # mlflow artifact & tracking data
+    - name: "Python 3.7"
+      python: 3.7
+      before_install:
+        - pwd
+        - ls -la
+        - id
+      install:
+        - pip install -U pip
+        - pip install tox-travis
+        - pip install codecov
+      script:
+        - tox -e $TOX_PYTHON_ENV -e lint
+      after_success:
+        - codecov # submit coverage to https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/        
+      env: TOX_PYTHON_ENV=py37
 before_install:
   - pwd
   - ls -la
