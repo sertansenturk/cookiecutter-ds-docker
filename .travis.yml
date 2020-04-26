@@ -1,16 +1,9 @@
 language: python
 os: linux
 dist: bionic
+python: 3.7
 jobs:
   include:
-    - name: "cookiecutter-test"
-      python: 3.7
-      install:
-        - pip install -U pip
-        - pip install cookiecutter
-      script: 
-        - cookiecutter --no-input ./ repo_name=test-repo author_name=test_author author_email=test_email github_username=test_user description=test_description
-        - ls -la test-repo
     - name: "docker-compose-build"
       if: branch NOT IN (master, dev) # already covered by docker-compose-test
       services: docker
@@ -24,10 +17,6 @@ jobs:
         - ls -la ./data/ # mlflow artifact & tracking data
     - name: "Python 3.7"
       python: 3.7
-      before_install:
-        - pwd
-        - ls -la
-        - id
       install:
         - pip install -U pip
         - pip install tox-travis
@@ -42,10 +31,13 @@ before_install:
   - ls -la
   - id
   - docker --version
+  - pip install -U pip
+  - pip install cookiecutter
 install:
-  - 
-before_script:
   -
+before_script:
+  - cookiecutter --no-input ./ --output-dir ../ repo_name=test-repo author_name=test_author author_email=test_email github_username=test_user description=test_description
+  - cd ../test-repo
 script:
   - 
 after_success:
