@@ -2,6 +2,14 @@ language: python
 os: linux
 dist: bionic
 python: 3.7
+env:
+  global:
+    - COOKIECUTTER_REPO_DIR=..
+    - COOKIECUTTER_REPO_NAME=test-repo
+    - COOKIECUTTER_AUTHOR_NAME=test_author
+    - COOKIECUTTER_AUTHOR_EMAIL=test_email
+    - COOKIECUTTER_GITHUB_USERNAME=test_user
+    - COOKIECUTTER_DESCRIPTION=test_description
 jobs:
   include:
     - name: "docker-compose-build"
@@ -34,8 +42,8 @@ before_install:
 install:
   -
 before_script:
-  - cookiecutter --no-input ./ --output-dir ../ repo_name=test-repo author_name=test_author author_email=test_email github_username=test_user description=test_description
-  - cd ../test-repo
+  - cookiecutter --no-input ./ --output-dir $COOKIECUTTER_REPO_DIR repo_name=$COOKIECUTTER_REPO_NAME author_name=$COOKIECUTTER_AUTHOR_NAME author_email=$COOKIECUTTER_AUTHOR_EMAIL github_username=$COOKIECUTTER_GITHUB_USERNAME description=$COOKIECUTTER_DESCRIPTION
+  - cd $COOKIECUTTER_REPO_DIR/$COOKIECUTTER_REPO_NAME
 script:
   - 
 after_success:
