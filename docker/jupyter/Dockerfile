@@ -58,12 +58,3 @@ COPY ./tests/docker ${TEST_DIR}/docker
 COPY ./docker/jupyter/scripts/run_pytest.sh ${TEST_DIR}/
 
 WORKDIR ${TEST_DIR}
-
-################## static image ###################
-FROM jupyter-custom AS static
-
-COPY ./src/ $WORK_DIR/src/
-COPY ./setup.py $WORK_DIR/
-
-WORKDIR $WORK_DIR
-RUN pip install .
