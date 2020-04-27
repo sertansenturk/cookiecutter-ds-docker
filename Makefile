@@ -2,7 +2,8 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := default
 .PHONY: \
 	help default cut \
-	test clean clean-test clean-clean-$(VENV_NAME) \
+	install test \
+	clean clean-test clean-clean-$(VENV_NAME) \
 	debug-travis
 
 HELP_PADDING = 28
