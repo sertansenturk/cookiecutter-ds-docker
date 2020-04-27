@@ -42,7 +42,7 @@ before_script:
     cookiecutter ./ \
       --no-input \
       --output-dir $COOKIECUTTER_REPO_DIR \
-      repo_slug=$COOKIECUTTER_REPO_SLUG \
+      repo_slug=$COOKIECUTTER_REPO_SLUG
   - cd $COOKIECUTTER_REPO_DIR/$COOKIECUTTER_REPO_SLUG
 script:
   - 
