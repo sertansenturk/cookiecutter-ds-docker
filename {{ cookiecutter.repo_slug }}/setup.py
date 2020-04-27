@@ -29,6 +29,19 @@ def get_version():
         raise ValueError("Unable to find version string in %s." % (f,))
 
 
+def get_long_description():
+    """Get the long description from the README file
+
+    Returns:
+        str -- the README content in the markdown format
+    """
+    try:
+        with open(os.path.join(HERE, "README.md"), encoding="utf-8") as f:
+            return f.read()
+    except FileNotFoundError:  # not necessary, e.g. in Docker
+        return ""
+
+
 setup(
     name="{{ cookiecutter.package_name }}",
     version=get_version(),
@@ -38,6 +51,8 @@ setup(
     maintainer_email="{{ cookiecutter.author_email }}",
     url="https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}",
     description="{{ cookiecutter.description }}",
+    long_description=get_long_description(),
+    long_description_content_type="text/markdown",
     download_url=(
         "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}.git"
         if "dev" in get_version()
