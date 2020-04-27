@@ -5,7 +5,7 @@
 - Convert the repo into a [cookiecutter template](https://github.com/cookiecutter/cookiecutter)
 - Rename the repo from *ds-template* to [cookiecutter-ds-docker](https://github.com/sertansenturk/cookiecutter-ds-docker)
 - Fix a bug in `make test` where `mlflow` and `postgres` containers do not stop after testing
-- Added maintainer and description related fields to `setup.py`
+- Add maintainer and description related fields to `setup.py`
 
 ## v0.6.0
 
