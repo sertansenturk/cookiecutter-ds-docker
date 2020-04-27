@@ -2,14 +2,14 @@
 
 ## v0.7.0
 
-- Converted into [cookiecutter](https://github.com/cookiecutter/cookiecutter)
-- Renamed the repo to [cookiecutter-ds-docker](https://github.com/sertansenturk/cookiecutter-ds-docker)
-- Fixed a bug in `make test` where `mlflow` and `postgres` containers do not stop after testing
+- Convert the repo into a [cookiecutter template](https://github.com/cookiecutter/cookiecutter)
+- Rename the repo from *ds-template* to [cookiecutter-ds-docker](https://github.com/sertansenturk/cookiecutter-ds-docker)
+- Fix a bug in `make test` where `mlflow` and `postgres` containers do not stop after testing
 
 ## v0.6.0
 
 - Deprecate static Jupyter and no-cache builds
-- Added git to python-dev docker image
+- Add git to python-dev docker image
 
 ## v0.5.0
 

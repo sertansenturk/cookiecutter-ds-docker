@@ -8,14 +8,13 @@ A Docker-based Data Science cookiecutter
 
 - [1. Introduction](#1-introduction)
 - [2. Setup](#2-setup)
-- [3. Running the Services](#3-running-the-services)
 - [4. Testing and Development](#4-testing-and-development)
 - [5. License](#5-license)
 - [6. Authors](#6-authors)
 
 ## 1. Introduction
 
-This repo hosts a personalized, Docker-based Data Science cookiecutter template. The template consists of a docker-compose stack with the services below:
+This repo hosts a personalized, Docker-based cookiecutter template for Data Science projects. The template consists of a docker-compose stack with the services below:
 
 1. A [Jupyter](https://jupyter.org/) service with minimal customization
 2. An [mlflow](https://mlflow.org/) tracking server to store experiments
@@ -23,7 +22,7 @@ This repo hosts a personalized, Docker-based Data Science cookiecutter template.
 
 In addition, it also includes a Docker image for Python test and development.
 
-Please refer to the [README.md file in the template folder]({{ cookiecutter.repo_slug }}/README.md) for additional information on the template's functionalities.
+Please refer to the [README.md file in the template folder](\{\{\ cookiecutter.repo_slug\ \}\}/README.md) for more information on the functionality.
 
 ## 2. Setup
 
@@ -35,20 +34,32 @@ source venv/bin/activate
 pip install cookiecutter
 ```
 
-Then, baking a template is straightforward:
+Then, "baking" a template is straightforward:
 
 ```bash
-cd /path/to/base/folder
+cd /base_folder
 cookiecutter https://github.com/sertansenturk/cookiecutter-ds-docker
 ```
 
+You will be asked to fille a few variables, namely:
 
+| Variable        | Explanation                                    | Modifies |
+| --------------- | ---------------------------------------------- | - |
+| repo_name       | Name of the repository                         | Header of `README.md` |
+| repo_slug       | Slug of the repository name                    | Repository folder name, GitHub URL, explanations in `README.md` |
+| package_name    | Name of the Python package in the project      | Python package name, `setup.py`, `tox.ini`, unittests, explanations in `README.md` |
+| author_name     | Name of the authoring person/team/organization | authors information in `setup.py` and `README.md` |
+| author_email    | E-mail to contact the author                   | authors information in `setup.py` and `README.md` |
+| github_username | Github username                                | `setup.py`, GitHub URL, explanations in `README.md` |
+| description     | A short description of the project             | explanations in `setup.py` and `README.md` |
+
+Afterwards, the project will be created in `/base_folder/repo_slug`.
 
 For more options and general information about Python cookiecutter, please refer to the [official cookiecutter documentation](https://cookiecutter.readthedocs.io/en/latest/).
 
 ## 4. Testing and Development
 
-You can test the functionalities of the services (e.g., if `mlflow` logging functionality from the Jupyter service is correct) automatically by running the docker-compose stack in test mode. You can run the test stack locally by:
+You can test the functionalities of the cookiecutter and baked services (e.g., if `mlflow` logging functionality from the Jupyter service is correct) automatically by running the docker-compose stack in test mode. You can run the test stack locally by:
 
 ```bash
 make test
