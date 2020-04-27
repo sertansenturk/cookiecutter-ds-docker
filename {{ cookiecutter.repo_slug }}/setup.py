@@ -34,8 +34,16 @@ setup(
     version=get_version(),
     author="{{ cookiecutter.author_name }}",
     author_email="{{ cookiecutter.author_email }}",
+    maintainer="{{ cookiecutter.author_name }}",
+    maintainer_email="{{ cookiecutter.author_email }}",
     url="https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}",
     description="{{ cookiecutter.description }}",
+    download_url=(
+        "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}.git"
+        if "dev" in get_version()
+        else "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/"
+        "releases/tag/v{0:s}".format(get_version())
+    ),
     classifiers=[
         "Development Status :: 4 - Beta",
         "Environment :: Console",
