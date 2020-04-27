@@ -50,7 +50,7 @@ cookiecutter https://github.com/sertansenturk/cookiecutter-ds-docker
 | package_name    | Name of the Python package in the project      | Python package name, `setup.py`, `tox.ini`, unittests, explanations in `README.md` |
 | author_name     | Name of the authoring person/team/organization | authors information in `setup.py` and `README.md` |
 | author_email    | E-mail to contact the author                   | authors information in `setup.py` and `README.md` |
-| github_username | Github username                                | `setup.py`, GitHub URL, explanations in `README.md` |
+| github_username | Github username                                | GitHub URL, `setup.py`, explanations in `README.md` |
 | description     | A short description of the project             | explanations in `setup.py` and `README.md` |
 
 Afterward, the project will be created in `/base_folder/repo_slug`.
