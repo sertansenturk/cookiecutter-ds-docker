@@ -17,7 +17,7 @@ def get_version():
         str -- value of __version__ as defined in __init__.py
     """
     version_file2 = os.path.join(
-        HERE, EXP_DIR, "python_package", "__init__.py")
+        HERE, EXP_DIR, "{{ cookiecutter.package_name }}", "__init__.py")
     with open(version_file2) as f:
         init_contents = f.read().strip()
 
@@ -30,20 +30,12 @@ def get_version():
 
 
 setup(
-    name="python_package",
+    name="{{ cookiecutter.package_name }}",
     version=get_version(),
-    author="Sertan Senturk",
-    author_email="contact AT sertansenturk DOT com",
-    maintainer="Sertan Senturk",
-    maintainer_email="contact AT sertansenturk DOT com",
-    url="https://github.com/sertansenturk/ds-template",
-    description="Template Python repo",
-    download_url=(
-        "https://github.com/sertansenturk/ds-template.git"
-        if "dev" in get_version()
-        else "https://github.com/sertansenturk/ds-template/"
-        "releases/tag/v{0:s}".format(get_version())
-    ),
+    author="{{ cookiecutter.author_name }}",
+    author_email="{{ cookiecutter.author_email }}",
+    url="https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}",
+    description="{{ cookiecutter.description }}",
     classifiers=[
         "Development Status :: 4 - Beta",
         "Environment :: Console",
