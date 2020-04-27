@@ -1,96 +1,77 @@
-# ds-template
+# cookiecutter-ds-docker
 
-A personalized Github template repository for data science projects
+A Docker-based Data Science cookiecutter
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/sertansenturk/ds-template) [![Build Status](https://travis-ci.com/sertansenturk/ds-template.svg?branch=master)](https://travis-ci.com/sertansenturk/ds-template) [![codecov](https://codecov.io/gh/sertansenturk/ds-template/branch/master/graph/badge.svg)](https://codecov.io/gh/sertansenturk/ds-template) [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-ff69b4.svg)](http://www.gnu.org/licenses/agpl-3.0) [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-ff69b4.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/sertansenturk/cookiecutter-ds-docker) [![Build Status](https://travis-ci.com/sertansenturk/cookiecutter-ds-docker.svg?branch=master)](https://travis-ci.com/sertansenturk/cookiecutter-ds-docker) [![codecov](https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/branch/master/graph/badge.svg)](https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker) [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-ff69b4.svg)](http://www.gnu.org/licenses/agpl-3.0) [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-ff69b4.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
 
-Currently, the template consists of a docker-compose stack with the services below:
+## Table of Contents
 
-1. A [Jupyter](https://jupyter.org/) service with minimal customization
-2. An [mlflow](https://mlflow.org/) tracking server to store experiments
-3. A [postgresql](https://www.postgresql.org/) database, which stores mlflow tracking information
+- [1. Introduction](#1-introduction)
+- [2. Setup](#2-setup)
+- [4. Testing and Development](#4-testing-and-development)
+- [5. License](#5-license)
+- [6. Authors](#6-authors)
 
-Also, we include the Docker images below for utility's sake:
+## 1. Introduction
 
-1. A Python development image to facilitate code test and development in Python
+This repo hosts a personalized, Docker-based cookiecutter template for Data Science projects. The template consists of a docker-compose stack with the services below:
 
-Commands to interact with the template are wrapped in a `Makefile`. Below, we explain the common operations. For more options, please refer to the help by running on the terminal:
+1. A [Jupyter](https://jupyter.org/) service with minimal customization. The Python package in the template is installed in this service.
+2. An [mlflow](https://mlflow.org/) tracking server to store experiments.
+3. A [postgresql](https://www.postgresql.org/) database, which stores mlflow tracking information.
 
-```bash
-make help
-```
+The template also includes a Docker image for Python test and development.
 
-## Setup
+Please refer to the [README.md file in the template folder](%7B%7B%20cookiecutter.repo_slug%20%7D%7D/README.md) for more information on the functionality.
 
-To build the stack, run:
+## 2. Setup
 
-```bash
-make build
-```
-
-If you need to make a clean start:
+First, you have to [install cookiecutter](https://cookiecutter.readthedocs.io/en/latest/installation.html#install-cookiecutter). For example, you can install cookiecutter in a [virtualenv](https://virtualenv.pypa.io/en/stable/) by:
 
 ```bash
-make clean-all
-make build
+virtualenv -p python3 venv
+source venv/bin/activate
+pip install cookiecutter
 ```
 
-This repo also includes a template Python package at [src/python_package](src/python_package), which is installed to the Jupyter docker image. By default, the package is "pip installed" in **editable** mode, and the **base folder is mounted** on the docker container. This way, the changes are synchronized.
-
-## Run the Services
-
-To start the stack with [JupyterLab](https://jupyterlab.readthedocs.io/en/stable/), run:
+Then, "baking" a template is straightforward:
 
 ```bash
-make
+cd /base_folder
+cookiecutter https://github.com/sertansenturk/cookiecutter-ds-docker
 ```
 
-Note that the above commands also stops running stacks (if exist), cleans, and rebuilds the services to ensure that all everything starts up-to-date.
+*cookiecutter* will ask you to fill a few variables, namely:
 
-By default, we base the Jupyter service on the official [scipy-notebook](https://hub.docker.com/r/jupyter/scipy-notebook/tags) image. You can also build & run from [tensorflow](https://hub.docker.com/r/jupyter/tensorflow-notebook/tags) or [pyspark](https://hub.docker.com/r/jupyter/pyspark-notebook/tags) notebooks by:
+| Variable        | Explanation                                    | Modifies |
+| --------------- | ---------------------------------------------- | - |
+| repo_name       | Name of the repository                         | Header of `README.md` |
+| repo_slug       | Slug of the repository name                    | Repository folder name, GitHub URL, explanations in `README.md` |
+| package_name    | Name of the Python package in the project      | Python package name, `setup.py`, `tox.ini`, unittests, explanations in `README.md` |
+| author_name     | Name of the authoring person/team/organization | authors information in `setup.py` and `README.md` |
+| author_email    | E-mail to contact the author                   | authors information in `setup.py` and `README.md` |
+| github_username | Github username                                | `setup.py`, GitHub URL, explanations in `README.md` |
+| description     | A short description of the project             | explanations in `setup.py` and `README.md` |
 
-```bash
-make tensorflow
-make pyspark
-```
+Afterward, the project will be created in `/base_folder/repo_slug`.
 
-If you want to use classic Jupyter notebooks, run instead:
+For more options and information about Python cookiecutter, please refer to the [official cookiecutter documentation](https://cookiecutter.readthedocs.io/en/latest/).
 
-```bash
-make notebook
-```
+## 4. Testing and Development
 
-If you want to run the stack with the Python package installed statically, run instead:
-
-```bash
-make static
-```
-
-Once the service is running, you will see a link on the terminal, e.g., http://127.0.0.1:8888/?token=3c321..., which you can follow to access the notebook from your browser.
-
-You can reach the mlflow UI at [http://localhost:5000](http://localhost:5000). For a simple example on how to track a run, please refer to [notebooks/mlflow_example.ipynb](notebooks/mlflow_example.ipynb)
-
-## Test and Development
-
-We can test the functionalities of the services (e.g., if `mlflow` handles logging correctly from the Jupyter service) automatically by running the docker-compose stack in test mode. You can run the test stack locally by:
+You can test the cookiecutter, the baked services, and the Python package (e.g., build, unittest, code style, linting) locally by:
 
 ```bash
 make test
 ```
 
-We automate build, test, code style, and linting checks of the Python package using `tox` in a docker environment. You can run `tox` by:
+This repo also has Travis CI integration enabled ([link](https://travis-ci.com/github/sertansenturk/cookiecutter-ds-docker)). This service automatically runs all of the checks mentioned above after each push. Travis CI also generates code coverage reports for the Python package, which you can view on codecov ([link](https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/)).
 
-```bash
-make tox
-```
-
-In addition, the repo has Travis CI integration ([link](https://travis-ci.com/github/sertansenturk/ds-template)), which runs all of the checks mentioned above automatically after each push. Travis CI also generates code coverage reports for the Python package, which can be viewed on codecov ([link](https://codecov.io/gh/sertansenturk/ds-template/)).
-
-## License
+## 5. License
 
 The source code hosted in this repository is licensed under [Affero GPL version 3](https://www.gnu.org/licenses/agpl-3.0.en.html). Any data (features, models,  figures, results, etc.) in this repository are licensed under [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
 
-## Authors
+## 6. Authors
 
-Sertan Şentürk
+Sertan Şentürk  
 contact@sertansenturk.com

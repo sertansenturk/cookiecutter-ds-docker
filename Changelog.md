@@ -1,9 +1,16 @@
 # Changelog
 
+## v0.7.0
+
+- Convert the repo into a [cookiecutter template](https://github.com/cookiecutter/cookiecutter)
+- Rename the repo from *ds-template* to [cookiecutter-ds-docker](https://github.com/sertansenturk/cookiecutter-ds-docker)
+- Fix a bug in `make test` where `mlflow` and `postgres` containers do not stop after testing
+- Added maintainer and description related fields to `setup.py`
+
 ## v0.6.0
 
 - Deprecate static Jupyter and no-cache builds
-- Added git to python-dev docker image
+- Add git to python-dev docker image
 
 ## v0.5.0
 
@@ -19,7 +26,7 @@
 
 ## v0.3.0
 
-- Add [travis.ci](https://travis-ci.com/github/sertansenturk/ds-template) and [codecov](https://codecov.io/gh/sertansenturk/ds-template/) integration
+- Add [travis.ci](https://travis-ci.com/github/sertansenturk/cookiecutter-ds-docker) and [codecov](https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/) integration
 
 ## v0.2.0
 

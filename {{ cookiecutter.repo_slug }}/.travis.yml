@@ -1,11 +1,6 @@
 language: python
 os: linux
 dist: bionic
-python: 3.7
-env:
-  global:
-    - COOKIECUTTER_REPO_DIR=..
-    - COOKIECUTTER_REPO_SLUG=test_repo
 jobs:
   include:
     - name: "docker-compose-build"
@@ -21,29 +16,28 @@ jobs:
         - ls -la ./data/ # mlflow artifact & tracking data
     - name: "tox"
       env: TOX_PYTHON_ENV=py37
+      python: 3.7
+      before_install:
+        - pwd
+        - ls -la
+        - id
       install:
+        - pip install -U pip
         - pip install tox-travis
         - pip install codecov
       script:
         - tox -e $TOX_PYTHON_ENV -e lint
       after_success:
-        - codecov # submit coverage to https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/
+        - codecov # submit coverage to https://codecov.io/gh/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/
 before_install:
   - pwd
   - ls -la
   - id
   - docker --version
-  - pip install -U pip
-  - pip install cookiecutter
 install:
-  -
+  - 
 before_script:
-  - >-
-    cookiecutter ./ \
-      --no-input \
-      --output-dir $COOKIECUTTER_REPO_DIR \
-      repo_slug=$COOKIECUTTER_REPO_SLUG
-  - cd $COOKIECUTTER_REPO_DIR/$COOKIECUTTER_REPO_SLUG
+  -
 script:
   - 
 after_success:

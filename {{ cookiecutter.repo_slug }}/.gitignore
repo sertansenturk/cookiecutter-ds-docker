@@ -14,9 +14,6 @@ data/
 !.codeclimate.yml
 *.pkl
 
-# cookiecutter test project folder
-test-project/
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -17,7 +17,7 @@ def get_version():
         str -- value of __version__ as defined in __init__.py
     """
     version_file2 = os.path.join(
-        HERE, EXP_DIR, "python_package", "__init__.py")
+        HERE, EXP_DIR, "{{ cookiecutter.package_name }}", "__init__.py")
     with open(version_file2) as f:
         init_contents = f.read().strip()
 
@@ -29,19 +29,34 @@ def get_version():
         raise ValueError("Unable to find version string in %s." % (f,))
 
 
+def get_long_description():
+    """Get the long description from the README file
+
+    Returns:
+        str -- the README content in the markdown format
+    """
+    try:
+        with open(os.path.join(HERE, "README.md"), encoding="utf-8") as f:
+            return f.read()
+    except FileNotFoundError:  # not necessary, e.g. in Docker
+        return ""
+
+
 setup(
-    name="python_package",
+    name="{{ cookiecutter.package_name }}",
     version=get_version(),
-    author="Sertan Senturk",
-    author_email="contact AT sertansenturk DOT com",
-    maintainer="Sertan Senturk",
-    maintainer_email="contact AT sertansenturk DOT com",
-    url="https://github.com/sertansenturk/ds-template",
-    description="Template Python repo",
+    author="{{ cookiecutter.author_name }}",
+    author_email="{{ cookiecutter.author_email }}",
+    maintainer="{{ cookiecutter.author_name }}",
+    maintainer_email="{{ cookiecutter.author_email }}",
+    url="https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}",
+    description="{{ cookiecutter.description }}",
+    long_description=get_long_description(),
+    long_description_content_type="text/markdown",
     download_url=(
-        "https://github.com/sertansenturk/ds-template.git"
+        "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}.git"
         if "dev" in get_version()
-        else "https://github.com/sertansenturk/ds-template/"
+        else "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/"
         "releases/tag/v{0:s}".format(get_version())
     ),
     classifiers=[

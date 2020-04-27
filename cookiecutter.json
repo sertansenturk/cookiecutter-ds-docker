@@ -1,0 +1,9 @@
+{
+    "repo_name": "repo_name",
+    "repo_slug": "{{ cookiecutter.repo_name.lower().replace(' ', '_').replace('-', '_') }}",
+    "package_name": "{{ cookiecutter.repo_slug.replace('-', '_') }}",
+    "author_name": "Sertan Şentürk",
+    "author_email": "contact@sertansenturk.com",
+    "github_username": "sertansenturk",
+    "description": "A short description of the project"
+}
