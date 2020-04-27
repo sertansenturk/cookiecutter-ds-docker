@@ -16,13 +16,13 @@ A Docker-based Data Science cookiecutter
 
 This repo hosts a personalized, Docker-based cookiecutter template for Data Science projects. The template consists of a docker-compose stack with the services below:
 
-1. A [Jupyter](https://jupyter.org/) service with minimal customization
-2. An [mlflow](https://mlflow.org/) tracking server to store experiments
-3. A [postgresql](https://www.postgresql.org/) database, which stores mlflow tracking information
+1. A [Jupyter](https://jupyter.org/) service with minimal customization. The Python package in the template is installed to this service.
+2. An [mlflow](https://mlflow.org/) tracking server to store experiments.
+3. A [postgresql](https://www.postgresql.org/) database, which stores mlflow tracking information.
 
 In addition, it also includes a Docker image for Python test and development.
 
-Please refer to the [README.md file in the template folder](\{\{\ cookiecutter.repo_slug\ \}\}/README.md) for more information on the functionality.
+Please refer to the [README.md file in the template folder](%7B%7B%20cookiecutter.repo_slug%20%7D%7D/README.md) for more information on the functionality.
 
 ## 2. Setup
 
@@ -41,7 +41,7 @@ cd /base_folder
 cookiecutter https://github.com/sertansenturk/cookiecutter-ds-docker
 ```
 
-You will be asked to fille a few variables, namely:
+You will be asked to fill a few variables, namely:
 
 | Variable        | Explanation                                    | Modifies |
 | --------------- | ---------------------------------------------- | - |
@@ -55,23 +55,17 @@ You will be asked to fille a few variables, namely:
 
 Afterwards, the project will be created in `/base_folder/repo_slug`.
 
-For more options and general information about Python cookiecutter, please refer to the [official cookiecutter documentation](https://cookiecutter.readthedocs.io/en/latest/).
+For more options and information about Python cookiecutter, please refer to the [official cookiecutter documentation](https://cookiecutter.readthedocs.io/en/latest/).
 
 ## 4. Testing and Development
 
-You can test the functionalities of the cookiecutter and baked services (e.g., if `mlflow` logging functionality from the Jupyter service is correct) automatically by running the docker-compose stack in test mode. You can run the test stack locally by:
+You can test the cookiecutter, the baked services, and the Python package (e.g. build, unittest, code style, linting) locally by:
 
 ```bash
 make test
 ```
 
-We automate build, test, code style, and linting checks of the Python package, `./src/{{ cookiecutter.package_name }}` using `tox` in a docker environment. You can run `tox` by:
-
-```bash
-make tox
-```
-
-In addition, the repo has Travis CI integration enabled ([link](https://travis-ci.com/github/sertansenturk/cookiecutter-ds-docker)). This service runs all of the checks mentioned above automatically after each push. Travis CI also generates code coverage reports for the Python package, which can be viewed on codecov ([link](https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/)).
+In addition, this project has Travis CI integration enabled ([link](https://travis-ci.com/github/sertansenturk/cookiecutter-ds-docker)). This service automatically runs all of the checks mentioned above after each push. Travis CI also generates code coverage reports for the Python package, which can be viewed on codecov ([link](https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/)).
 
 ## 5. License
 
