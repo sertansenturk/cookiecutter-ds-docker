@@ -45,15 +45,15 @@ install:
   -
 before_script:
   - >-
-    cookiecutter ./
-      --no-input
-      --output-dir $COOKIECUTTER_REPO_DIR
-      repo_name=$COOKIECUTTER_REPO_NAME
-      repo_slug=$COOKIECUTTER_REPO_SLUG
-      package_name=$COOKIECUTTER_PACKAGE_NAME
-      author_name=$COOKIECUTTER_AUTHOR_NAME
-      author_email=$COOKIECUTTER_AUTHOR_EMAIL
-      github_username=$COOKIECUTTER_GITHUB_USERNAME
+    cookiecutter ./ \
+      --no-input \
+      --output-dir $COOKIECUTTER_REPO_DIR \
+      repo_name=$COOKIECUTTER_REPO_NAME \
+      repo_slug=$COOKIECUTTER_REPO_SLUG \
+      package_name=$COOKIECUTTER_PACKAGE_NAME \
+      author_name=$COOKIECUTTER_AUTHOR_NAME \
+      author_email=$COOKIECUTTER_AUTHOR_EMAIL \
+      github_username=$COOKIECUTTER_GITHUB_USERNAME \
       description=$COOKIECUTTER_DESCRIPTION
   - cd $COOKIECUTTER_REPO_DIR/$COOKIECUTTER_REPO_SLUG
 script:
