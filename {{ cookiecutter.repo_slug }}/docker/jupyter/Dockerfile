@@ -4,11 +4,12 @@ ARG JUPYTER_BASE_VERSION
 FROM jupyter/${JUPYTER_BASE_IMAGE}:${JUPYTER_BASE_VERSION} AS jupyter-custom
 
 ARG MLFLOW_ARTIFACT_STORE
+ARG MLFLOW_VERSION
 ENV HOME_DIR=/home/$NB_USER
 ENV WORK_DIR=$HOME_DIR/work
 
 RUN conda install --quiet --yes \
-        'mlflow=1.7.*' \
+        'mlflow='$MLFLOW_VERSION \
         'psycopg2=2.8.*' \
         'conda-build' \
         'tqdm' \

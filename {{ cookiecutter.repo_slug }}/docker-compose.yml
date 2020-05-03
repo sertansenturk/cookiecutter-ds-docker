@@ -8,6 +8,7 @@ services:
       target: ${JUPYTER_TARGET}
       args: 
         - MLFLOW_ARTIFACT_STORE=/${MLFLOW_ARTIFACT_STORE}
+        - MLFLOW_VERSION=${MLFLOW_VERSION}
         - JUPYTER_BASE_IMAGE=${JUPYTER_BASE_IMAGE}
         - JUPYTER_BASE_VERSION=${JUPYTER_BASE_VERSION}
     image: ${IMAGE_OWNER}/${REPO_NAME}/${JUPYTER_BASE_IMAGE}-${JUPYTER_TARGET}:${VERSION}
@@ -30,6 +31,8 @@ services:
   mlflow:
     build:
       context: ./docker/mlflow
+      args:
+        - MLFLOW_VERSION=${MLFLOW_VERSION}
     image: ${IMAGE_OWNER}/${REPO_NAME}/${MLFLOW_IMAGE_NAME}:${VERSION}
     expose: 
       - "${MLFLOW_TRACKING_SERVER_PORT}"
