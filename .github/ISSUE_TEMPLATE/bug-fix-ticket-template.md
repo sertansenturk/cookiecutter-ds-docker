@@ -10,11 +10,14 @@ assignees: ''
 **One-line summary (optional)**
 
 **Steps to Reproduce**
+
 Steps to reproduce the behavior:
+
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
 4. See error
+
 - Add screenshots to help explain your problem, if applicable
 - Include specs (OS, Python version, code commit hash or release version), if useful
 
@@ -25,10 +28,11 @@ Steps to reproduce the behavior:
 **Acceptance Criteria**
 
 **Outcome**
+
 - Clarify the deliverables (scripts, process etc.) and documentation, if applicable.
 
 **Don't forget to**
-- Point the ticket
-- Set priority as a label
-- Assign to a person
+
+- Add appropriate labels
+- Assign to a person, if possible
 - Link dependencies, if applicable

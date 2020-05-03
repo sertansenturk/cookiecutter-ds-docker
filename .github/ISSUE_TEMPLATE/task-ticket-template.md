@@ -19,7 +19,7 @@ assignees: ''
 - Clarify the deliverables (scripts, process etc.) and documentation, if applicable.
 
 **Don't forget to**
-- Point the ticket
-- Set priority as a label
-- Assign to a person
+
+- Add appropriate labels
+- Assign to a person, if possible
 - Link dependencies, if applicable

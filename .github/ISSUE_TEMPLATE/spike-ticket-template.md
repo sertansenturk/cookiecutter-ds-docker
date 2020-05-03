@@ -12,17 +12,17 @@ assignees: ''
 **Reason**
 
 **Design**
+
 - Include a summary as a list of questions to be answered, for the sake of clarity.
 
 **Acceptance Criteria**
 
-
 **Outcome**
+
 - Clarify the deliverables (scripts, process etc.) and documentation, where applicable.
 
-
 **Don't forget to**
-- Point the ticket
-- Set priority as a label
-- Assign to a person
+
+- Add appropriate labels
+- Assign to a person, if possible
 - Link dependencies, if applicable
