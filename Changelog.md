@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.8.0
+
+- Increment `mlflow` version to 1.8.*
+
 ## v0.7.0
 
 - Convert the repo into a [cookiecutter template](https://github.com/cookiecutter/cookiecutter)
