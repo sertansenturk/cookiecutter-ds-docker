@@ -55,7 +55,7 @@ cookiecutter https://github.com/sertansenturk/cookiecutter-ds-docker
 
 Afterward, the project will be created in `/base_folder/repo_slug`.
 
-For more options and information about Python cookiecutter, please refer to the [official cookiecutter documentation](https://cookiecutter.readthedocs.io/en/latest/).
+For additional command line options (and information about Python cookiecutter), please refer to [official cookiecutter documentation](https://cookiecutter.readthedocs.io/en/latest/advanced/cli_options.html#command-line-options).
 
 ## 4. Testing and Development
 
