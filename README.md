@@ -26,13 +26,14 @@ Please refer to the [README.md file in the template folder](%7B%7B%20cookiecutte
 
 ## 2. Setup
 
-First, you have to [install cookiecutter](https://cookiecutter.readthedocs.io/en/latest/installation.html#install-cookiecutter). For example, you can install cookiecutter in a [virtualenv](https://virtualenv.pypa.io/en/stable/) by:
+First, you have to install `cookiecutter`. For example, you can install cookiecutter in Ubuntu or Mac by:
 
-```bash
-virtualenv -p python3 venv
-source venv/bin/activate
-pip install cookiecutter
-```
+| OS              | Command                     |
+| :-------------- | :-------------------------- |
+| Ubuntu Linux    | `apt install cookiecutter`  |
+| Mac OSX         | `brew install cookiecutter` |
+
+For other methods to install `cookiecutter`, please refer to the [official documentation](https://cookiecutter.readthedocs.io/en/latest/installation.html#install-cookiecutter).
 
 Then, "baking" a template is straightforward:
 
@@ -44,7 +45,7 @@ cookiecutter https://github.com/sertansenturk/cookiecutter-ds-docker
 *cookiecutter* will ask you to fill a few variables, namely:
 
 | Variable        | Explanation                                    | Modifies |
-| --------------- | ---------------------------------------------- | - |
+| :-------------- | :--------------------------------------------  | :- |
 | repo_name       | Name of the repository                         | Header of `README.md` |
 | repo_slug       | Slug of the repository name                    | Repository folder name, GitHub URL, explanations in `README.md` |
 | package_name    | Name of the Python package in the project      | Python package name, `setup.py`, `tox.ini`, unittests, explanations in `README.md` |
