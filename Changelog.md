@@ -3,7 +3,7 @@
 ## v0.8.0
 
 - Increment `mlflow` version to 1.8.*
-- Add Github issue and PR templates into cookiecutter project
+- Add Github issue and PR templates into the cookiecutter project
 
 ## v0.7.0
 
