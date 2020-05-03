@@ -180,7 +180,6 @@ run:
 	docker-compose run ${RUN_OPTS}
 
 down:
-	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} \
 	docker-compose down ${DOWN_OPTS}
 down-all: DOWN_OPTS:=${DOWN_ALL_OPTS}
 down-all: down
