@@ -84,6 +84,8 @@ help:
 	@printf "$(pretty_command): run automated checks inside \"python-dev\" using tox\n" tox
 	@printf "\n"
 	@printf "========= Misc =======\n"
+	@printf "$(pretty_command): create the local mlflow artifact store\n" ${MLFLOW_ARTIFACT_STORE}
+	@printf "$(pretty_command): create the local posgres store\n" ${POSTGRES_STORE}
 	@printf "$(pretty_command): identify applications, which are bound to the given port. Useful for freeing ports from phantom tasks\n" find-port-usage
 	@printf "$(padded_str)CHK_PORT, Port to check (default: $(CHK_PORT))\n"
 	@printf "$(pretty_command): send a job debug request to travis\n" debug-travis
@@ -159,8 +161,13 @@ build:
 	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} \
 	docker-compose build ${BUILD_OPTS}
 
-up: 
-	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
+${MLFLOW_ARTIFACT_STORE}:
+	mkdir -p ${MLFLOW_ARTIFACT_STORE}
+
+${POSTGRES_STORE}:
+	mkdir -p ${POSTGRES_STORE}
+
+up: ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
 	JUPYTER_BASE_IMAGE=${JUPYTER_BASE_IMAGE} JUPYTER_BASE_VERSION=${JUPYTER_BASE_VERSION} \
 	JUPYTER_TARGET=${JUPYTER_TARGET} \
 	JUPYTER_CHOWN_EXTRA=${JUPYTER_CHOWN_EXTRA} \
@@ -169,8 +176,7 @@ up:
 	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} \
 	docker-compose up ${UP_OPTS}
 
-run:
-	mkdir -p ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
+run: ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
 	JUPYTER_BASE_IMAGE=${JUPYTER_BASE_IMAGE} JUPYTER_BASE_VERSION=${JUPYTER_BASE_VERSION} \
 	JUPYTER_TARGET=${JUPYTER_TARGET} \
 	JUPYTER_CHOWN_EXTRA=${JUPYTER_CHOWN_EXTRA} \
