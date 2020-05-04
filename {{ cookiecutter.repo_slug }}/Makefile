@@ -166,10 +166,6 @@ ${MLFLOW_ARTIFACT_STORE}:
 
 ${POSTGRES_STORE}:
 	mkdir -p ${POSTGRES_STORE}
-	chown 1000:1000 ${POSTGRES_STORE}
-# chown 1000:1000 is needed to "fake" /etc/passwd contents for initdb
-# do not change 1000:1000
-# see: https://github.com/docker-library/docs/tree/master/postgres#arbitrary---user-notes
 
 up: ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
 	JUPYTER_BASE_IMAGE=${JUPYTER_BASE_IMAGE} JUPYTER_BASE_VERSION=${JUPYTER_BASE_VERSION} \
