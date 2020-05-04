@@ -2,7 +2,8 @@ FROM python:3.7
 
 EXPOSE 5000
 
-RUN pip install mlflow==1.7.* psycopg2==2.8.* && \
+ARG MLFLOW_VERSION
+RUN pip install mlflow==$MLFLOW_VERSION psycopg2==2.8.* && \
     mkdir -p /server
 
 COPY ./scripts/wait-for-it.sh /server/

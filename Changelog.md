@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.8.0
+
+- Increment `mlflow` version to 1.8.*
+- Add Github issue and PR templates into the cookiecutter project
+- Simplify Jupyter multi-stage builds
+- Update `cookiecutter` installation instructions in the `README.md`
+
 ## v0.7.0
 
 - Convert the repo into a [cookiecutter template](https://github.com/cookiecutter/cookiecutter)

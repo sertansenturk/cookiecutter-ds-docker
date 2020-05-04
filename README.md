@@ -8,7 +8,8 @@ A Docker-based Data Science cookiecutter
 
 - [1. Introduction](#1-introduction)
 - [2. Setup](#2-setup)
-- [4. Testing and Development](#4-testing-and-development)
+- [3. Running a Baked Project](#3-running-a-baked-project)
+- [4. Testing and Developing the Template](#4-testing-and-developing-the-template)
 - [5. License](#5-license)
 - [6. Authors](#6-authors)
 
@@ -26,38 +27,50 @@ Please refer to the [README.md file in the template folder](%7B%7B%20cookiecutte
 
 ## 2. Setup
 
-First, you have to [install cookiecutter](https://cookiecutter.readthedocs.io/en/latest/installation.html#install-cookiecutter). For example, you can install cookiecutter in a [virtualenv](https://virtualenv.pypa.io/en/stable/) by:
+First, you have to install `cookiecutter`. For example, you can install cookiecutter in Ubuntu or Mac by:
+
+| OS              | Command                     |
+| :-------------- | :-------------------------- |
+| Ubuntu Linux    | `apt install cookiecutter`  |
+| Mac OSX         | `brew install cookiecutter` |
+
+For other methods to install `cookiecutter`, please refer to the [official documentation](https://cookiecutter.readthedocs.io/en/latest/installation.html#install-cookiecutter).
+
+Then, "baking" the template is straightforward:
 
 ```bash
-virtualenv -p python3 venv
-source venv/bin/activate
-pip install cookiecutter
-```
-
-Then, "baking" a template is straightforward:
-
-```bash
-cd /base_folder
+cd /[base_folder]
 cookiecutter https://github.com/sertansenturk/cookiecutter-ds-docker
 ```
 
 *cookiecutter* will ask you to fill a few variables, namely:
 
 | Variable        | Explanation                                    | Modifies |
-| --------------- | ---------------------------------------------- | - |
+| :-------------- | :--------------------------------------------  | :- |
 | repo_name       | Name of the repository                         | Header of `README.md` |
 | repo_slug       | Slug of the repository name                    | Repository folder name, GitHub URL, explanations in `README.md` |
 | package_name    | Name of the Python package in the project      | Python package name, `setup.py`, `tox.ini`, unittests, explanations in `README.md` |
 | author_name     | Name of the authoring person/team/organization | authors information in `setup.py` and `README.md` |
 | author_email    | E-mail to contact the author                   | authors information in `setup.py` and `README.md` |
-| github_username | Github username                                | `setup.py`, GitHub URL, explanations in `README.md` |
+| github_username | Github username                                | GitHub URL, `setup.py`, explanations in `README.md` |
 | description     | A short description of the project             | explanations in `setup.py` and `README.md` |
 
-Afterward, the project will be created in `/base_folder/repo_slug`.
+Afterward, the project will be created in `/[base_folder]/[repo_slug]`.
 
-For more options and information about Python cookiecutter, please refer to the [official cookiecutter documentation](https://cookiecutter.readthedocs.io/en/latest/).
+For additional command line options and information about Python cookiecutter, please refer to [official cookiecutter documentation](https://cookiecutter.readthedocs.io/en/latest/advanced/cli_options.html#command-line-options).
 
-## 4. Testing and Development
+## 3. Running a Baked Project
+
+To build and run the Docker stack in a baked project, simply run:
+
+```bash
+cd /[base_folder]/[repo_slug]
+make
+```
+
+Please refer to the [README.md file in the template folder](%7B%7B%20cookiecutter.repo_slug%20%7D%7D/README.md) for other commands.
+
+## 4. Testing and Developing the Template
 
 You can test the cookiecutter, the baked services, and the Python package (e.g., build, unittest, code style, linting) locally by:
 
