@@ -8,7 +8,6 @@ ARG SERVER_DIR=/server
 RUN pip install mlflow==$MLFLOW_VERSION psycopg2==2.8.* && \
     mkdir -p ${SERVER_DIR}
 
-COPY ./scripts/run_mlflow.sh ${SERVER_DIR}/
 COPY ./scripts/wait-for-it.sh ${SERVER_DIR}/
 RUN chmod +x ${SERVER_DIR}/wait-for-it.sh
 
