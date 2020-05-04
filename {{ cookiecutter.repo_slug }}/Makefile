@@ -166,6 +166,8 @@ ${MLFLOW_ARTIFACT_STORE}:
 
 ${POSTGRES_STORE}:
 	mkdir -p ${POSTGRES_STORE}
+	chown ${POSTGRES_UID}:${POSTGRES_GID} ${POSTGRES_STORE}
+# chown is needed for initdb, see: https://github.com/docker-library/docs/tree/master/postgres#arbitrary---user-notes
 
 up: ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
 	JUPYTER_BASE_IMAGE=${JUPYTER_BASE_IMAGE} JUPYTER_BASE_VERSION=${JUPYTER_BASE_VERSION} \
