@@ -4,6 +4,7 @@
 
 - Increment `mlflow` version to 1.8.*
 - Add Github issue and PR templates into the cookiecutter project
+- Simplify Jupyter multi-stage builds
 
 ## v0.7.0
 
