@@ -12,7 +12,8 @@ RUN chmod +x /server/wait-for-it.sh
 WORKDIR /server
 
 # wait as long as 60 seconds for posgres to init db, which takes a lot of time particularly in mac osx
-CMD ./wait-for-it.sh ${MLFLOW_BACKEND_STORE}:${POSTGRES_PORT} -t 60 -- mlflow server \
+CMD ./wait-for-it.sh ${MLFLOW_BACKEND_STORE}:${POSTGRES_PORT} -t 60 -- \
+    mlflow server \
     --backend-store-uri postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${MLFLOW_BACKEND_STORE}:${POSTGRES_PORT}/${POSTGRES_DATABASE} \
     --default-artifact-root /${MLFLOW_ARTIFACT_STORE} \
     --host ${MLFLOW_TRACKING_SERVER_HOST} \

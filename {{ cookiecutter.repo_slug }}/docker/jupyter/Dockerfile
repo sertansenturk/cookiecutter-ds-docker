@@ -54,5 +54,9 @@ RUN pip install -r ${TEST_DIR}/requirements.test.txt
 
 COPY ./tests/docker ${TEST_DIR}/docker
 COPY ./docker/jupyter/scripts/run_pytest.sh ${TEST_DIR}/
+COPY ./docker/jupyter/scripts/wait-for-it.sh ${TEST_DIR}/
+USER root
+RUN chmod +x ${TEST_DIR}/wait-for-it.sh
+USER $NB_UID
 
 WORKDIR ${TEST_DIR}
