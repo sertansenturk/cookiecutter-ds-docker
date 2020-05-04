@@ -1,7 +1,7 @@
 ############## custom jupyter image ###############
 ARG JUPYTER_BASE_IMAGE
 ARG JUPYTER_BASE_VERSION
-FROM jupyter/${JUPYTER_BASE_IMAGE}:${JUPYTER_BASE_VERSION} AS jupyter-custom
+FROM jupyter/${JUPYTER_BASE_IMAGE}:${JUPYTER_BASE_VERSION} AS jupyter
 
 ARG MLFLOW_ARTIFACT_STORE
 ARG MLFLOW_VERSION
@@ -27,9 +27,6 @@ RUN ldconfig && \
 
 USER $NB_UID
 
-################# development image ###############
-FROM jupyter-custom AS editable
-
 # Install Python dependencies from requirements.txt in advance
 # Useful for development since changes in code will not trigger a layer re-build
 COPY ./requirements.txt $WORK_DIR/
@@ -48,7 +45,7 @@ WORKDIR $WORK_DIR
 RUN pip install -e .
 
 ################## test image ###################
-FROM editable AS test
+FROM jupyter AS test
 
 ARG TEST_DIR=/tests
 
