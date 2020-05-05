@@ -2,7 +2,7 @@
 
 ## v0.8.1
 
-- Fix Mac OSX integration ([Pull Request #31](https://github.com/sertansenturk/cookiecutter-ds-docker/pull/31))
+- Fix a docker stack start-up issue in Mac OSX ([Pull Request #31](https://github.com/sertansenturk/cookiecutter-ds-docker/pull/31))
 
 ## v0.8.0
 
