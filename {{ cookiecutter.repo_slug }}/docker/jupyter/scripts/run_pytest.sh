@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
 
-sleep 5
-echo "Running pytest as $USER with uid $UID"
-pytest -vv "$(pwd)/docker"
+./wait-for-it.sh $1:$2 -t $3 -- \
+    echo "Running pytest as $USER with uid $UID" && \
+    pytest -vv "$(pwd)/docker"

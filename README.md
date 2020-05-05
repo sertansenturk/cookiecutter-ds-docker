@@ -49,10 +49,10 @@ cookiecutter https://github.com/sertansenturk/cookiecutter-ds-docker
 | :-------------- | :--------------------------------------------  | :- |
 | repo_name       | Name of the repository                         | Header of `README.md` |
 | repo_slug       | Slug of the repository name                    | Repository folder name, GitHub URL, explanations in `README.md` |
-| package_name    | Name of the Python package in the project      | Python package name, `setup.py`, `tox.ini`, unittests, explanations in `README.md` |
-| author_name     | Name of the authoring person/team/organization | authors information in `setup.py` and `README.md` |
-| author_email    | E-mail to contact the author                   | authors information in `setup.py` and `README.md` |
-| github_username | Github username                                | GitHub URL, `setup.py`, explanations in `README.md` |
+| package_name    | Name of the Python package in the project      | Python package name, `setup.py`, `tox.ini`, unittests, docker image names, explanations in `README.md` |
+| author_name     | Name of the authoring person/team/organization | author name in `setup.py` and `README.md` |
+| author_email    | E-mail to contact the author                   | author e-mail in `setup.py`, `CODE_OF_CONDUCT.md` and `README.md` |
+| github_username | Github username                                | GitHub URL, URLs in `setup.py`, docker image names, explanations in `README.md` |
 | description     | A short description of the project             | explanations in `setup.py` and `README.md` |
 
 Afterward, the project will be created in `/[base_folder]/[repo_slug]`.
