@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.9.0
+
+- Add LICENSE file to the base folder ([Pull Request #33](https://github.com/sertansenturk/cookiecutter-ds-docker/pull/33))
+
 ## v0.8.1
 
 - Fix a docker stack start-up issue in Mac OSX ([Pull Request #31](https://github.com/sertansenturk/cookiecutter-ds-docker/pull/31))
