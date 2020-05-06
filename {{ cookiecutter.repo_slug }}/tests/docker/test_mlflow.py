@@ -14,7 +14,8 @@ def logs():
     }
     metric = {
         "key": "metric1",
-        "val": list(range(10))
+        "step": list(range(10)),
+        "val": [i**2 for i in range(10)]
     }
     tag = {
         "key": "tag_key1",
@@ -61,8 +62,8 @@ def test_mlflow_log_to_backend(logs):
     def mlflow_commands():
         mlflow.log_params(logs["parameters"])
 
-        for vv in logs["metric"]["val"]:
-            mlflow.log_metric(logs["metric"]["key"], vv)
+        for ss, vv in zip(logs["metric"]["step"], logs["metric"]["val"]):
+            mlflow.log_metric(logs["metric"]["key"], vv, step=ss)
 
         mlflow.set_tag(logs["tag"]["key"], logs["tag"]["val"])
 
@@ -93,9 +94,10 @@ def test_mlflow_get_metric(logs):
     # WHEN
     metric = mlflow_client().get_metric_history(run_id, logs["metric"]["key"])
     metric_vals = [mm.value for mm in metric]
+    metric_steps = [mm.step for mm in metric]
 
     #THEN
-    assert metric_vals == logs["metric"]["val"]
+    assert (metric_vals == logs["metric"]["val"]) and (metric_steps == logs["metric"]["step"])
 
 
 @pytest.mark.dependency()
