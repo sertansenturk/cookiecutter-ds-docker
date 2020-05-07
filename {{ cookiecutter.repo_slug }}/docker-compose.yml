@@ -11,7 +11,7 @@ services:
         - MLFLOW_VERSION=${MLFLOW_VERSION}
         - JUPYTER_BASE_IMAGE=${JUPYTER_BASE_IMAGE}
         - JUPYTER_BASE_VERSION=${JUPYTER_BASE_VERSION}
-    image: ${IMAGE_OWNER}/${REPO_NAME}/${JUPYTER_TARGET}:${VERSION}
+    image: ${IMAGE_OWNER}/${REPO_SLUG}/${JUPYTER_TARGET}:${VERSION}
     ports:
       - "${JUPYTER_PORT}:${JUPYTER_PORT}"
     depends_on: 
@@ -33,7 +33,7 @@ services:
       context: ./docker/mlflow
       args:
         - MLFLOW_VERSION=${MLFLOW_VERSION}
-    image: ${IMAGE_OWNER}/${REPO_NAME}/${MLFLOW_IMAGE_NAME}:${VERSION}
+    image: ${IMAGE_OWNER}/${REPO_SLUG}/${MLFLOW_IMAGE_NAME}:${VERSION}
     expose: 
       - "${MLFLOW_TRACKING_SERVER_PORT}"
     ports:
@@ -56,7 +56,7 @@ services:
     user: "${POSTGRES_UID}:${POSTGRES_GID}"
     build:
       context: ./docker/postgres
-    image: ${IMAGE_OWNER}/${REPO_NAME}/${POSTGRES_IMAGE_NAME}:${VERSION}
+    image: ${IMAGE_OWNER}/${REPO_SLUG}/${POSTGRES_IMAGE_NAME}:${VERSION}
     restart: always
     environment: 
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
