@@ -29,23 +29,6 @@ Typical commands to interact are wrapped in a `Makefile`. Below, we explain the 
 make help
 ```
 
-## 2. Setup
-
-To build the stack, run:
-
-```bash
-make build
-```
-
-If you need to make a clean start:
-
-```bash
-make clean-all
-make build
-```
-
-This project installs a Python package called `{{ cookiecutter.package_name }}` to the Jupyter docker service, which located at [./src](src). By default, the package is "pip installed" in **editable** mode, and the **project's base folder is mounted** on the docker container so all changes are synchronized.
-
 ## 3. Running the Services
 
 To start the stack with [JupyterLab](https://jupyterlab.readthedocs.io/en/stable/), run:
@@ -54,7 +37,7 @@ To start the stack with [JupyterLab](https://jupyterlab.readthedocs.io/en/stable
 make
 ```
 
-Note that the above commands also stops running stacks (if exist), cleans, and rebuilds the services to ensure that all everything is up-to-date.
+The above command stops running stacks (if exist), cleans, (re)builds, and starts the services. It also installs a Python package called `{{ cookiecutter.package_name }}` to the Jupyter docker service. The package is located at from [./src](src). By default, it is "pip installed" in **editable** mode, and the **project's base folder is mounted** on the docker container so all changes are synchronized.
 
 By default, we base the Jupyter service on the official [scipy-notebook](https://hub.docker.com/r/jupyter/scipy-notebook/tags) image. You can also build & run from [tensorflow](https://hub.docker.com/r/jupyter/tensorflow-notebook/tags) or [pyspark](https://hub.docker.com/r/jupyter/pyspark-notebook/tags) notebooks by:
 
@@ -73,9 +56,24 @@ Once the service is running, you will see a link on the terminal, e.g., http://1
 
 You can reach the mlflow UI at [http://localhost:5000](http://localhost:5000). For a simple example on how to track a run, please refer to [notebooks/mlflow_example.ipynb](notebooks/mlflow_example.ipynb)
 
+## 2. Setup
+
+If you want to build the stack without starting it, run:
+
+```bash
+make build
+```
+
+If you need to make a clean start:
+
+```bash
+make clean-all
+make build
+```
+
 ## 4. Testing and Development
 
-You can test the functionalities of the services (e.g., if `mlflow` logging functionality from the Jupyter service is correct) automatically by running the docker-compose stack in test mode. You can run the test stack locally by:
+You can test the functionalities of the services (e.g., `mlflow` logging from the Jupyter service) automatically by running the docker-compose stack in test mode by executing:
 
 ```bash
 make test
