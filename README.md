@@ -1,6 +1,6 @@
 # cookiecutter-ds-docker
 
-A Docker-based Data Science cookiecutter
+A Docker-based Data Science cookiecutter (for myself)
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/sertansenturk/cookiecutter-ds-docker) [![Build Status](https://travis-ci.com/sertansenturk/cookiecutter-ds-docker.svg?branch=master)](https://travis-ci.com/sertansenturk/cookiecutter-ds-docker) [![codecov](https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/branch/master/graph/badge.svg)](https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker) [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-ff69b4.svg)](http://www.gnu.org/licenses/agpl-3.0) [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-ff69b4.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
 
@@ -8,10 +8,11 @@ A Docker-based Data Science cookiecutter
 
 - [1. Introduction](#1-introduction)
 - [2. Setup](#2-setup)
-- [3. Running a Baked Project](#3-running-a-baked-project)
-- [4. Testing and Developing the Template](#4-testing-and-developing-the-template)
-- [5. License](#5-license)
-- [6. Authors](#6-authors)
+- [3. Quickstart](#3-quickstart)
+- [4. Testing](#4-testing)
+- [5. Documentation](#5-documentation)
+- [6. License](#6-license)
+- [7. Authors](#7-authors)
 
 ## 1. Introduction
 
@@ -59,7 +60,7 @@ Afterward, the project will be created in `/[base_folder]/[repo_slug]`.
 
 For additional command line options and information about Python cookiecutter, please refer to [official cookiecutter documentation](https://cookiecutter.readthedocs.io/en/latest/advanced/cli_options.html#command-line-options).
 
-## 3. Running a Baked Project
+## 3. Quickstart
 
 To build and run the Docker stack in a baked project, simply run:
 
@@ -70,7 +71,7 @@ make
 
 Please refer to the [README.md file in the template folder](%7B%7B%20cookiecutter.repo_slug%20%7D%7D/README.md) for other commands.
 
-## 4. Testing and Developing the Template
+## 4. Testing
 
 You can test the cookiecutter, the baked services, and the Python package (e.g., build, unittest, code style, linting) locally by:
 
@@ -80,11 +81,21 @@ make test
 
 This repo also has Travis CI integration enabled ([link](https://travis-ci.com/github/sertansenturk/cookiecutter-ds-docker)). This service automatically runs all of the checks mentioned above after each push. Travis CI also generates code coverage reports for the Python package, which you can view on codecov ([link](https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/)).
 
-## 5. License
+## 5. Documentation
+
+We use [Sphinx](https://www.sphinx-doc.org) for the documentation. If you would like to build the documentation locally, you need to run:
+
+```bash
+make sphinx-html
+```
+
+You can then access the documentation by opening `./docs/_build/html/index.html` on your browser.
+
+## 6. License
 
 The source code hosted in this repository is licensed under [Affero GPL version 3](https://www.gnu.org/licenses/agpl-3.0.en.html). Any data (features, models,  figures, results, etc.) in this repository are licensed under [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
 
-## 6. Authors
+## 7. Authors
 
 Sertan Şentürk  
 contact@sertansenturk.com
