@@ -1,6 +1,6 @@
 {
-    "repo_name": "repo_name",
-    "repo_slug": "{{ cookiecutter.repo_name.lower().replace(' ', '_').replace('-', '_') }}",
+    "repo_name": "Repository Name",
+    "repo_slug": "{{ cookiecutter.repo_name.lower().replace(' ', '-').replace('_', '-') }}",
     "package_name": "{{ cookiecutter.repo_slug.replace('-', '_') }}",
     "author_name": "Sertan Şentürk",
     "author_email": "contact@sertansenturk.com",
