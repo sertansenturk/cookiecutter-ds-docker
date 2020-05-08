@@ -1,10 +1,12 @@
 Documentation
 ==================================================
 
-We use `Sphinx <https://www.sphinx-doc.org>`_ for the documentation. If you would like to build the documentation locally, you need to run:
+We use `Sphinx <https://www.sphinx-doc.org>`_ for the documentation. The documentation is hosted online at `Read the Docs <https://cookiecutter-ds-docker.readthedocs.io>`_.
+
+If you would like to build the documentation locally, you need to run:
 
 .. code:: bash
 
     make sphinx-html
 
-You can then access the documentation by opening ``./docs/_build/html/index.html`` on your browser.
+Then, you can then access the documentation by opening ``./docs/_build/html/index.html`` on your browser.

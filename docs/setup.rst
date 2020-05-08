@@ -1,19 +1,40 @@
 Setup
 ==================================================
 
-First, you have to install ``cookiecutter``. For example, you can install cookiecutter in Ubuntu or Mac by:
+Prequisites
+---------------------------------------------------
 
-+--------------------+---------------------------------+
-| OS                 | Command                         |
-+====================+=================================+
-| *Ubuntu Linux*     | ``apt install cookiecutter``    |
-+--------------------+---------------------------------+
-| *Mac OSX*          | ``brew install cookiecutter``   |
-+--------------------+---------------------------------+
+- **docker**
+- **homebrew** (Optional for *Mac OSX*)
+- **Python cookiecutter**
 
-For other methods to install ``cookiecutter``, please refer to the `official documentation <https://cookiecutter.readthedocs.io/en/latest/installation.html#install-cookiecutter>`_.
+Installing docker
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Please follow the instructions in the `official docker documentation <https://docs.docker.com/get-docker/>`_.
 
-Then, "baking" the template is straightforward:
+(Optional) Installing homebrew in Mac OSX 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The easiest way to install *cookiecutter* in Mac OSX is using *homebrew* (see below). Please follow the instructions in the `official homebrew website <https://brew.sh/>`_ to install `homebrew`.
+
+Installing cookiecutter
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Installing `cookiecutter` in Ubuntu and Mac OSX is straightforward:
+
++--------------------+-----------------------------------+
+| OS                 | Command                           |
++====================+===================================+
+| *Ubuntu Linux*     | ``sudo apt install cookiecutter`` |
++--------------------+-----------------------------------+
+| *Mac OSX*          | ``brew install cookiecutter``     |
++--------------------+-----------------------------------+
+
+Please refer to the `official cookiecutter documentation <https://cookiecutter.readthedocs.io/en/latest/installation.html#install-cookiecutter>`_ for other options.
+
+Baking a New Project
+---------------------------------------------------
+
+To "bake" a new project from the template, run:
 
 .. code:: bash
 
@@ -31,15 +52,15 @@ Then, "baking" the template is straightforward:
 +----------------------+--------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
 | *package\_name*      | Name of the Python package in the project        | Python package name, ``setup.py``, ``tox.ini``, unittests, docker image names, explanations in ``README.md``   |
 +----------------------+--------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| *author\_name*       | Name of the authoring person/team/organization   | author name in ``setup.py`` and ``README.md``                                                                  |
+| *author\_name*       | Name of the authoring person/team/organization   | Author name in ``setup.py`` and ``README.md``                                                                  |
 +----------------------+--------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| *author\_email*      | E-mail to contact the author                     | author e-mail in ``setup.py``, ``CODE_OF_CONDUCT.md`` and ``README.md``                                        |
+| *author\_email*      | E-mail to contact the author                     | Author e-mail in ``setup.py``, ``CODE_OF_CONDUCT.md`` and ``README.md``                                        |
 +----------------------+--------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
 | *github\_username*   | Github username                                  | GitHub URL, URLs in ``setup.py``, docker image names, explanations in ``README.md``                            |
 +----------------------+--------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| *description*        | A short description of the project               | explanations in ``setup.py`` and ``README.md``                                                                 |
+| *description*        | A short description of the project               | Explanations in ``setup.py`` and ``README.md``                                                                 |
 +----------------------+--------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
 
 Afterward, the project will be created in ``/[base_folder]/[repo_slug]``.
 
-For additional command line options and information about Python cookiecutter, please refer to `official cookiecutter documentation <https://cookiecutter.readthedocs.io/en/latest/advanced/cli_options.html#command-line-options>`_.
+For additional command line options, please refer to the `advanced options <https://cookiecutter.readthedocs.io/en/latest/advanced/cli_options.html#command-line-options>`_ in the official cookiecutter documentation.
