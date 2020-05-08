@@ -1,8 +1,0 @@
-version: '3.7'
-services:
-  sphinx:
-    build:
-      context: .
-    image: sertansenturk/sphinx
-    volumes:
-      - ./:/docs
