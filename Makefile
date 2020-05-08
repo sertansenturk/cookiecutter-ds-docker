@@ -3,7 +3,8 @@ SHELL := /bin/bash
 .PHONY: \
 	help default cut \
 	install test \
-	clean clean-test clean-clean-$(VENV_NAME) \
+	clean clean-test clean-clean-$(VENV_NAME) clean-$(DOCS_FOLDER) \
+	sphinx-build sphinx-quickstart sphinx-html \
 	debug-travis
 
 HELP_PADDING = 28
@@ -15,6 +16,10 @@ pretty_command := $(bold)$(padded_str)$(sgr0)
 VENV_INTERP = python3
 VENV_NAME ?= venv
 
+BUILDKIT = 1
+
+MAKEFILE_DIR = $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
+
 CUT_BASE_FOLDER = ..
 CUT_OPTS := --output-dir $(CUT_BASE_FOLDER)
 
@@ -22,6 +27,7 @@ TEST_BASE_FOLDER = .
 TEST_FOLDER = test-project
 
 DOCS_FOLDER = docs
+SPHINX_VERSION = 3.0.3
 
 TRAVIS_JOB =
 TRAVIS_TOKEN =
@@ -79,16 +85,25 @@ clean-$(VENV_NAME):
 	rm -rf $(VENV_NAME)
 
 clean-$(DOCS_FOLDER):
-	find $(DOCS_FOLDER) \
-		-not -name 'Dockerfile' \
-		-not -name 'docker-compose.yml' \
-		-not -name $(DOCS_FOLDER) \
-		-exec rm -r {} +
+	rm -rf $(DOCS_FOLDER)
+
+sphinx-build:
+	DOCKER_BUILDKIT=${BUILDKIT} \
+	docker build . \
+		-f ./docker/sphinx/Dockerfile \
+		-t sertansenturk/sphinx:$(SPHINX_VERSION)
+
+sphinx-quickstart: sphinx-build
+	mkdir -p $(DOCS_FOLDER)
+	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs sertansenturk/sphinx sphinx-quickstart
+
+sphinx-html: sphinx-build
+	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs sertansenturk/sphinx make html
 
 debug-travis:
 	curl -s -X POST \
 		-H "Content-Type: application/json" \
 		-H "Accept: application/json" -H "Travis-API-Version: 3" \
-		-H "Authorization: token ${TRAVIS_TOKEN}" \
+		-H "Authorization: token $(TRAVIS_TOKEN)" \
 		-d '{ "quiet": true }' \
-		https://api.travis-ci.com/job/${TRAVIS_JOB}/debug
+		https://api.travis-ci.com/job/$(TRAVIS_JOB)/debug
