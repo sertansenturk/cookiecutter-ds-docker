@@ -21,6 +21,8 @@ CUT_OPTS := --output-dir $(CUT_BASE_FOLDER)
 TEST_BASE_FOLDER = .
 TEST_FOLDER = test-project
 
+DOCS_FOLDER = docs
+
 TRAVIS_JOB =
 TRAVIS_TOKEN =
 
@@ -40,6 +42,7 @@ help:
 	@printf "$(pretty_command): remove everything described below\n" clean
 	@printf "$(pretty_command): remove the test project folder\n" clean-test
 	@printf "$(pretty_command): remove the virtualenv\n" clean-$(VENV_NAME)
+	@printf "$(pretty_command): remove the sphinx documentation\n" clean-$(DOCS_FOLDER)
 	@printf "\n"
 	@printf "========= Misc =======\n"
 	@printf "$(pretty_command): send a job debug request to travis\n" debug-travis
@@ -67,13 +70,20 @@ test: clean-test cut
 	make tox
 	$(MAKE) clean-test
 
-clean: clean-$(VENV_NAME) clean-test
+clean: clean-$(VENV_NAME) clean-test clean-$(DOCS_FOLDER)
 
 clean-test:
 	rm -rf $(TEST_FOLDER)
 
 clean-$(VENV_NAME):
 	rm -rf $(VENV_NAME)
+
+clean-$(DOCS_FOLDER):
+	find $(DOCS_FOLDER) \
+		-not -name 'Dockerfile' \
+		-not -name 'docker-compose.yml' \
+		-not -name $(DOCS_FOLDER) \
+		-exec rm -r {} +
 
 debug-travis:
 	curl -s -X POST \
