@@ -2,6 +2,8 @@
 
 ## v0.9.0
 
+- Added Sphinx documentation ([Pull Request #36](https://github.com/sertansenturk/cookiecutter-ds-docker/pull/36))
+- Add VERSION file to the base folder
 - Add LICENSE file to the base folder ([Pull Request #33](https://github.com/sertansenturk/cookiecutter-ds-docker/pull/33))
 - Add `step` parameter to the `mlflow.log_metrics` test case and jupyter demo
 
