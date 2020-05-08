@@ -1,6 +1,8 @@
 Quickstart
 ==================================================
 
+**Note:** You need to `install Docker <https://docs.docker.com/get-docker/>`_ as a prequisite. 
+
 To build and run the Docker stack in a baked project, simply run:
 
 .. code:: bash
