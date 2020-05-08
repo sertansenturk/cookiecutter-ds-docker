@@ -37,7 +37,7 @@ To start the stack with [JupyterLab](https://jupyterlab.readthedocs.io/en/stable
 make
 ```
 
-The above command stops running stacks (if exist), cleans, (re)builds, and starts the services. It also installs a Python package called `{{ cookiecutter.package_name }}` to the Jupyter docker service. The package is located at from [./src](src). By default, it is "pip installed" in **editable** mode, and the **project's base folder is mounted** on the docker container so all changes are synchronized.
+The above command stops running stacks (if exist), cleans, (re)builds, and starts the services. It also installs a Python package called `{{ cookiecutter.package_name }}` to the Jupyter docker service. The package is located at [./src](src). By default, it is "pip installed" in **editable** mode, and the **project's base folder is mounted** on the docker container so all changes are synchronized.
 
 By default, we base the Jupyter service on the official [scipy-notebook](https://hub.docker.com/r/jupyter/scipy-notebook/tags) image. You can also build & run from [tensorflow](https://hub.docker.com/r/jupyter/tensorflow-notebook/tags) or [pyspark](https://hub.docker.com/r/jupyter/pyspark-notebook/tags) notebooks by:
 
