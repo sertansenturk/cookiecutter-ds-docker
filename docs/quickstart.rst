@@ -1,4 +1,11 @@
 Quickstart
 ==================================================
 
-TODO
+To build and run the Docker stack in a baked project, simply run:
+
+.. code:: bash
+
+    cd /[base_folder]/[repo_slug]
+    make
+
+Please refer to the ``{{ cookiecutter.repo_slug}}/README.md`` file for other commands.
