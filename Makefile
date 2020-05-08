@@ -20,6 +20,8 @@ BUILDKIT = 1
 DOCKER_USERNAME = sertansenturk
 
 MAKEFILE_DIR = $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
+VERSION := $(shell cat VERSION)
+AUTHORS := $(shell cut -f1 AUTHORS | awk 1 ORS=', ' | head -c -2)
 
 CUT_BASE_FOLDER = ..
 CUT_OPTS := --output-dir $(CUT_BASE_FOLDER)
@@ -51,6 +53,11 @@ help:
 	@printf "$(pretty_command): remove the test project folder\n" clean-test
 	@printf "$(pretty_command): remove the virtualenv\n" clean-$(VENV_NAME)
 	@printf "$(pretty_command): remove the sphinx documentation\n" clean-$(DOCS_FOLDER)
+	@printf "\n"
+	@printf "======= Documentation ======\n"
+	@printf "$(pretty_command): builds sphinx docker image\n" sphinx-build
+	@printf "$(pretty_command): \"quickstarts\" sphinx documentation\n" sphinx-quickstart
+	@printf "$(pretty_command): builds sphinx html docs\n" sphinx-html	
 	@printf "\n"
 	@printf "========= Misc =======\n"
 	@printf "$(pretty_command): send a job debug request to travis\n" debug-travis
@@ -97,7 +104,11 @@ sphinx-build:
 
 sphinx-quickstart: sphinx-build
 	mkdir -p $(DOCS_FOLDER)
-	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs $(SPHINX_IMAGE) sphinx-quickstart
+	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs $(SPHINX_IMAGE) sphinx-quickstart \
+		-q \
+		-p cookiecutter-ds-docker \
+		-a "$(AUTHORS)" \
+		-v $(VERSION)
 
 sphinx-html: sphinx-build
 	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs $(SPHINX_IMAGE) make html
