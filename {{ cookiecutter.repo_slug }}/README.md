@@ -7,21 +7,21 @@
 ## Table of Contents
 
 - [1. Introduction](#1-introduction)
-- [2. Setup](#2-setup)
-- [3. Running the Services](#3-running-the-services)
+- [2. Running the Services](#2-running-the-services)
+- [3. Setup](#3-setup)
 - [4. Testing and Development](#4-testing-and-development)
 - [5. License](#5-license)
 - [6. Authors](#6-authors)
 
 ## 1. Introduction
 
-This project is based on [sertansenturk/cookiecutter-ds-docker](https://github.com/sertansenturk/cookiecutter-ds-docker). It consists of a docker-compose stack with the services below (See Sections [Setup](#setup) and [Running the Services](#running-the-services)):
+This project is "baked" from [sertansenturk/cookiecutter-ds-docker](https://github.com/sertansenturk/cookiecutter-ds-docker). It consists of a docker-compose stack with the services below (See Sections [Setup](#setup) and [Running the Services](#running-the-services)):
 
 1. A [Jupyter](https://jupyter.org/) service with minimal customization
 2. An [mlflow](https://mlflow.org/) tracking server to store experiments
 3. A [postgresql](https://www.postgresql.org/) database, which stores mlflow tracking information
 
-We also include a Docker image for Python test and development (See [Section: Testing and Development](#testing-and-development)).
+- It also includes a Docker image for Python test and development (See [Section: Testing and Development](#testing-and-development)).
 
 Typical commands to interact are wrapped in a `Makefile`. Below, we explain the common operations. For more options, please refer to the help by running on the terminal:
 
@@ -29,7 +29,7 @@ Typical commands to interact are wrapped in a `Makefile`. Below, we explain the 
 make help
 ```
 
-## 3. Running the Services
+## 2. Running the Services
 
 To start the stack with [JupyterLab](https://jupyterlab.readthedocs.io/en/stable/), run:
 
@@ -56,7 +56,7 @@ Once the service is running, you will see a link on the terminal, e.g., http://1
 
 You can reach the mlflow UI at [http://localhost:5000](http://localhost:5000). For a simple example on how to track a run, please refer to [notebooks/mlflow_example.ipynb](notebooks/mlflow_example.ipynb)
 
-## 2. Setup
+## 3. Setup
 
 If you want to build the stack without starting it, run:
 
@@ -85,11 +85,11 @@ We automate build, test, code style, and linting checks of the Python package, `
 make tox
 ```
 
-In addition, the repo has Travis CI integration enabled ([link](https://travis-ci.com/github/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }})). This service runs all of the checks mentioned above automatically after each push. Travis CI also generates code coverage reports for the Python package, which can be viewed on codecov ([link](https://codecov.io/gh/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/)).
+In addition, the repo has Travis CI integration enabled. Travis CI ([link](https://travis-ci.com/github/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }})) runs all of the checks mentioned above automatically after each push, and generates code coverage reports for the Python package, which can be viewed on codecov ([link](https://codecov.io/gh/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/)).
 
 ## 5. License
 
-The source code hosted in this repository is licensed under [Affero GPL version 3](https://www.gnu.org/licenses/agpl-3.0.en.html). Any data (features, models,  figures, results, etc.) in this repository are licensed under [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
+The source code hosted in this repository is licensed under [Affero GPL version 3](https://www.gnu.org/licenses/agpl-3.0.en.html). Any data (features, models,  figures, results, documentation, etc.) in this repository are licensed under [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 ## 6. Authors
 
