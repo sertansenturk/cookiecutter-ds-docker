@@ -17,6 +17,7 @@ VENV_INTERP = python3
 VENV_NAME ?= venv
 
 BUILDKIT = 1
+DOCKER_USERNAME = sertansenturk
 
 MAKEFILE_DIR = $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
@@ -28,6 +29,7 @@ TEST_FOLDER = test-project
 
 DOCS_FOLDER = docs
 SPHINX_VERSION = 3.0.3
+SPHINX_IMAGE = $(DOCKER_USERNAME)/sphinx:$(SPHINX_VERSION)
 
 TRAVIS_JOB =
 TRAVIS_TOKEN =
@@ -91,14 +93,14 @@ sphinx-build:
 	DOCKER_BUILDKIT=${BUILDKIT} \
 	docker build . \
 		-f ./docker/sphinx/Dockerfile \
-		-t sertansenturk/sphinx:$(SPHINX_VERSION)
+		-t $(SPHINX_IMAGE)
 
 sphinx-quickstart: sphinx-build
 	mkdir -p $(DOCS_FOLDER)
-	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs sertansenturk/sphinx sphinx-quickstart
+	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs $(SPHINX_IMAGE) sphinx-quickstart
 
 sphinx-html: sphinx-build
-	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs sertansenturk/sphinx make html
+	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs $(SPHINX_IMAGE) make html
 
 debug-travis:
 	curl -s -X POST \
