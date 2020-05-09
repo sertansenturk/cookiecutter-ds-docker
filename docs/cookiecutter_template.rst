@@ -78,7 +78,7 @@ For additional command line options, please refer to the `advanced options <http
 Development and Local Usage
 *****************************************
 
-You should clone the repo, if you would like to use *cookiecutter-ds-docker* locally or further develop the template:
+You should clone the repo, if you would like to use *cookiecutter-ds-docker* locally or develop the template further:
 
 .. code:: bash
 
