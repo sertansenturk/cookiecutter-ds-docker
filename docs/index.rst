@@ -37,16 +37,8 @@ Please refer to the ``{{ cookiecutter.repo_slug}}/README.md`` file for more info
    quickstart
    testing
    documentation
-
-License
-----------
-
-The source code is licensed under `Affero GPL version 3 <https://www.gnu.org/licenses/agpl-3.0.en.html>`_. Any data (features, models, figures, results, documentation, etc.) are licensed under `Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License <http://creativecommons.org/licenses/by-nc-sa/4.0/>`_.
-
-Authors
-----------
-
-Sertan Şentürk - contact@sertansenturk.com
+   credits
+   licenses
 
 .. Indices and tables
    ==================
@@ -54,3 +46,4 @@ Sertan Şentürk - contact@sertansenturk.com
    * :ref:`genindex`
    * :ref:`modindex`
    * :ref:`search`
+

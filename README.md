@@ -24,7 +24,7 @@ This repo hosts a personalized, Docker-based [cookiecutter](https://cookiecutter
 
 ## 2. Documentation
 
-Please refer to [Read The Docs](https://cookiecutter-ds-docker.readthedocs.io/en/latest/) for the documentation.
+Please refer to [Read The Docs](https://cookiecutter-ds-docker.readthedocs.io) for the documentation.
 
 ## 3. Quickstart
 
