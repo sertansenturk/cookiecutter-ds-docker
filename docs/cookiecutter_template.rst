@@ -1,23 +1,31 @@
-Setup
-==================================================
+.. sectnum:: 
 
-Prerequisites
----------------------------------------------------
+#########################################
+Cookiecutter Template
+#########################################
+
+*****************************************
+Setup
+*****************************************
+
+``cookiecutter-ds-docker`` requires these tools as a prerequisite:
 
 - **docker**
 - **homebrew** (Optional for *Mac OSX*)
 - **Python cookiecutter**
 
 Installing docker
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+=========================================
+
 Please follow the instructions in the `official docker documentation <https://docs.docker.com/get-docker/>`_.
 
-(Optional) Installing homebrew in Mac OSX 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The easiest way to install *cookiecutter* in Mac OSX is using *homebrew* (see below). Please follow the instructions in the `official homebrew website <https://brew.sh/>`__ to install `homebrew`.
+(Optional) Installing homebrew in Mac OSX
+=========================================
+
+*homebrew* is the easiest way to install *cookiecutter* in Mac OSX (see below). Please follow the instructions in the `official website <https://brew.sh/>`__, if you wish to install `homebrew`.
 
 Installing cookiecutter
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+=========================================
 
 Installing `cookiecutter` in Ubuntu and Mac OSX is straightforward:
 
@@ -29,10 +37,11 @@ Installing `cookiecutter` in Ubuntu and Mac OSX is straightforward:
 | *Mac OSX*          | ``brew install cookiecutter``     |
 +--------------------+-----------------------------------+
 
-Please refer to the `official cookiecutter documentation <https://cookiecutter.readthedocs.io/en/latest/installation.html#install-cookiecutter>`__ for other options.
+Please refer to the `official cookiecutter documentation <https://cookiecutter.readthedocs.io/en/latest/installation.html#install-cookiecutter>`__ for alternatives.
 
+*****************************************
 Cutting a New Project
----------------------------------------------------
+*****************************************
 
 To "cut" a new project from the template, run:
 
@@ -65,23 +74,59 @@ Afterward, the project will be created in ``/{ base_folder }/{{ cookiecutter.rep
 
 For additional command line options, please refer to the `advanced options <https://cookiecutter.readthedocs.io/en/latest/advanced/cli_options.html#command-line-options>`__ in the official cookiecutter documentation.
 
-Building the Docker Stack
--------------------------
+*****************************************
+Development and Local Usage
+*****************************************
 
-.. Note::
-
-   Project functionality: XX
-
-If you want to build the stack from the cut project without starting it, run:
+You should clone the repo, if you would like to use *cookiecutter-ds-docker* locally or further develop the template:
 
 .. code:: bash
 
-    cd /{ base_folder }/{{ cookiecutter.repo_slug }}
-    make build
+   git clone https://github.com/sertansenturk/cookiecutter-ds-docker.git
+   cd cookiecutter-ds-docker
 
-If you need to make a clean start:
+The common commands to interact with ``cookiecutter-ds-docker`` are wrapped in a ``Makefile``. For available commands, please refer to the help by running on the terminal:
+
+   .. code:: bash
+
+      make help
+
+Cutting a New Project Locally
+=========================================
+
+You can cut a project by running:
 
 .. code:: bash
 
-    make clean-all
-    make build
+    make
+
+and entering the variables as `explained above <#cutting-a-new-project>`__. The project will be created at ``../{{ cookiecutter.repo_slug }}`` relative to the ``./cookiecutter-ds-docker`` folder.
+
+Running Tests Locally
+=========================================
+
+You can test the cookiecutter template - as well as the `tests inside the project <ds_docker_project.html#testing>`__ - by running:
+
+.. code:: bash
+
+    make test
+
+Running Tests in Travis CI
+=========================================
+
+``cookiecutter-ds-docker`` has *Travis CI* integration (`link <https://travis-ci.com/github/sertansenturk/cookiecutter-ds-docker>`__), where all of the test above are run automatically after each push. 
+
+*Travis CI* also generates code coverage reports for the starter Python package (`see Python Tests in the Project <ds_docker_project.html#python>`__), which can be viewed on *codecov* (`link <https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/>`__).
+
+Documentation
+=========================================
+
+We use `Sphinx <https://www.sphinx-doc.org>`__ for documentation. The documentation is hosted online at `Read the Docs <https://cookiecutter-ds-docker.readthedocs.io>`_, which automatically publishes and updates a version for *master* and *dev* branches, and for each release in *Github*,.
+
+If you would like to build it locally, you need to run:
+
+.. code:: bash
+
+    make sphinx-html
+
+Then, you can then access the documentation by opening ``./docs/_build/html/index.html`` on your browser.
