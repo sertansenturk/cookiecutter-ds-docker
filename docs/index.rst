@@ -39,6 +39,7 @@ Please refer to the ``{{ cookiecutter.repo_slug}}/README.md`` file for more info
    documentation
    credits
    licenses
+   changelog
 
 .. Indices and tables
    ==================
