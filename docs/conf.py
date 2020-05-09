@@ -62,3 +62,6 @@ html_context = {
         '_static/theme_overrides.css',  # override wide tables in RTD theme
         ],
      }
+
+# Sphinx master doc
+master_doc = 'index'
