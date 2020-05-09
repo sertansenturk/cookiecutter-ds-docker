@@ -1,4 +1,5 @@
-FROM sphinxdoc/sphinx
+ARG SPHINX_VERSION
+FROM sphinxdoc/sphinx:${SPHINX_VERSION}
 
 RUN useradd -ms /bin/bash sphinxuser && \
     chown -R sphinxuser /docs && \
