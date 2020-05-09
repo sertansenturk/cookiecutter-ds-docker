@@ -4,24 +4,23 @@ Changelog
 v0.9.0
 ------
 
--  Add Sphinx documentation (`Pull Request
-   #36 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/36>`__)
+-  Add Sphinx documentation (Pull Request
+   `#36 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/36>`__)
 -  Create online documentation at `Read the
    Docs <https://readthedocs.org/projects/cookiecutter-ds-docker/>`__
--  Create Sphinx docker image and makefile recipes for local development
--  Change local cookiecutter processes from virtualenv to a Docker
-   container
+-  Move Sphinx docker image and makefile recipes for local development
+-  Port local cookiecutter processes from virtualenv to docker
 -  Add VERSION file to the base folder
--  Add LICENSE file to the base folder (`Pull Request
-   #33 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/33>`__)
+-  Add LICENSE file to the base folder (Pull Request
+   `#33 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/33>`__)
 -  Add ``step`` parameter to the ``mlflow.log_metrics`` test case and
    jupyter demo
 
 v0.8.1
 ------
 
--  Fix a docker stack start-up issue in Mac OSX (`Pull Request
-   #31 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/31>`__)
+-  Fix docker stack start-up failure in Mac OSX (Pull Request
+   `#31 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/31>`__)
 
 v0.8.0
 ------

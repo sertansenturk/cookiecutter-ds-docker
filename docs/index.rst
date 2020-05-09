@@ -37,8 +37,8 @@ Please refer to the ``{{ cookiecutter.repo_slug}}/README.md`` file for more info
    quickstart
    testing
    documentation
-   credits
    licenses
+   credits
    changelog
 
 .. Indices and tables
@@ -47,4 +47,3 @@ Please refer to the ``{{ cookiecutter.repo_slug}}/README.md`` file for more info
    * :ref:`genindex`
    * :ref:`modindex`
    * :ref:`search`
-
