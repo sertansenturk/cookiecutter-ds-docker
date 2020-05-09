@@ -24,8 +24,8 @@ A project cut from ``cookiecutter-ds-docker`` consists of a docker-compose stack
 We mount several folders from our host to these services:
 
 - The project base folder, ``./``, is mounted on the *Jupyter docker* container so that all modifications are synchronized immediately.
-- The folder, ``./data/artifacts``, where the artifacts logged by *mlflow* are stored by default, is mounted to the *Jupyter* and *mlflow* services.
-- The *posgres data folder*, ``/var/lib/postgresql/data`` inside the container, is mounted locally on ``./data/db/`` to keep the database intact, even after stopping the stack. 
+- The folder, ``./data/artifacts``, where the artifacts logged by *mlflow* are stored by default, is mounted on the *Jupyter* and *mlflow* services.
+- The *posgres data folder*, ``/var/lib/postgresql/data`` inside the container, is mounted locally on ``./data/db/`` to keep the database intact, after stopping the stack. 
 
 Python development
 =========================================
@@ -109,12 +109,12 @@ Build, code style, linting checks and unittests of the starter Python packageis 
 
     make tox
 
-This command builds a ``python-dev`` *docker* image, and runs the Python tests inside a container automatically.
+This command builds a ``python-dev`` *docker* image, and runs the Python tests inside a container.
 
 Docker Stack
 =========================================
 
-You can test the integration of the Docker services (e.g., ``mlflow`` logging from the Jupyter service) automatically by running the *docker-compose* stack in "test" mode by executing:
+You can test the integration of the Docker services (e.g., sending log requests to *mlflow tracking server* from the *Jupyter* service) automatically by running the *docker-compose* stack in "test" mode by executing:
 
 .. code:: bash
 
