@@ -27,14 +27,12 @@ cookiecutter-ds-docker
 
 The template also includes a Docker image for Python test and development.
 
-Please refer to the ``{{ cookiecutter.repo_slug}}/README.md`` file for more information on the functionality.
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    setup
-   quickstart
+   run_services
    testing
    documentation
    licenses

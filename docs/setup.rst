@@ -38,7 +38,7 @@ To "cut" a new project from the template, run:
 
 .. code:: bash
 
-    cd /[base_folder]
+    cd /{ base_folder }
     cookiecutter https://github.com/sertansenturk/cookiecutter-ds-docker
 
 *cookiecutter* will ask you to fill a few variables, namely:
@@ -61,6 +61,27 @@ To "cut" a new project from the template, run:
 | *description*        | A short description of the project               | Explanations in ``setup.py`` and ``README.md``                                                                 |
 +----------------------+--------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
 
-Afterward, the project will be created in ``/[base_folder]/[repo_slug]``.
+Afterward, the project will be created in ``/{ base_folder }/{{ cookiecutter.repo_slug }}``.
 
 For additional command line options, please refer to the `advanced options <https://cookiecutter.readthedocs.io/en/latest/advanced/cli_options.html#command-line-options>`__ in the official cookiecutter documentation.
+
+Building the Docker Stack
+-------------------------
+
+.. Note::
+
+   Project functionality: XX
+
+If you want to build the stack from the cut project without starting it, run:
+
+.. code:: bash
+
+    cd /{ base_folder }/{{ cookiecutter.repo_slug }}
+    make build
+
+If you need to make a clean start:
+
+.. code:: bash
+
+    make clean-all
+    make build
