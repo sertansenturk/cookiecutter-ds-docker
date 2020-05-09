@@ -2,8 +2,8 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := default
 .PHONY: \
 	help default cut \
-	install test \
-	clean clean-test clean-clean-$(VENV_NAME) clean-$(DOCS_FOLDER) \
+	cookiecutter-build test \
+	clean clean-test clean-$(DOCS_FOLDER) \
 	sphinx-build sphinx-quickstart sphinx-html \
 	debug-travis
 
@@ -24,10 +24,14 @@ VERSION := $(shell cat VERSION)
 AUTHORS := $(shell cut -f1 AUTHORS | awk 1 ORS=', ' | head -c -2)
 
 CUT_BASE_FOLDER = ..
-CUT_OPTS := --output-dir $(CUT_BASE_FOLDER)
+CUT_TMP_FOLDER = tmp
+CUT_OPTS :=
 
 TEST_BASE_FOLDER = .
 TEST_FOLDER = test-project
+
+COOKIECUTTER_VERSION = latest
+COOKIECUTTER_IMAGE = $(DOCKER_USERNAME)/cookiecutter:$(COOKIECUTTER_VERSION)
 
 DOCS_FOLDER = docs
 SPHINX_VERSION = 3.0.3
@@ -66,39 +70,44 @@ help:
 
 default: cut
 
-$(VENV_NAME):
-	virtualenv -p $(VENV_INTERP) $(VENV_NAME)
+clean: clean-$(VENV_NAME) clean-test clean-$(DOCS_FOLDER)
 
-install: $(VENV_NAME)
-	source $(VENV_NAME)/bin/activate ; \
-	pip install --upgrade pip ; \
-	pip install cookiecutter
+clean-test:
+	rm -rf $(TEST_FOLDER)
 
-cut: install
-	source $(VENV_NAME)/bin/activate ; \
-	cookiecutter ./ $(CUT_OPTS)
+clean-$(DOCS_FOLDER):
+	rm -rf $(DOCS_FOLDER)
 
-test: CUT_OPTS:=--no-input --output-dir $(TEST_BASE_FOLDER) repo_slug=$(TEST_FOLDER)
+cookiecutter-build:
+	DOCKER_BUILDKIT=${BUILDKIT} \
+	docker build . \
+		-f ./docker/cookiecutter/Dockerfile \
+		-t $(COOKIECUTTER_IMAGE)
+
+cut: cookiecutter-build
+	mkdir -p $(CUT_TMP_FOLDER)
+	docker run \
+		-it --rm \
+		-v $(MAKEFILE_DIR):/project \
+		-e CUT_OPTS="$(CUT_OPTS)" \
+		$(COOKIECUTTER_IMAGE)
+	find $(CUT_TMP_FOLDER)/ -maxdepth 1 -type d -not -name $(CUT_TMP_FOLDER) \
+		-exec mv {} $(CUT_BASE_FOLDER)/ \;
+	rm -rf $(CUT_TMP_FOLDER)
+
+test: CUT_BASE_FOLDER:=$(TEST_BASE_FOLDER)
+test: CUT_OPTS:=--no-input repo_slug=$(TEST_FOLDER)
 test: clean-test cut
 	cd $(TEST_FOLDER) ; \
 	make test ; \
 	make tox
 	$(MAKE) clean-test
 
-clean: clean-$(VENV_NAME) clean-test clean-$(DOCS_FOLDER)
-
-clean-test:
-	rm -rf $(TEST_FOLDER)
-
-clean-$(VENV_NAME):
-	rm -rf $(VENV_NAME)
-
-clean-$(DOCS_FOLDER):
-	rm -rf $(DOCS_FOLDER)
-
 sphinx-build:
 	DOCKER_BUILDKIT=${BUILDKIT} \
-	docker build . \
+	docker build \
+		--build-arg SPHINX_VERSION=$(SPHINX_VERSION) \
+		. \
 		-f ./docker/sphinx/Dockerfile \
 		-t $(SPHINX_IMAGE)
 
