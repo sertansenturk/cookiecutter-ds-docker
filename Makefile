@@ -111,7 +111,7 @@ sphinx-quickstart: sphinx-build
 		-v $(VERSION)
 
 sphinx-html: sphinx-build
-	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs $(SPHINX_IMAGE) make html
+	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs $(SPHINX_IMAGE)
 
 debug-travis:
 	curl -s -X POST \
