@@ -29,6 +29,9 @@ CUT_OPTS := --output-dir $(CUT_BASE_FOLDER)
 TEST_BASE_FOLDER = .
 TEST_FOLDER = test-project
 
+COOKIECUTTER_VERSION = latest
+COOKIECUTTER_IMAGE = $(DOCKER_USERNAME)/sphinx:$(COOKIECUTTER_VERSION)
+
 DOCS_FOLDER = docs
 SPHINX_VERSION = 3.0.3
 SPHINX_IMAGE = $(DOCKER_USERNAME)/sphinx:$(SPHINX_VERSION)
@@ -98,7 +101,9 @@ clean-$(DOCS_FOLDER):
 
 sphinx-build:
 	DOCKER_BUILDKIT=${BUILDKIT} \
-	docker build . \
+	docker build \
+		--build-arg SPHINX_VERSION=$(SPHINX_VERSION) \
+		. \
 		-f ./docker/sphinx/Dockerfile \
 		-t $(SPHINX_IMAGE)
 
