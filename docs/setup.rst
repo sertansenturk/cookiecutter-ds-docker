@@ -31,10 +31,10 @@ Installing `cookiecutter` in Ubuntu and Mac OSX is straightforward:
 
 Please refer to the `official cookiecutter documentation <https://cookiecutter.readthedocs.io/en/latest/installation.html#install-cookiecutter>`_ for other options.
 
-Baking a New Project
+Cutting a New Project
 ---------------------------------------------------
 
-To "bake" a new project from the template, run:
+To "cut" a new project from the template, run:
 
 .. code:: bash
 

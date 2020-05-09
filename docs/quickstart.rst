@@ -1,7 +1,7 @@
 Quickstart
 ==================================================
 
-To build and run the Docker stack in a baked project, simply run:
+To build and run the Docker stack in a cut project, simply run:
 
 .. code:: bash
 

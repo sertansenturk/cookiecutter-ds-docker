@@ -15,7 +15,7 @@
 
 ## 1. Introduction
 
-This project is "baked" from [sertansenturk/cookiecutter-ds-docker](https://github.com/sertansenturk/cookiecutter-ds-docker). It consists of a docker-compose stack with the services below (See Sections [Setup](#setup) and [Running the Services](#running-the-services)):
+This project is "cut" from [sertansenturk/cookiecutter-ds-docker](https://github.com/sertansenturk/cookiecutter-ds-docker). It consists of a docker-compose stack with the services below (See Sections [Setup](#setup) and [Running the Services](#running-the-services)):
 
 1. A [Jupyter](https://jupyter.org/) service with minimal customization
 2. An [mlflow](https://mlflow.org/) tracking server to store experiments
