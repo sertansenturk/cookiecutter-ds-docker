@@ -21,9 +21,9 @@ cookiecutter-ds-docker
    
 ``cookiecutter-ds-docker`` is a personalized, Docker-based cookiecutter template repo for Data Science projects. The template consists of a docker-compose stack with the services below:
 
-1. A customized `Jupyter <https://jupyter.org/>`_ service with a starter Python package installed
-2. An `mlflow <https://mlflow.org/>`_ tracking server to store experiments
-3. A `postgresql <https://www.postgresql.org/>`_ database, which stores mlflow tracking information
+1. A customized `Jupyter <https://jupyter.org/>`__ service with a starter Python package installed
+2. An `mlflow <https://mlflow.org/>`__ tracking server to store experiments
+3. A `postgresql <https://www.postgresql.org/>`__ database, which stores mlflow tracking information
 
 The template also includes a Docker image for Python test and development.
 

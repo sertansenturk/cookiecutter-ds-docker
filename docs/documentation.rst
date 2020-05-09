@@ -1,7 +1,7 @@
 Documentation
 ==================================================
 
-We use `Sphinx <https://www.sphinx-doc.org>`_ for the documentation. The documentation is hosted online at `Read the Docs <https://cookiecutter-ds-docker.readthedocs.io>`_.
+We use `Sphinx <https://www.sphinx-doc.org>`__ for the documentation. The documentation is hosted online at `Read the Docs <https://cookiecutter-ds-docker.readthedocs.io>`_.
 
 If you would like to build the documentation locally, you need to run:
 

@@ -14,7 +14,7 @@ Please follow the instructions in the `official docker documentation <https://do
 
 (Optional) Installing homebrew in Mac OSX 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The easiest way to install *cookiecutter* in Mac OSX is using *homebrew* (see below). Please follow the instructions in the `official homebrew website <https://brew.sh/>`_ to install `homebrew`.
+The easiest way to install *cookiecutter* in Mac OSX is using *homebrew* (see below). Please follow the instructions in the `official homebrew website <https://brew.sh/>`__ to install `homebrew`.
 
 Installing cookiecutter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -29,7 +29,7 @@ Installing `cookiecutter` in Ubuntu and Mac OSX is straightforward:
 | *Mac OSX*          | ``brew install cookiecutter``     |
 +--------------------+-----------------------------------+
 
-Please refer to the `official cookiecutter documentation <https://cookiecutter.readthedocs.io/en/latest/installation.html#install-cookiecutter>`_ for other options.
+Please refer to the `official cookiecutter documentation <https://cookiecutter.readthedocs.io/en/latest/installation.html#install-cookiecutter>`__ for other options.
 
 Cutting a New Project
 ---------------------------------------------------
@@ -63,4 +63,4 @@ To "cut" a new project from the template, run:
 
 Afterward, the project will be created in ``/[base_folder]/[repo_slug]``.
 
-For additional command line options, please refer to the `advanced options <https://cookiecutter.readthedocs.io/en/latest/advanced/cli_options.html#command-line-options>`_ in the official cookiecutter documentation.
+For additional command line options, please refer to the `advanced options <https://cookiecutter.readthedocs.io/en/latest/advanced/cli_options.html#command-line-options>`__ in the official cookiecutter documentation.
