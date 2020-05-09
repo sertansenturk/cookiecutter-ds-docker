@@ -30,14 +30,14 @@ Please refer to [Read The Docs](https://cookiecutter-ds-docker.readthedocs.io/en
 
 First, install [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/installation.html#install-cookiecutter) and [docker](https://docs.docker.com/get-docker/).
 
-Then, run the commands below and follow the on-screen instructions to "bake" the template:
+Then, run the commands below and follow the on-screen instructions to "cut" a new project from the template:
 
 ```bash
 cd /[base_folder]
 cookiecutter gh:sertansenturk/cookiecutter-ds-docker
 ```
 
-To build and start the Docker stack in a baked project, run:
+To build and start the Docker stack, run:
 
 ```bash
 cd /[base_folder]/[repo_slug]

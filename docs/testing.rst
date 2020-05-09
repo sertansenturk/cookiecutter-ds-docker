@@ -1,7 +1,7 @@
 Testing
 ==================================================
 
-You can test the cookiecutter, the baked services, and the installed Python package (e.g., build, unittest, code style, linting) locally by:
+You can test the cookiecutter, the docker-compose stack, and the installed Python package (e.g., build, unittest, code style, linting) locally by:
 
 .. code:: bash
 
