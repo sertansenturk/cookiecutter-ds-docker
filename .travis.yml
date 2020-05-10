@@ -42,7 +42,7 @@ jobs:
       before_script:
         - cd docs
       script:
-        - make html -nWT -b dummy
+        - make html SPHINXOPTS:="-nWT -b dummy"
 before_install:
   - pwd
   - ls -la
