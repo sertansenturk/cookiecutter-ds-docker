@@ -10,6 +10,9 @@ cookiecutter-ds-docker
 
 .. image:: https://img.shields.io/github/v/release/sertansenturk/cookiecutter-ds-docker
     :alt: GitHub release (latest SemVer)
+.. image:: https://readthedocs.org/projects/cookiecutter-ds-docker/badge/?version=latest
+    :target: https://cookiecutter-ds-docker.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
 .. image:: https://travis-ci.com/sertansenturk/cookiecutter-ds-docker.svg?branch=master
     :target: https://travis-ci.com/sertansenturk/cookiecutter-ds-docker
 .. image:: https://img.shields.io/codecov/c/github/sertansenturk/cookiecutter-ds-docker

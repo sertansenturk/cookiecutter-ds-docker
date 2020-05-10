@@ -6,7 +6,7 @@ Working with a Project
 
 .. attention::
 
-   We assume you have already `cut a project by following the instructions <cookiecutter_template.html#cutting-a-new-project>`__ and you are in the project directory, ``/{ base_folder }/{{ cookiecutter.repo_slug }}``.
+   We assume you have already `cut a project by following the instructions <cookiecutter_template.html#cutting-a-new-project>`__, and you are in the project directory, ``/{ base_folder }/{{ cookiecutter.repo_slug }}``.
 
 *****************************************
 Overview
@@ -35,7 +35,7 @@ The project comes with a Python starter package called ``{{ cookiecutter.package
 Makefile
 =========================================
 
-The common commands to interact with the project are wrapped in a ``Makefile``. In the rest of this Page, we will explain the most important commands. For all commands, please refer to the help by running on the terminal:
+Below, we introduce some useful ``Makefile`` commands to interact with the project. For all commands, please refer to the help by running on the terminal:
 
 .. code:: bash
 
@@ -77,7 +77,7 @@ If you need to make a clean start:
 Running the Docker Stack
 *****************************************
 
-To build and run the Docker stack in a cut project, simply run:
+To build and run the Docker stack in a cut project, run:
 
 .. code:: bash
 
@@ -118,7 +118,7 @@ Testing
 Python
 =========================================
 
-Build, code style, linting checks and unittests of the starter Python packageis automated using ``tox`` in a docker environment. You can run these tests by:
+Build, code style, linting checks and unittests of the starter Python package are automated using ``tox`` in a docker environment. You can run these tests by:
 
 .. code:: bash
 

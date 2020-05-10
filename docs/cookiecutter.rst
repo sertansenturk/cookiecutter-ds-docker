@@ -79,7 +79,7 @@ Local Usage
 *****************************************
 
 .. attention::
-   You should clone the repo, if you would like to use *cookiecutter-ds-docker* locally or modify the template:
+   You should clone the repo if you would like to use *cookiecutter-ds-docker* locally or modify the template:
 
    .. code:: bash
 
@@ -101,12 +101,12 @@ You can cut a project by running:
 
     make
 
-and entering the variables as `explained above <#cutting-a-new-project>`__. The project will be created at ``../{{ cookiecutter.repo_slug }}`` relative to the ``./cookiecutter-ds-docker`` folder.
+and entering the variables, as `explained above <#cutting-a-new-project>`__. The project will be created at ``../{{ cookiecutter.repo_slug }}`` relative to the ``./cookiecutter-ds-docker`` folder.
 
 Documentation
 =========================================
 
-We use `Sphinx <https://www.sphinx-doc.org>`__ for documentation. The documentation is hosted online at `Read the Docs <https://cookiecutter-ds-docker.readthedocs.io>`_. *Read the Docs* automatically publishes and updates a version for *master* and *dev* branches, and for each release in *Github*.
+We use `Sphinx <https://www.sphinx-doc.org>`__ for documentation. The documentation is hosted online at `Read the Docs <https://cookiecutter-ds-docker.readthedocs.io>`_. *Read the Docs* automatically publishes and updates a version for the *master* branch, *dev* branch, and each release in *Github*.
 
 If you would like to build the documentation locally, you need to run:
 
@@ -122,7 +122,7 @@ To validate the documentation without building, run:
 
     make sphinx-html-test
 
-Tests
+Running Tests Locally
 =========================================
 
 You can run the tests with a single command by:
@@ -140,6 +140,6 @@ The above command:
 Tests in Travis CI
 *****************************************
 
-``cookiecutter-ds-docker`` has *Travis CI* integration (`link <https://travis-ci.com/github/sertansenturk/cookiecutter-ds-docker>`__), where all of the test above are run automatically after each push. 
+``cookiecutter-ds-docker`` has *Travis CI* integration (`link <https://travis-ci.com/github/sertansenturk/cookiecutter-ds-docker>`__), where all of the aforementioned tests are run automatically after each push.
 
 *Travis CI* also generates code coverage reports for the starter Python package (`see Python Tests in the Project <ds_docker_project.html#python>`__), which can be viewed on *codecov* (`link <https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/>`__).
