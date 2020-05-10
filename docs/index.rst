@@ -19,7 +19,24 @@ cookiecutter-ds-docker
 .. image:: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-ff69b4.svg
     :target: http://creativecommons.org/licenses/by-nc-sa/4.0/
    
-``cookiecutter-ds-docker`` is a personalized, Docker-based cookiecutter template repo for Data Science projects. It aims to standardize the common decisions (repo structure, setup, integrations), which I need to take care for each the data science project, and hence minimize the (overtly dull) start-up effort for future work.
+``cookiecutter-ds-docker`` is a personalized, Docker-based cookiecutter template repo for Data Science projects. It aims to standardize the common decisions (repo structure, setup, integrations), which I need to consider for each new project, and hence minimize the (overtly dull) start-up effort for future work.
+
+Quickstart
+----------
+
+In a terminal, run the following:
+
+.. code:: bash
+
+   cd {base_folder}
+   cookiecutter gh:sertansenturk/cookiecutter-ds-docker
+   # follow the on-screen instructions to cut the project
+   # ...
+   cd {{ cookiecutter.repo_slug}} # change repo_slug with what you entered earlier
+   make
+   # once the docker stack is running, click the URL starting with 
+   # http://127.0.0.1:8888/?token=... to access JupyterLab
+   # mlflow UI is at http://localhost:5000/
 
 .. toctree::
    :maxdepth: 2
