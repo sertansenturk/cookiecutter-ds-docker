@@ -2,9 +2,10 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := default
 .PHONY: \
 	help default cut \
-	cookiecutter-build test \
 	clean clean-test clean-$(DOCS_FOLDER) \
-	sphinx-build sphinx-quickstart sphinx-html \
+	test sphinx-html-test \
+	cookiecutter-build sphinx-build \
+	sphinx-quickstart sphinx-html \
 	debug-travis
 
 HELP_PADDING = 28
@@ -46,7 +47,7 @@ help:
 	@printf "$(pretty_command): alias of \"make cut\" (see below)\n" \(default\)
 	@printf "$(pretty_command): cut a new project\n" cut
 	@printf "$(padded_str)CUT_OPTS, cookiecutter options (default: $(CUT_OPTS))\n"
-	@printf "$(pretty_command): run cookiecutter and template tests\n" test
+	@printf "$(pretty_command): run cookiecutter, template, and documentation tests\n" test
 	@printf "\n"
 	@printf "======= Setup =======\n"
 	@printf "$(pretty_command): create a python virtualenv called $(VENV_NAME)\n" $(VENV_NAME)
@@ -63,6 +64,8 @@ help:
 	@printf "$(pretty_command): builds sphinx docker image\n" sphinx-build
 	@printf "$(pretty_command): \"quickstarts\" sphinx documentation\n" sphinx-quickstart
 	@printf "$(pretty_command): builds sphinx html docs\n" sphinx-html	
+	@printf "$(padded_str)SPHINX_OPTS, options to pass to sphinx (default: $(SPHINX_OPTS))\n"
+	@printf "$(pretty_command): tests sphinx html build\n" sphinx-html-test
 	@printf "\n"
 	@printf "========= Misc =======\n"
 	@printf "$(pretty_command): send a job debug request to travis\n" debug-travis
@@ -98,7 +101,7 @@ cut: cookiecutter-build
 
 test: CUT_BASE_FOLDER:=$(TEST_BASE_FOLDER)
 test: CUT_OPTS:=--no-input repo_slug=$(TEST_FOLDER)
-test: clean-test cut
+test: sphinx-html-test clean-test cut
 	cd $(TEST_FOLDER) ; \
 	make test ; \
 	make tox
@@ -122,6 +125,9 @@ sphinx-quickstart: sphinx-build
 
 sphinx-html: sphinx-build
 	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs -e SPHINX_OPTS="$(SPHINX_OPTS)" $(SPHINX_IMAGE)
+
+sphinx-html-test: SPHINX_OPTS:=$(SPHINX_OPTS) -b dummy
+sphinx-html-test: sphinx-html
 
 debug-travis:
 	curl -s -X POST \
