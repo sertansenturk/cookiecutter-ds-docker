@@ -63,6 +63,10 @@ The above command will build these images:
 | *postgres*            | ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/postgres:0.1.0`` |
 +-----------------------+------------------------------------------------------------------------------------+
 
+.. note::
+
+   The version tag of docker images in a new project starts from ``0.1.0``, which is read from the ``VERSION`` variable in ``.env`` file.
+
 If you need to make a clean start:
 
 .. code:: bash
@@ -120,7 +124,7 @@ Build, code style, linting checks and unittests of the starter Python packageis 
 
     make tox
 
-This command builds a ``python-dev`` *docker* image, and runs the Python tests inside a container.
+This command builds a *docker* image called ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/python-dev:0.1.0``, and runs the Python tests inside a container.
 
 Docker Stack
 =========================================
