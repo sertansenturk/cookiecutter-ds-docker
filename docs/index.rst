@@ -19,7 +19,7 @@ cookiecutter-ds-docker
 .. image:: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-ff69b4.svg
     :target: http://creativecommons.org/licenses/by-nc-sa/4.0/
    
-``cookiecutter-ds-docker`` is a personalized, Docker-based cookiecutter template repo for Data Science projects. It aims to standardize the common decisions (repo structure, setup, integrations), which I need to consider for each new project, and hence minimize the (overtly dull) start-up effort for future work.
+``cookiecutter-ds-docker`` is a personalized, Docker-based cookiecutter template repo for Data Science projects. It aims to standardize the common decisions (repo structure, setup, integrations, etc.), which I need to consider for each new project, and hence minimize the (overtly dull) start-up effort for future work.
 
 Quickstart
 ----------
