@@ -32,7 +32,7 @@ In a terminal, run the following:
    cookiecutter gh:sertansenturk/cookiecutter-ds-docker
    # follow the on-screen instructions to cut the project
    # ...
-   cd {{ cookiecutter.repo_slug}} # change repo_slug with what you entered earlier
+   cd {{ cookiecutter.repo_slug}} # replace repo_slug with what you entered earlier
    make
    # once the docker stack is running, click the URL starting with 
    # http://127.0.0.1:8888/?token=... to access JupyterLab
@@ -42,9 +42,9 @@ In a terminal, run the following:
    :maxdepth: 2
    :caption: Contents:
 
-   cookiecutter_template
-   ds_docker_project
-   licenses
+   template
+   project
+   license
    credits
    changelog
 
