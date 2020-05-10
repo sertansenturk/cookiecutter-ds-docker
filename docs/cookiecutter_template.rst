@@ -32,7 +32,7 @@ Installing cookiecutter
 +----------------------+-----------------------------------+
 | OS                   | Command                           |
 +======================+===================================+
-| *Debían-based Linux* | ``sudo apt install cookiecutter`` |
+| *Debian-based Linux* | ``sudo apt install cookiecutter`` |
 +----------------------+-----------------------------------+
 | *Mac OSX*            | ``brew install cookiecutter``     |
 +----------------------+-----------------------------------+

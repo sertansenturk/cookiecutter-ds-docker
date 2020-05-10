@@ -14,7 +14,7 @@ Overview
 
 A project cut from ``cookiecutter-ds-docker`` consists of a docker-compose stack with the services below:
 
-1. A customized `Jupyter <https://jupyter.org/>`__ service with a starter Python package installed.
+1. A customized `Jupyter <https://jupyter.org/>`__ service with a starter Python package installed. Comes with *Python 3.7*.
 2. An `mlflow <https://mlflow.org/>`__ tracking server to log experiments.
 3. A `postgresql <https://www.postgresql.org/>`__ database, which stores *mlflow* tracking information.
 
@@ -25,7 +25,7 @@ We mount several folders from our host to these services:
 
 - The project base folder, ``./``, is mounted on the *Jupyter docker* container so that all modifications are synchronized immediately.
 - The folder, ``./data/artifacts``, where the artifacts logged by *mlflow* are stored by default, is mounted on the *Jupyter* and *mlflow* services.
-- The *posgres data folder*, ``/var/lib/postgresql/data`` inside the container, is mounted locally on ``./data/db/`` to keep the database intact, after stopping the stack. 
+- The *postgresql data folder*, ``/var/lib/postgresql/data`` inside the container, is mounted locally on ``./data/db/`` to keep the database intact, after stopping the stack.
 
 Python development
 =========================================
@@ -51,12 +51,23 @@ If you want to build the stack from the cut project without starting it, run:
 
     make build
 
+The above command will build these images:
+
++-----------------------+------------------------------------------------------------------------------------+
+| Service               | Image name                                                                         |
++=======================+====================================================================================+
+| *Jupyter*             | ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/jupyter:0.1.0``  |
++-----------------------+------------------------------------------------------------------------------------+
+| *mlflow*              | ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/mlflow:0.1.0``   |
++-----------------------+------------------------------------------------------------------------------------+
+| *postgres*            | ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/postgres:0.1.0`` |
++-----------------------+------------------------------------------------------------------------------------+
+
 If you need to make a clean start:
 
 .. code:: bash
 
     make clean-all
-    make build
 
 *****************************************
 Running the Docker Stack
