@@ -19,34 +19,34 @@ cookiecutter-ds-docker
 .. image:: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-ff69b4.svg
     :target: http://creativecommons.org/licenses/by-nc-sa/4.0/
    
-``cookiecutter-ds-docker`` is a personalized, Docker-based cookiecutter template repo for Data Science projects. The template consists of a docker-compose stack with the services below:
+``cookiecutter-ds-docker`` is a personalized, Docker-based cookiecutter template repo for Data Science projects. It aims to standardize the common decisions (repo structure, setup, integrations), which I need to consider for each new project, and hence minimize the (overtly dull) start-up effort for future work.
 
-1. A customized `Jupyter <https://jupyter.org/>`_ service with a starter Python package installed
-2. An `mlflow <https://mlflow.org/>`_ tracking server to store experiments
-3. A `postgresql <https://www.postgresql.org/>`_ database, which stores mlflow tracking information
+Quickstart
+----------
 
-The template also includes a Docker image for Python test and development.
+In a terminal, run the following:
 
-Please refer to the ``{{ cookiecutter.repo_slug}}/README.md`` file for more information on the functionality.
+.. code:: bash
+
+   cd {base_folder}
+   cookiecutter gh:sertansenturk/cookiecutter-ds-docker
+   # follow the on-screen instructions to cut the project
+   # ...
+   cd {{ cookiecutter.repo_slug}} # change repo_slug with what you entered earlier
+   make
+   # once the docker stack is running, click the URL starting with 
+   # http://127.0.0.1:8888/?token=... to access JupyterLab
+   # mlflow UI is at http://localhost:5000/
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   setup
-   quickstart
-   testing
-   documentation
-
-License
-----------
-
-The source code is licensed under `Affero GPL version 3 <https://www.gnu.org/licenses/agpl-3.0.en.html>`_. Any data (features, models, figures, results, documentation, etc.) are licensed under `Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License <http://creativecommons.org/licenses/by-nc-sa/4.0/>`_.
-
-Authors
-----------
-
-Sertan Şentürk - contact@sertansenturk.com
+   cookiecutter_template
+   ds_docker_project
+   licenses
+   credits
+   changelog
 
 .. Indices and tables
    ==================

@@ -63,7 +63,7 @@ help:
 	@printf "\n"
 	@printf "======= Cleanup ======\n"
 	@printf "$(pretty_command): run \"down\" and \"prune\"\n" clean
-	@printf "$(pretty_command): run \"down-all\", \"prune\" and \"clean-stores\"\n" clean-all
+	@printf "$(pretty_command): run \"down-all\", \"prune\", \"clean-python\" and \"clean-stores\"\n" clean-all
 	@printf "$(pretty_command): remove local folders mounted as volumes in docker-compose\n" clean-stores
 	@printf "$(pretty_command): clean python-related artifacts\n" clean-python
 	@printf "$(pretty_command): alias of \"clean-all\"\n" purge

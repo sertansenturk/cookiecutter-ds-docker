@@ -24,7 +24,7 @@ This repo hosts a personalized, Docker-based [cookiecutter](https://cookiecutter
 
 ## 2. Documentation
 
-Please refer to [Read The Docs](https://cookiecutter-ds-docker.readthedocs.io/en/latest/) for the documentation.
+Please refer to [Read The Docs](https://cookiecutter-ds-docker.readthedocs.io) for the documentation.
 
 ## 3. Quickstart
 
@@ -33,14 +33,14 @@ First, install [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/inst
 Then, run the commands below and follow the on-screen instructions to "cut" a new project from the template:
 
 ```bash
-cd /[base_folder]
+cd /{ base_folder }
 cookiecutter gh:sertansenturk/cookiecutter-ds-docker
 ```
 
 To build and start the Docker stack, run:
 
 ```bash
-cd /[base_folder]/[repo_slug]
+cd /{ base_folder }/{{ cookiecutter.repo_slug }}
 make
 ```
 
