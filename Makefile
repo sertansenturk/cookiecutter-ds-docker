@@ -36,6 +36,7 @@ COOKIECUTTER_IMAGE = $(DOCKER_USERNAME)/cookiecutter:$(COOKIECUTTER_VERSION)
 DOCS_FOLDER = docs
 SPHINX_VERSION = 3.0.3
 SPHINX_IMAGE = $(DOCKER_USERNAME)/sphinx:$(SPHINX_VERSION)
+SPHINX_OPTS := -nWT
 
 TRAVIS_JOB =
 TRAVIS_TOKEN =
@@ -120,7 +121,7 @@ sphinx-quickstart: sphinx-build
 		-v $(VERSION)
 
 sphinx-html: sphinx-build
-	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs $(SPHINX_IMAGE)
+	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs -e SPHINX_OPTS="$(SPHINX_OPTS)" $(SPHINX_IMAGE)
 
 debug-travis:
 	curl -s -X POST \
