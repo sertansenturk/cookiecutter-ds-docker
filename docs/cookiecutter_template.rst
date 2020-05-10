@@ -27,7 +27,7 @@ Please follow the instructions in the `official docker documentation <https://do
 Installing cookiecutter
 =========================================
 
-*cookiecutter* is quite straightforward to install in many modern systems. For example, you can install `cookiecutter` in Debian-based Linux distributions (e.g., Ubuntu) and Mac OSX by:
+*cookiecutter* is quite straightforward to install in many modern systems. For example, you can install `cookiecutter` in *Debian-based Linux* distributions (e.g., *Ubuntu*) and *Mac OSX* by:
 
 +----------------------+-----------------------------------+
 | OS                   | Command                           |
