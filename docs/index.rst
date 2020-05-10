@@ -42,7 +42,7 @@ In a terminal, run the following:
    :maxdepth: 2
    :caption: Contents:
 
-   template
+   cookiecutter
    project
    license
    credits
