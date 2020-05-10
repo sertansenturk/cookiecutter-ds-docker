@@ -28,6 +28,12 @@ jobs:
         - tox -e $TOX_PYTHON_ENV -e lint
       after_success:
         - codecov # submit coverage to https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/
+    - name: "documentation"
+      services: docker
+      before_script:
+        - # don't cut a project, stay in the base folder
+      script:
+        - make sphinx-html-test
 before_install:
   - pwd
   - ls -la
