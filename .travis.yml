@@ -37,11 +37,12 @@ jobs:
         - docker --version
         # skip pip install steps
       install:
-        - 
+        - pip install sphinx
+        - pip install sphinx_rtd_theme
       before_script:
-        - # don't cut a project, stay in the base folder
+        - cd docs
       script:
-        - make sphinx-html-test
+        - make html -nWT -b dummy
 before_install:
   - pwd
   - ls -la
