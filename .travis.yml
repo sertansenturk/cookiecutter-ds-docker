@@ -30,6 +30,12 @@ jobs:
         - codecov # submit coverage to https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/
     - name: "documentation"
       services: docker
+      before_install:
+        - pwd
+        - ls -la
+        - id
+        - docker --version
+        # skip pip install steps
       before_script:
         - # don't cut a project, stay in the base folder
       script:
