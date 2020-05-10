@@ -27,15 +27,15 @@ Please follow the instructions in the `official docker documentation <https://do
 Installing cookiecutter
 =========================================
 
-Installing `cookiecutter` in Ubuntu and Mac OSX is straightforward:
+*cookiecutter* is quite straightforward to install in many modern systems. For example, you can install `cookiecutter` in Debian-based Linux distributions (e.g., Ubuntu) and Mac OSX by:
 
-+--------------------+-----------------------------------+
-| OS                 | Command                           |
-+====================+===================================+
-| *Ubuntu Linux*     | ``sudo apt install cookiecutter`` |
-+--------------------+-----------------------------------+
-| *Mac OSX*          | ``brew install cookiecutter``     |
-+--------------------+-----------------------------------+
++----------------------+-----------------------------------+
+| OS                   | Command                           |
++======================+===================================+
+| *Debían-based Linux* | ``sudo apt install cookiecutter`` |
++----------------------+-----------------------------------+
+| *Mac OSX*            | ``brew install cookiecutter``     |
++----------------------+-----------------------------------+
 
 Please refer to the `official cookiecutter documentation <https://cookiecutter.readthedocs.io/en/latest/installation.html#install-cookiecutter>`__ for alternatives.
 
