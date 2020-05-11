@@ -1,18 +1,10 @@
-.. sectnum:: :start: 4
-
 Credits
 ==================================================
 
 Authors
 ------------
 
-Sertan Şentürk - contact@sertansenturk.com 
-
-Contributors
-------------
-Halil Erdoğan - herdoganturkey@gmail.com 🌷
-
-- Mac OSX integration (`Issue #28 <https://github.com/sertansenturk/cookiecutter-ds-docker/issues/28>`__, `Pull Request #31 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/31>`__)
+{{ cookiecutter.author_name }} - {{ cookiecutter.author_email }}
 
 Contributor Code of Conduct
 ---------------------------

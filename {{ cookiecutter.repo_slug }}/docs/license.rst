@@ -1,5 +1,3 @@
-.. sectnum:: :start: 3
-
 Licenses
 ================
 

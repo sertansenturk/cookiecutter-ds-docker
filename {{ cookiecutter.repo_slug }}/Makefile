@@ -33,6 +33,9 @@ RUN_OPTS =
 
 PYTHON_DEV_CMD =
 
+DOCS_FOLDER = docs
+SPHINX_OPTS := -nWT -b linkcheck
+
 CHK_PORT = ${MLFLOW_TRACKING_SERVER_PORT}
 
 HOST_USERNAME := $(shell id -u -n)
@@ -200,6 +203,20 @@ python-dev-build:
 tox: PYTHON_DEV_CMD := tox
 tox: python-dev-build
 	docker run -it ${IMAGE_OWNER}/${PYTHON_DEV_IMAGE_NAME}:${VERSION} ${PYTHON_DEV_CMD}
+
+sphinx-build:
+	DOCKER_BUILDKIT=${BUILDKIT} \
+	docker build \
+		--build-arg SPHINX_VERSION=${SPHINX_VERSION} \
+		. \
+		-f ./docker/sphinx/Dockerfile \
+		-t ${IMAGE_OWNER}/${SPHINX_IMAGE_NAME}:${SPHINX_VERSION}
+
+sphinx-html: sphinx-build
+	docker run -it --rm -v ${MAKEFILE_DIR}${DOCS_FOLDER}:/docs -e SPHINX_OPTS="${SPHINX_OPTS}" ${IMAGE_OWNER}/${SPHINX_IMAGE_NAME}:${SPHINX_VERSION}
+
+sphinx-html-test: SPHINX_OPTS:=${SPHINX_OPTS} -b dummy
+sphinx-html-test: sphinx-html
 
 find-port-usage:
 	sudo lsof -i -P -n | grep ${CHK_PORT}
