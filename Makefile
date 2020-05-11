@@ -63,7 +63,7 @@ help:
 	@printf "======= Documentation ======\n"
 	@printf "$(pretty_command): builds sphinx docker image\n" sphinx-build
 	@printf "$(pretty_command): \"quickstarts\" sphinx documentation\n" sphinx-quickstart
-	@printf "$(pretty_command): builds sphinx html docs\n" sphinx-html	
+	@printf "$(pretty_command): builds sphinx html docs\n" sphinx-html
 	@printf "$(padded_str)SPHINX_OPTS, options to pass to sphinx (default: $(SPHINX_OPTS))\n"
 	@printf "$(pretty_command): tests sphinx html build\n" sphinx-html-test
 	@printf "\n"
