@@ -29,7 +29,6 @@ jobs:
       after_success:
         - codecov # submit coverage to https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/
     - name: "documentation"
-      services: docker
       before_install:
         - pwd
         - ls -la
