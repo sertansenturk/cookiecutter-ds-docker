@@ -37,8 +37,9 @@ In a terminal, run the following:
    # ...
    cd {{ cookiecutter.repo_slug}} # replace repo_slug with what you entered earlier
    make
-   # once the docker stack is running, click the URL starting with 
+   # once the docker stack is running, click the URL starting with
    # http://127.0.0.1:8888/?token=... to access JupyterLab
+   #
    # mlflow UI is at http://localhost:5000/
 
 .. toctree::
