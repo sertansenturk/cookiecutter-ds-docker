@@ -14,10 +14,14 @@ Setup
 - **homebrew** (Optional for *Mac OSX*)
 - **Python cookiecutter**
 
-Installing docker
+Installing Docker
 =========================================
 
-Please follow the instructions in the `official docker documentation <https://docs.docker.com/get-docker/>`_.
+Please follow the instructions in the `official Docker documentation <https://docs.docker.com/get-docker/>`_. 
+
+.. note::
+
+   We suggest using *Docker 18.09* or higher.
 
 (Optional) Installing homebrew in Mac OSX
 =========================================
