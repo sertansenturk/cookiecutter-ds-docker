@@ -43,7 +43,7 @@ Please refer to the `official cookiecutter documentation <https://cookiecutter.r
 Cutting a New Project
 *****************************************
 
-To "cut" a new project from the template, run:
+To "cut" a new project from the template, run on the terminal:
 
 .. code:: bash
 
@@ -75,21 +75,22 @@ Afterward, the project will be created in ``/{ base_folder }/{{ cookiecutter.rep
 For additional command line options, please refer to the `advanced options <https://cookiecutter.readthedocs.io/en/latest/advanced/cli_options.html#command-line-options>`__ in the official cookiecutter documentation.
 
 *****************************************
-Development and Local Usage
+Local Usage
 *****************************************
 
-You should clone the repo, if you would like to use *cookiecutter-ds-docker* locally or develop the template further:
-
-.. code:: bash
-
-   git clone https://github.com/sertansenturk/cookiecutter-ds-docker.git
-   cd cookiecutter-ds-docker
-
-The common commands to interact with ``cookiecutter-ds-docker`` are wrapped in a ``Makefile``. For available commands, please refer to the help by running on the terminal:
+.. attention::
+   You should clone the repo if you would like to use *cookiecutter-ds-docker* locally or modify the template:
 
    .. code:: bash
 
-      make help
+      git clone https://github.com/sertansenturk/cookiecutter-ds-docker.git
+      cd cookiecutter-ds-docker
+
+Below, we introduce some useful ``Makefile`` commands to interact with ``cookiecutter-ds-docker``. For all available commands, please refer to the help by running:
+
+.. code:: bash
+
+   make help
 
 Cutting a New Project Locally
 =========================================
@@ -100,33 +101,45 @@ You can cut a project by running:
 
     make
 
-and entering the variables as `explained above <#cutting-a-new-project>`__. The project will be created at ``../{{ cookiecutter.repo_slug }}`` relative to the ``./cookiecutter-ds-docker`` folder.
-
-Running Tests Locally
-=========================================
-
-You can test the cookiecutter template - as well as the `tests inside the project <ds_docker_project.html#testing>`__ - by running:
-
-.. code:: bash
-
-    make test
-
-Running Tests in Travis CI
-=========================================
-
-``cookiecutter-ds-docker`` has *Travis CI* integration (`link <https://travis-ci.com/github/sertansenturk/cookiecutter-ds-docker>`__), where all of the test above are run automatically after each push. 
-
-*Travis CI* also generates code coverage reports for the starter Python package (`see Python Tests in the Project <ds_docker_project.html#python>`__), which can be viewed on *codecov* (`link <https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/>`__).
+and entering the variables, as `explained above <#cutting-a-new-project>`__. The project will be created at ``../{{ cookiecutter.repo_slug }}`` relative to the ``./cookiecutter-ds-docker`` folder.
 
 Documentation
 =========================================
 
-We use `Sphinx <https://www.sphinx-doc.org>`__ for documentation. The documentation is hosted online at `Read the Docs <https://cookiecutter-ds-docker.readthedocs.io>`_, which automatically publishes and updates a version for *master* and *dev* branches, and for each release in *Github*,.
+We use `Sphinx <https://www.sphinx-doc.org>`__ for documentation. The documentation is hosted online at `Read the Docs <https://cookiecutter-ds-docker.readthedocs.io>`_. *Read the Docs* automatically publishes and updates a version for the *master* branch, *dev* branch, and each release in *Github*.
 
-If you would like to build it locally, you need to run:
+If you would like to build the documentation locally, you need to run:
 
 .. code:: bash
 
     make sphinx-html
 
 Then, you can then access the documentation by opening ``./docs/_build/html/index.html`` on your browser.
+
+To validate the documentation without building, run:
+
+.. code:: bash
+
+    make sphinx-html-test
+
+Running Tests Locally
+=========================================
+
+You can run the tests with a single command by:
+
+.. code:: bash
+
+    make test
+
+The above command:
+
+1. Cuts a dummy project and runs all tests inside (See `Project Testing <ds_docker_project.html#testing>`__)
+2. Validates the Sphinx documentation (See `above <#documentation>`__)
+
+*****************************************
+Tests in Travis CI
+*****************************************
+
+``cookiecutter-ds-docker`` has *Travis CI* integration (`link <https://travis-ci.com/github/sertansenturk/cookiecutter-ds-docker>`__), where all of the aforementioned tests are run automatically after each push.
+
+*Travis CI* also generates code coverage reports for the starter Python package (`see Python Tests in the Project <ds_docker_project.html#python>`__), which can be viewed on *codecov* (`link <https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/>`__).

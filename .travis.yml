@@ -28,6 +28,21 @@ jobs:
         - tox -e $TOX_PYTHON_ENV -e lint
       after_success:
         - codecov # submit coverage to https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/
+    - name: "documentation"
+      services: docker
+      before_install:
+        - pwd
+        - ls -la
+        - id
+        - docker --version
+        # skip pip install steps
+      install:
+        - pip install sphinx
+        - pip install sphinx_rtd_theme
+      before_script:
+        - cd docs
+      script:
+        - make html SPHINXOPTS:="-nWT -b dummy"
 before_install:
   - pwd
   - ls -la

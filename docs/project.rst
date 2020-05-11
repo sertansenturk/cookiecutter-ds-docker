@@ -6,7 +6,7 @@ Working with a Project
 
 .. attention::
 
-   We assume you have already `cut a project by following the instructions <cookiecutter_template.html#cutting-a-new-project>`__ and you are in the project directory, ``/{ base_folder }/{{ cookiecutter.repo_slug }}``.
+   We assume you have already `cut a project by following the instructions <cookiecutter_template.html#cutting-a-new-project>`__, and you are in the project directory, ``/{ base_folder }/{{ cookiecutter.repo_slug }}``.
 
 *****************************************
 Overview
@@ -19,7 +19,7 @@ A project cut from ``cookiecutter-ds-docker`` consists of a docker-compose stack
 3. A `postgresql <https://www.postgresql.org/>`__ database, which stores *mlflow* tracking information.
 
 .. note::
-   There is also a standalone *Docker* image for *Python* test and development, which is explained in the `Tests Section below <#python>`__.
+   There is also a standalone *Docker* image for *Python* test and development (See `Python Tests <#python>`__).
 
 We mount several folders from our host to these services:
 
@@ -35,7 +35,7 @@ The project comes with a Python starter package called ``{{ cookiecutter.package
 Makefile
 =========================================
 
-The common commands to interact with the project are wrapped in a ``Makefile``. In the rest of this Page, we will explain the most important commands. For all commands, please refer to the help by running on the terminal:
+Below, we introduce some useful ``Makefile`` commands to interact with the project. For all commands, please refer to the help by running on the terminal:
 
 .. code:: bash
 
@@ -77,7 +77,7 @@ If you need to make a clean start:
 Running the Docker Stack
 *****************************************
 
-To build and run the Docker stack in a cut project, simply run:
+To build and run the Docker stack in a cut project, run:
 
 .. code:: bash
 
@@ -87,13 +87,13 @@ For convenience, the above command stops running stacks (if exist), cleans, (re)
 
 .. note:: **Accessing Jupyter UI**
 
-   Once the stack is up and running, you will see a link on the terminal, e.g., http://127.0.0.1:8888/?token=3c321..., which you can follow to access the *JupyterLab* interface from your browser. 
+   Once the stack is up and running, you will see a link on the terminal, e.g., ``http://127.0.0.1:8888/?token=3c321...``, which you can follow to access the *JupyterLab* interface from your browser.
 
 .. note:: **Accessing mlflow UI**
 
-   You can reach the *mlflow* UI at http://localhost:5000. For a simple example on how to track a run, please refer to `notebooks/mlflow\_example.ipynb <https://github.com/sertansenturk/cookiecutter-ds-docker/blob/master/%7B%7B%20cookiecutter.repo_slug%20%7D%7D/notebooks/mlflow_example.ipynb>`__.
+   You can reach the *mlflow* UI at ``http://localhost:5000``. For a simple example on how to track a run, please refer to `notebooks/mlflow\_example.ipynb <https://github.com/sertansenturk/cookiecutter-ds-docker/blob/master/%7B%7B%20cookiecutter.repo_slug%20%7D%7D/notebooks/mlflow_example.ipynb>`__.
 
-   For thorough tutorials, please refer to the `official mlflow documentation <https://mlflow.org/docs/latest/tutorials-and-examples/index.html>`__.
+   For in-depth tutorials, please refer to the `official mlflow documentation <https://mlflow.org/docs/latest/tutorials-and-examples/index.html>`__.
 
 Additional Run Options
 =========================================
@@ -118,7 +118,7 @@ Testing
 Python
 =========================================
 
-Build, code style, linting checks and unittests of the starter Python packageis automated using ``tox`` in a docker environment. You can run these tests by:
+Build, code style, linting checks and unittests of the starter Python package are automated using ``tox`` in a docker environment. You can run these tests by:
 
 .. code:: bash
 
