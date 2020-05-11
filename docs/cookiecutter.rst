@@ -51,8 +51,8 @@ To "cut" a new project from the template, run on the terminal:
 
 .. code:: bash
 
-    cd /{ base_folder }
-    cookiecutter https://github.com/sertansenturk/cookiecutter-ds-docker
+   cd /{ base_folder }
+   cookiecutter https://github.com/sertansenturk/cookiecutter-ds-docker
 
 *cookiecutter* will ask you to fill a few variables, namely:
 
@@ -103,20 +103,22 @@ You can cut a project by running:
 
 .. code:: bash
 
-    make
+   make
 
 and entering the variables, as `explained above <#cutting-a-new-project>`__. The project will be created at ``../{{ cookiecutter.repo_slug }}`` relative to the ``./cookiecutter-ds-docker`` folder.
 
 Documentation
 =========================================
 
-We use `Sphinx <https://www.sphinx-doc.org>`__ for documentation. The documentation is hosted online at `Read the Docs <https://cookiecutter-ds-docker.readthedocs.io>`_. *Read the Docs* automatically publishes and updates a version for the *master* branch, *dev* branch, and each release in *Github*.
+The documentation is hosted online at `Read the Docs <https://cookiecutter-ds-docker.readthedocs.io>`_. *Read the Docs* automatically publishes and updates a version for the *master* branch, *dev* branch, and each release in *Github*.
 
 If you would like to build the documentation locally, you need to run:
 
 .. code:: bash
 
-    make sphinx-html
+   make sphinx-html
+
+The above command builds a docker image called ``sertansenturk/sphinx`` and runs a container from the image, which -in turn- builds the documentation using *Sphinx*. Then, you can then access the documentation by opening ``./docs/_build/html/index.html`` on your browser.
 
 Then, you can then access the documentation by opening ``./docs/_build/html/index.html`` on your browser.
 
@@ -124,7 +126,7 @@ To validate the documentation without building, run:
 
 .. code:: bash
 
-    make sphinx-html-test
+   make sphinx-html-test
 
 Running Tests Locally
 =========================================
@@ -133,7 +135,7 @@ You can run the tests with a single command by:
 
 .. code:: bash
 
-    make test
+   make test
 
 The above command:
 
