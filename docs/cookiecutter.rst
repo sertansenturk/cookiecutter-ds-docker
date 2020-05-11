@@ -133,7 +133,7 @@ You can run the tests with a single command by:
 
 The above command:
 
-1. Cuts a dummy project and runs the all tests inside (See `Project Testing Section <ds_docker_project.html#testing>`__)
+1. Cuts a dummy project and runs all tests inside (See `Project Testing <ds_docker_project.html#testing>`__)
 2. Validates the Sphinx documentation (See `above <#documentation>`__)
 
 *****************************************
