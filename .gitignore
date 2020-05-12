@@ -12,6 +12,8 @@ data/
 !.gitignore
 !.travis.yml
 !.codeclimate.yml
+!*.env
+!.pylintrc
 *.pkl
 
 # cookiecutter test project folder
@@ -98,7 +100,6 @@ ipython_config.py
 .python-version
 
 # Environments
-.env
 .venv
 env/
 venv/
