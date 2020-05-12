@@ -120,7 +120,7 @@ The project comes with a basic documentation, which is located at ``{{ cookiecut
 
    make sphinx-html
 
-The above command builds a docker image called ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/sphinx`` and runs a container from the image, which -in turn- builds the documentation. Then, you can then access the documentation by opening ``{{ cookiecutter.repo_slug }}/docs/_build/html/index.html`` on your browser.
+The above command builds a docker image called ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/sphinx`` and starts a container from the image, which -in turn- builds the documentation. Then, you can then access the documentation by opening ``./docs/_build/html/index.html`` on your browser.
 
 .. note ::
 
@@ -149,7 +149,7 @@ Build, code style, linting checks and unittests of the starter Python package ar
 
    make tox
 
-This command builds a *docker* image called ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/python-dev``, and runs the Python tests inside a container.
+This command builds a *docker* image called ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/python-dev``, and starts a container from the image, which -in turn- runs the Python tests.
 
 Docker Stack
 =========================================
