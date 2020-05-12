@@ -8,6 +8,7 @@ SHELL := /bin/bash
 	prune build \
 	up run down down-all \
 	python-dev-build tox \
+	sphinx-html sphinx-html-test \
 	find-port-usage debug-travis
 
 HELP_PADDING = 28
@@ -122,7 +123,7 @@ pyspark: default
 test: JUPYTER_TARGET:=${JUPYTER_TEST_TARGET}
 test: RUN_OPTS:=jupyter start.sh ./run_pytest.sh ${MLFLOW_IMAGE_NAME} ${MLFLOW_TRACKING_SERVER_PORT} ${WAIT_FOR_IT_TIMEOUT}
 test: JUPYTER_CHOWN_EXTRA:="/${DATA_DIR},/tests"
-test: clean build run chk-store-permissions
+test: sphinx-html-test clean build run chk-store-permissions
 	$(MAKE) down
 # NOTE: above, `clean` had already called `down` so we had to make
 # an explicit recursive call by `$(MAKE) down` 

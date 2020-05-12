@@ -210,6 +210,10 @@ Travis CI also generates code coverage reports for the starter Python package, w
 
 ``https://codecov.io/gh/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}``
 
+.. note::
+
+   Please refer to the `official guide <https://docs.codecov.io/docs>`__ to how to quick-start and use codecov.
+
 Online Documentation
 =========================================
 
