@@ -137,7 +137,7 @@ You can run the tests with a single command by:
 
 The above command:
 
-1. Cuts a dummy project and runs all tests inside (See `Project Testing <ds_docker_project.html#testing>`__)
+1. Cuts a dummy project and runs all tests inside (See `Project Testing <project.html#testing>`__)
 2. Validates the Sphinx documentation (See `above <#documentation>`__)
 
 *****************************************
@@ -146,4 +146,4 @@ Tests in Travis CI
 
 ``cookiecutter-ds-docker`` has *Travis CI* integration (`link <https://travis-ci.com/github/sertansenturk/cookiecutter-ds-docker>`__), where all of the tests above are run automatically after each push.
 
-*Travis CI* also generates code coverage reports for the starter Python package (`see Python Tests in the Project <ds_docker_project.html#python>`__), which can be viewed on *codecov* (`link <https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/>`__).
+*Travis CI* also generates code coverage reports for the starter Python package (`see Python Tests in the Project <project.html#python>`__), which can be viewed on *codecov* (`link <https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/>`__).

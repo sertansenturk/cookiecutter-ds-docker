@@ -40,7 +40,12 @@ In a terminal, run the following:
    :maxdepth: 2
    :caption: Contents:
    
-   {{ cookiecutter.repo_slug }}.rst
+   overview
+   setup
+   run
+   documentation
+   test
+   services
    license
    credits
    changelog

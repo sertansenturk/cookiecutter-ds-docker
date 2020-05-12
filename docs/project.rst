@@ -126,16 +126,6 @@ The project comes with a basic documentation, which is located at ``{{ cookiecut
 
 The above command builds a docker image called ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/sphinx`` and starts a container from the image, which -in turn- builds the documentation. Then, you can then access the documentation by opening ``{{ cookiecutter.repo_slug }}/docs/_build/html/index.html`` on your browser.
 
-To validate the documentation without building, run:
-
-.. code:: bash
-
-   make sphinx-html-test
-
-.. note ::
-   
-   If you `enable Travis CI integration <#running-tests-in-travis-ci>`__, the documentation is validated automatically.
-
 *****************************************
 Testing
 *****************************************
@@ -159,6 +149,15 @@ You can test the integration of the Docker services (e.g., sending log requests 
 .. code:: bash
 
    make test
+
+Documentation
+=========================================
+
+To validate the documentation without building, run:
+
+.. code:: bash
+
+   make sphinx-html-test
 
 *****************************************
 Online Services
@@ -205,7 +204,7 @@ Travis CI
 
 Please follow the `official Travis CI documentation <https://docs.travis-ci.com/user/tutorial/>`_ for instructions to grant *Travis CI* access to the repository.
 
-Once enabled, Travis CI runs `all of the tests mentioned above <#tests>`__ automatically after each push. You can view the results at ``https://travis-ci.com/github/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}``
+Once enabled, Travis CI runs `all of the tests mentioned above <#testing>`__ automatically after each push. You can view the results at: ``https://travis-ci.com/github/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}``
 
 Travis CI also generates code coverage reports for the starter Python package, which can be viewed at codecov: 
 
@@ -214,7 +213,7 @@ Travis CI also generates code coverage reports for the starter Python package, w
 Online Documentation
 =========================================
 
-You may want to host the `Sphinx documentation <#documentation>`__ online, e.g. at `Read the Docs <https://readthedocs.io>`__ or `Github Pages <https://pages.github.com/>`__. Typically, these services offer seamless integration with *Github*. Please refer to these services to learn how.
+You may want to host the `Sphinx documentation <#documentation>`__ online, e.g. at `Read the Docs <https://readthedocs.io>`__ or `Github Pages <https://pages.github.com/>`__. Typically, these services offer effortless integration with *Github*. Please refer to these services to learn how.
 
 .. note::
 
