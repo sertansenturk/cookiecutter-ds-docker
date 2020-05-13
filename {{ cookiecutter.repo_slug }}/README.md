@@ -20,7 +20,7 @@ This project is "cut" from [sertansenturk/cookiecutter-ds-docker](https://github
 2. An [mlflow](https://mlflow.org/) tracking server to store experiments
 3. A [postgresql](https://www.postgresql.org/) database, which stores mlflow tracking information
 
-- The template also includes a Docker image for local Python test and development, and another for building local Sphinx documantation.
+- The template also includes a *Docker* image for local *Python* test and development, and another for building local *Sphinx* documentation.
 
 ## 2. Documentation
 
