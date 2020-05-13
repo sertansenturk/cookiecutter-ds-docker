@@ -31,7 +31,7 @@ The project comes with a Python starter package called ``{{ cookiecutter.package
 Makefile
 =========================================
 
-Below, we introduce some useful ``Makefile`` commands to interact with the project. For all commands, please refer to the help by running on the terminal:
+``Makefile`` commands are used extensively to work with ``{{ cookiecutter.repo_slug }}``. For all commands, please refer to the help by running on the terminal:
 
 .. code:: bash
 
