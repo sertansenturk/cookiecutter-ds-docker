@@ -8,6 +8,7 @@ SHELL := /bin/bash
 	prune build \
 	up run down down-all \
 	python-dev-build tox \
+	sphinx-html sphinx-html-test \
 	find-port-usage debug-travis
 
 HELP_PADDING = 28
@@ -32,6 +33,9 @@ UP_OPTS =
 RUN_OPTS =
 
 PYTHON_DEV_CMD =
+
+DOCS_FOLDER = docs
+SPHINX_OPTS := -nWT -b linkcheck
 
 CHK_PORT = ${MLFLOW_TRACKING_SERVER_PORT}
 
@@ -82,6 +86,12 @@ help:
 	@printf "$(pretty_command): docker-compose down with \"${DOWN_ALL_OPTS}\"\n" down-all
 	@printf "$(pretty_command): build \"python-dev\" image\n" python-dev-build
 	@printf "$(pretty_command): run automated checks inside \"python-dev\" using tox\n" tox
+	@printf "\n"
+	@printf "======= Documentation ======\n"
+	@printf "$(pretty_command): builds sphinx docker image\n" sphinx-build
+	@printf "$(pretty_command): builds sphinx html docs\n" sphinx-html
+	@printf "$(padded_str)SPHINX_OPTS, options to pass to sphinx (default: $(SPHINX_OPTS))\n"
+	@printf "$(pretty_command): tests sphinx html build\n" sphinx-html-test
 	@printf "\n"
 	@printf "========= Misc =======\n"
 	@printf "$(pretty_command): create the local mlflow artifact store\n" ${MLFLOW_ARTIFACT_STORE}
@@ -200,6 +210,20 @@ python-dev-build:
 tox: PYTHON_DEV_CMD := tox
 tox: python-dev-build
 	docker run -it ${IMAGE_OWNER}/${PYTHON_DEV_IMAGE_NAME}:${VERSION} ${PYTHON_DEV_CMD}
+
+sphinx-build:
+	DOCKER_BUILDKIT=${BUILDKIT} \
+	docker build \
+		--build-arg SPHINX_VERSION=${SPHINX_VERSION} \
+		. \
+		-f ./docker/sphinx/Dockerfile \
+		-t ${IMAGE_OWNER}/${SPHINX_IMAGE_NAME}:${SPHINX_VERSION}
+
+sphinx-html: sphinx-build
+	docker run -it --rm -v ${MAKEFILE_DIR}${DOCS_FOLDER}:/docs -e SPHINX_OPTS="${SPHINX_OPTS}" ${IMAGE_OWNER}/${SPHINX_IMAGE_NAME}:${SPHINX_VERSION}
+
+sphinx-html-test: SPHINX_OPTS:=${SPHINX_OPTS} -b dummy
+sphinx-html-test: sphinx-html
 
 find-port-usage:
 	sudo lsof -i -P -n | grep ${CHK_PORT}

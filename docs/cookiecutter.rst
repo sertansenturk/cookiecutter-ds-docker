@@ -51,28 +51,28 @@ To "cut" a new project from the template, run on the terminal:
 
 .. code:: bash
 
-    cd /{ base_folder }
-    cookiecutter https://github.com/sertansenturk/cookiecutter-ds-docker
+   cd /{ base_folder }
+   cookiecutter https://github.com/sertansenturk/cookiecutter-ds-docker
 
 *cookiecutter* will ask you to fill a few variables, namely:
 
-+----------------------+--------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| Variable             | Explanation                                      | Modifies                                                                                                       |
-+======================+==================================================+================================================================================================================+
-| *repo\_name*         | Name of the repository                           | Header of ``README.md``                                                                                        |
-+----------------------+--------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| *repo\_slug*         | Slug of the repository name                      | Repository folder name, GitHub URL, explanations in ``README.md``                                              |
-+----------------------+--------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| *package\_name*      | Name of the Python package in the project        | Python package name, ``setup.py``, ``tox.ini``, unittests, docker image names, explanations in ``README.md``   |
-+----------------------+--------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| *author\_name*       | Name of the authoring person/team/organization   | Author name in ``setup.py`` and ``README.md``                                                                  |
-+----------------------+--------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| *author\_email*      | E-mail to contact the author                     | Author e-mail in ``setup.py``, ``CODE_OF_CONDUCT.md`` and ``README.md``                                        |
-+----------------------+--------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| *github\_username*   | Github username                                  | GitHub URL, URLs in ``setup.py``, docker image names, explanations in ``README.md``                            |
-+----------------------+--------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
-| *description*        | A short description of the project               | Explanations in ``setup.py`` and ``README.md``                                                                 |
-+----------------------+--------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
++----------------------+--------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+
+| Variable             | Explanation                                      | Modifies                                                                                                           |
++======================+==================================================+====================================================================================================================+
+| *repo\_name*         | Name of the repository                           | Header of ``README.md``                                                                                            |
++----------------------+--------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+
+| *repo\_slug*         | Slug of the repository name                      | Repository folder name, GitHub URL, explanations in the documentation                                              |
++----------------------+--------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+
+| *package\_name*      | Name of the Python package in the project        | Python package name, ``setup.py``, ``tox.ini``, unittests, docker image names, explanations in the documentation   |
++----------------------+--------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+
+| *author\_name*       | Name of the authoring person/team/organization   | Author name in ``setup.py`` and the documentation                                                                  |
++----------------------+--------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+
+| *author\_email*      | E-mail to contact the author                     | Author e-mail in ``setup.py``, ``CODE_OF_CONDUCT.md`` and the documentation                                        |
++----------------------+--------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+
+| *github\_username*   | Github username                                  | GitHub URL, URLs in ``setup.py``, docker image names, explanations in the documentation                            |
++----------------------+--------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+
+| *description*        | A short description of the project               | Explanations in ``setup.py`` and the documentation                                                                 |
++----------------------+--------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+
 
 Afterward, the project will be created in ``/{ base_folder }/{{ cookiecutter.repo_slug }}``.
 
@@ -103,28 +103,28 @@ You can cut a project by running:
 
 .. code:: bash
 
-    make
+   make
 
 and entering the variables, as `explained above <#cutting-a-new-project>`__. The project will be created at ``../{{ cookiecutter.repo_slug }}`` relative to the ``./cookiecutter-ds-docker`` folder.
 
 Documentation
 =========================================
 
-We use `Sphinx <https://www.sphinx-doc.org>`__ for documentation. The documentation is hosted online at `Read the Docs <https://cookiecutter-ds-docker.readthedocs.io>`_. *Read the Docs* automatically publishes and updates a version for the *master* branch, *dev* branch, and each release in *Github*.
+The documentation is hosted online at `Read the Docs <https://cookiecutter-ds-docker.readthedocs.io>`_. *Read the Docs* automatically publishes and updates a version for the *master* branch, *dev* branch, and each release in *Github*.
 
 If you would like to build the documentation locally, you need to run:
 
 .. code:: bash
 
-    make sphinx-html
+   make sphinx-html
 
-Then, you can then access the documentation by opening ``./docs/_build/html/index.html`` on your browser.
+The above command builds a docker image called ``sertansenturk/sphinx`` and runs a container from the image, which -in turn- builds the documentation using *Sphinx*. Then, you can access the documentation by opening ``./docs/_build/html/index.html`` on your browser.
 
 To validate the documentation without building, run:
 
 .. code:: bash
 
-    make sphinx-html-test
+   make sphinx-html-test
 
 Running Tests Locally
 =========================================
@@ -133,17 +133,17 @@ You can run the tests with a single command by:
 
 .. code:: bash
 
-    make test
+   make test
 
 The above command:
 
-1. Cuts a dummy project and runs all tests inside (See `Project Testing <ds_docker_project.html#testing>`__)
+1. Cuts a dummy project and runs all tests inside (See `Project Testing <project.html#testing>`__)
 2. Validates the Sphinx documentation (See `above <#documentation>`__)
 
 *****************************************
 Tests in Travis CI
 *****************************************
 
-``cookiecutter-ds-docker`` has *Travis CI* integration (`link <https://travis-ci.com/github/sertansenturk/cookiecutter-ds-docker>`__), where all of the aforementioned tests are run automatically after each push.
+``cookiecutter-ds-docker`` has *Travis CI* integration (`link <https://travis-ci.com/github/sertansenturk/cookiecutter-ds-docker>`__), where all of the tests above are run automatically after each push.
 
-*Travis CI* also generates code coverage reports for the starter Python package (`see Python Tests in the Project <ds_docker_project.html#python>`__), which can be viewed on *codecov* (`link <https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/>`__).
+*Travis CI* also generates code coverage reports for the starter Python package (`see Python Tests in the Project <project.html#python>`__), which can be viewed on *codecov* (`link <https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker/>`__).

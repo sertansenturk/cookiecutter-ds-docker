@@ -14,13 +14,13 @@ A Docker-based Data Science cookiecutter (for myself)
 
 ## 1. Introduction
 
-This repo hosts a personalized, Docker-based [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/) template for Data Science projects. The template consists of a docker-compose stack with the services below:
+This repo hosts a personalized, *Docker*-based [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/) template for Data Science projects. The template consists of a docker-compose stack with the services below:
 
-1. A customized [Jupyter](https://jupyter.org/) service with a starter Python installed
+1. A customized [Jupyter](https://jupyter.org/) service with a starter *Python* package installed
 2. An [mlflow](https://mlflow.org/) tracking server to store experiments
 3. A [postgresql](https://www.postgresql.org/) database, which stores mlflow tracking information
 
-- The template also includes a Docker image for Python test and development.
+- The template also includes a *Docker* image for local *Python* test and development, and another for building local *Sphinx* documantation.
 
 ## 2. Documentation
 

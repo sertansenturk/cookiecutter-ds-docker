@@ -12,6 +12,10 @@ data/
 !.gitignore
 !.travis.yml
 !.codeclimate.yml
+!.env
+!.pylintrc
+!.github
+!*.dockerignore
 *.pkl
 
 # Byte-compiled / optimized / DLL files
@@ -95,7 +99,6 @@ ipython_config.py
 .python-version
 
 # Environments
-.env
 .venv
 env/
 venv/

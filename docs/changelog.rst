@@ -8,10 +8,9 @@ Changelog
 v0.9.0
 ------
 
--  Add Sphinx documentation (Pull Request `#36 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/36>`__)
+-  Add Sphinx documentation (Pull Request `#36 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/36>`__, `#45 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/45>`__)
 -  Create online documentation at `Read the Docs <https://readthedocs.org/projects/cookiecutter-ds-docker/>`__
--  Move Sphinx docker image and makefile recipes for local development
--  Add Sphinx documentation validation to Travis CI (Pull Request `#43 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/43/>`__)
+-  Add Sphinx docker image for local build and test (Pull Request `#43 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/43/>`__)
 -  Port local cookiecutter processes from virtualenv to docker
 -  Add VERSION file to the base folder
 -  Add LICENSE file to the base folder (Pull Request `#33 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/33>`__)
