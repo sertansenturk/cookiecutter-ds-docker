@@ -37,7 +37,7 @@ For more information on *Github ecosystem*, please refer to the official `help <
 Travis CI
 =========================================
 
-*Travis CI* is a continuous integration service to build and test projects hosted in *Github*. {{ cookiecutter.repo_slug}} comes with a pre-made *Travis CI* configuration located at ``.travis.yml``.
+*Travis CI* is a continuous integration service to build and test projects hosted in *Github*. ``{{ cookiecutter.repo_slug}}`` comes with a pre-made *Travis CI* configuration located at ``.travis.yml``.
 
 .. important::
 
