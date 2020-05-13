@@ -38,7 +38,7 @@ The project comes with a Python starter package called ``{{ cookiecutter.package
 Makefile
 =========================================
 
-Below, we introduce some useful ``Makefile`` commands to interact with the project. For all commands, please refer to the help by running on the terminal:
+``Makefile`` commands are used extensively to interact with the project. For a list of commands, please refer to the help by running on the terminal:
 
 .. code:: bash
 
@@ -101,7 +101,7 @@ For convenience, the above command stops running stacks (if exist), cleans, (re)
 Additional Run Options
 =========================================
 
-By default, we base the *Jupyter* service on the official `scipy-notebook <https://hub.docker.com/r/jupyter/scipy-notebook/tags>`__ image. You can also build & run from `tensorflow <https://hub.docker.com/r/jupyter/tensorflow-notebook/tags>`__ or `pyspark <https://hub.docker.com/r/jupyter/pyspark-notebook/tags>`__ notebooks by:
+By default, the *Jupyter* service is based on the official `scipy-notebook <https://hub.docker.com/r/jupyter/scipy-notebook/tags>`__ image. You can also build & run from `tensorflow <https://hub.docker.com/r/jupyter/tensorflow-notebook/tags>`__ or `pyspark <https://hub.docker.com/r/jupyter/pyspark-notebook/tags>`__ notebooks by:
 
 .. code:: bash
 
@@ -118,13 +118,13 @@ If you want to use classic *Jupyter* notebooks, run instead:
 Documentation
 *****************************************
 
-The project comes with a basic documentation, which is located at ``{{ cookiecutter.repo_slug }}/docs``. You can use `Sphinx <https://www.sphinx-doc.org>`__ to build the documentation locally:
+The project comes with a basic documentation, which is located at ``{{ cookiecutter.repo_slug }}/docs``. You can use `Sphinx <https://www.sphinx-doc.org>`__ to build the documentation locally by running:
 
 .. code:: bash
 
    make sphinx-html
 
-The above command builds a docker image called ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/sphinx`` and starts a container from the image, which -in turn- builds the documentation. Then, you can then access the documentation by opening ``{{ cookiecutter.repo_slug }}/docs/_build/html/index.html`` on your browser.
+The above command builds a docker image called ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/sphinx`` and starts a container from the image, which -in turn- builds the documentation. Then, you can then access the documentation by opening ``./docs/_build/html/index.html`` on your browser.
 
 *****************************************
 Testing
@@ -206,13 +206,13 @@ Please follow the `official Travis CI documentation <https://docs.travis-ci.com/
 
 Once enabled, Travis CI runs `all of the tests mentioned above <#testing>`__ automatically after each push. You can view the results at: ``https://travis-ci.com/github/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}``
 
-Travis CI also generates code coverage reports for the starter Python package, which can be viewed at codecov: 
+Travis CI also generates code coverage reports for the starter Python package, which can be viewed at *codecov*: 
 
 ``https://codecov.io/gh/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}``
 
 .. note::
 
-   Please refer to the `official guide <https://docs.codecov.io/docs>`__ to how to quick-start and use codecov.
+   Please refer to the `official guide <https://docs.codecov.io/docs>`__ to how to quick-start and use *codecov*.
 
 Online Documentation
 =========================================

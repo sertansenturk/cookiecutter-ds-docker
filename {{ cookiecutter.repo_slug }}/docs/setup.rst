@@ -13,9 +13,9 @@ The above command will build these images:
 ======================= ====================================================================================
  Service                 Image name                                                                         
 ======================= ====================================================================================
- *jupyter*               ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/jupyter:0.1.0``  
- *mlflow*                ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/mlflow:0.1.0``   
- *postgres*              ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/postgres:0.1.0`` 
+ *jupyter*               ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/jupyter``  
+ *mlflow*                ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/mlflow``   
+ *postgres*              ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/postgres`` 
 ======================= ====================================================================================
 
 .. note::

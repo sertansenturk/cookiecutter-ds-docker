@@ -47,11 +47,11 @@ Please follow the `official Travis CI documentation <https://docs.travis-ci.com/
 
 Once enabled, Travis CI runs `all of the tests <test.html>`__ automatically after each push. You can view the results at ``https://travis-ci.com/github/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}``.
 
-Travis CI also generates code coverage reports for the starter Python package, which can be viewed at codecov ``https://codecov.io/gh/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}``.
+Travis CI also generates code coverage reports for the starter Python package, which can be viewed at *codecov* ``https://codecov.io/gh/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}``.
 
 .. note::
 
-   Please refer to the `official guide <https://docs.codecov.io/docs>`__ to how to quick-start and use codecov.
+   Please refer to the `official guide <https://docs.codecov.io/docs>`__ to how to quick-start and use *codecov*.
 
 
 Online Documentation
