@@ -195,7 +195,7 @@ To host the project in *Github*, follow the steps below:
       git remote add origin https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}.git
       git push -u origin master
 
-For more information on *Github ecosystem*, please refer to the official `help <https://help.github.com/en>`__ and `guides <https://guides.github.com/>`__.
+For more information on the *Github ecosystem*, please refer to the official `help <https://help.github.com/en>`__ and `guides <https://guides.github.com/>`__.
 
 Travis CI
 =========================================
