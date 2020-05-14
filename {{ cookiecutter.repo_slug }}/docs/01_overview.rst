@@ -20,8 +20,8 @@ We mount several folders from our host to these services:
 .. note::
    The project also includes these supplementary, standalone *Docker* images:
 
-   1. for building Sphinx documentation (See `Documentation <documentation.html>`__)
-   2. for testing *Python* code (See `Python Tests <testing.html/#python>`__)
+   1. for building Sphinx documentation (See `Documentation <04_documentation.html>`__)
+   2. for testing *Python* code (See `Python Tests <05_test.html/#python>`__)
 
 Python
 =========================================
@@ -32,7 +32,7 @@ The code is organized in a *Python* package called ``{{ cookiecutter.package_nam
 
    ``{{ cookiecutter.package_name }}`` docstrings follow the `numpy style <https://numpydoc.readthedocs.io/en/latest/format.html>`__.
 
-Please refer to the `Python API <modules>`__ for package documentation.
+Please refer to the `Python API <modules.html>`__ for package documentation.
 
 Makefile
 =========================================

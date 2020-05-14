@@ -59,7 +59,7 @@ Travis CI
 
 ``{{ cookiecutter.repo_slug}}`` comes with *Travis CI*, a continuous integration service to build and test projects hosted in *Github*. The configuration is located at ``.travis.yml``.
 
-*Travis CI* runs `all of the tests <test.html>`__ automatically after each push. You can view the results at https://travis-ci.com/github/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}.
+*Travis CI* runs `all of the tests <05_test.html>`__ automatically after each push. You can view the results at https://travis-ci.com/github/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}.
 
 .. note::
 
@@ -83,7 +83,7 @@ You can reach the up-to-date documentation online at https://{{ cookiecutter.rep
    .. important::
       Once the service is enabled, remove this block.
 
-   You may want to host the `Sphinx documentation <documentation.html>`__ online, e.g. at `Read the Docs <https://readthedocs.io>`__ or `Github Pages <https://pages.github.com/>`__. Typically, these services offer effortless integration with *Github*. Please refer to these services to learn how.
+   You may want to host the `Sphinx documentation <04_documentation.html>`__ online, e.g. at `Read the Docs <https://readthedocs.io>`__ or `Github Pages <https://pages.github.com/>`__. Typically, these services offer effortless integration with *Github*. Please refer to these services to learn how.
 
    .. note::
 

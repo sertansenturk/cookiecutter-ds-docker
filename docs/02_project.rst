@@ -6,7 +6,7 @@ Working with a Project
 
 .. attention::
 
-   We assume you have already `cut a project by following the instructions <cookiecutter_template.html#cutting-a-new-project>`__, and you are in the project directory, ``/{ base_folder }/{{ cookiecutter.repo_slug }}``.
+   We assume you have already `cut a project by following the instructions <01_cookiecutter_template.html#cutting-a-new-project>`__, and you are in the project directory, ``/{ base_folder }/{{ cookiecutter.repo_slug }}``.
 
 *****************************************
 Overview
