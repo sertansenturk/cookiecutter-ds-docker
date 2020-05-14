@@ -8,7 +8,7 @@ SHELL := /bin/bash
 	prune build \
 	up run down down-all \
 	python-dev-build tox \
-	sphinx-html sphinx-html-test \
+	sphinx-build sphinx-apidoc sphinx-html sphinx-html-test \
 	find-port-usage debug-travis
 
 HELP_PADDING = 28
@@ -35,7 +35,7 @@ RUN_OPTS =
 PYTHON_DEV_CMD =
 
 DOCS_FOLDER = docs
-SPHINX_OPTS := -nWT -b linkcheck
+SPHINX_OPTS := -nWT -b linkcheck --keep-going
 
 CHK_PORT = ${MLFLOW_TRACKING_SERVER_PORT}
 
@@ -89,6 +89,7 @@ help:
 	@printf "\n"
 	@printf "======= Documentation ======\n"
 	@printf "$(pretty_command): builds sphinx docker image\n" sphinx-build
+	@printf "$(pretty_command): creates automatic rst documentation of the python package\n" sphinx-apidoc
 	@printf "$(pretty_command): builds sphinx html docs\n" sphinx-html
 	@printf "$(padded_str)SPHINX_OPTS, options to pass to sphinx (default: $(SPHINX_OPTS))\n"
 	@printf "$(pretty_command): tests sphinx html build\n" sphinx-html-test
@@ -219,8 +220,17 @@ sphinx-build:
 		-f ./docker/sphinx/Dockerfile \
 		-t ${IMAGE_OWNER}/${SPHINX_IMAGE_NAME}:${SPHINX_VERSION}
 
-sphinx-html: sphinx-build
-	docker run -it --rm -v ${MAKEFILE_DIR}${DOCS_FOLDER}:/docs -e SPHINX_OPTS="${SPHINX_OPTS}" ${IMAGE_OWNER}/${SPHINX_IMAGE_NAME}:${SPHINX_VERSION}
+sphinx-apidoc: sphinx-build
+	docker run -it --rm \
+		-v ${MAKEFILE_DIR}:/{{ cookiecutter.repo_slug }}/ \
+		${IMAGE_OWNER}/${SPHINX_IMAGE_NAME}:${SPHINX_VERSION} \
+		sphinx-apidoc -f -o ./ ../src/{{ cookiecutter.package_name }}
+
+sphinx-html: sphinx-apidoc
+	docker run -it --rm \
+		-v ${MAKEFILE_DIR}:/{{ cookiecutter.repo_slug }}/ \
+		-e SPHINX_OPTS="${SPHINX_OPTS}" \
+		${IMAGE_OWNER}/${SPHINX_IMAGE_NAME}:${SPHINX_VERSION}
 
 sphinx-html-test: SPHINX_OPTS:=${SPHINX_OPTS} -b dummy
 sphinx-html-test: sphinx-html

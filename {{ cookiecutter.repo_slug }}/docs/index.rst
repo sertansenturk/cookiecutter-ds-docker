@@ -38,7 +38,7 @@ In a terminal, run the following:
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Contents
    
    overview
    setup
@@ -50,9 +50,17 @@ In a terminal, run the following:
    credits
    changelog
 
-.. Indices and tables
-   ==================
+.. toctree::
+   :maxdepth: 2
+   :caption: Python API
 
-   * :ref:`genindex`
-   * :ref:`modindex`
+   modules
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+
+..
    * :ref:`search`
