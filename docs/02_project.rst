@@ -130,7 +130,7 @@ Afterward, you can access the documentation by opening ``./docs/_build/html/inde
 
 .. note::
 
-   By default, ``{{ cookiecutter.package_name }}`` follows the `numpy docstring style <https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard>`__. If you would like to use `Google style docstrings <https://google.github.io/styleguide/pyguide.html#Comments>`__ instead, please reverse the ``napoleon_google_docstring`` and ``napoleon_numpy_docstring`` variables inside ``{{ cookiecutter.repo_slug }}/docs/conf.py``.
+   By default, ``{{ cookiecutter.package_name }}`` follows the `numpy docstring style <https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard>`__. If you would like to use `Google style docstrings <https://google.github.io/styleguide/pyguide.html>`__ instead, please reverse the ``napoleon_google_docstring`` and ``napoleon_numpy_docstring`` variables inside ``{{ cookiecutter.repo_slug }}/docs/conf.py``.
 
 *****************************************
 Testing

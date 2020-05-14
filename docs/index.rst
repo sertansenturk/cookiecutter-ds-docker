@@ -4,18 +4,23 @@ cookiecutter-ds-docker
 *A Docker-based Data Science cookiecutter (for myself)*
 
 .. image:: https://img.shields.io/github/v/release/sertansenturk/cookiecutter-ds-docker
+    :target: https://github.com/sertansenturk/cookiecutter-ds-docker/releases/latest
     :alt: GitHub release (latest SemVer)
 .. image:: https://readthedocs.org/projects/cookiecutter-ds-docker/badge/?version=latest
     :target: https://cookiecutter-ds-docker.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 .. image:: https://travis-ci.com/sertansenturk/cookiecutter-ds-docker.svg?branch=master
     :target: https://travis-ci.com/sertansenturk/cookiecutter-ds-docker
+    :alt: Build Status
 .. image:: https://img.shields.io/codecov/c/github/sertansenturk/cookiecutter-ds-docker
-    :alt: Codecov
+    :target: https://codecov.io/gh/sertansenturk/cookiecutter-ds-docker
+    :alt: Code Coverage
 .. image:: https://img.shields.io/badge/License-AGPL%20v3-ff69b4.svg
     :target: http://www.gnu.org/licenses/agpl-3.0
+    :alt: License for code
 .. image:: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-ff69b4.svg
     :target: http://creativecommons.org/licenses/by-nc-sa/4.0/
+    :alt: License for artifacts
    
 ``cookiecutter-ds-docker`` is a personalized, Docker-based cookiecutter template repo for Data Science projects. It aims to standardize the common decisions (repo structure, setup, integrations, etc.), which I need to consider for each new project, and hence minimize the (overtly dull) start-up effort for future work.
 
