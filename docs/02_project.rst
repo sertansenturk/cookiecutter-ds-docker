@@ -6,7 +6,7 @@ Working with a Project
 
 .. attention::
 
-   We assume you have already `cut a project by following the instructions <cookiecutter_template.html#cutting-a-new-project>`__, and you are in the project directory, ``/{ base_folder }/{{ cookiecutter.repo_slug }}``.
+   We assume you have already `cut a project by following the instructions <01_cookiecutter_template.html#cutting-a-new-project>`__, and you are in the project directory, ``/{ base_folder }/{{ cookiecutter.repo_slug }}``.
 
 *****************************************
 Overview
@@ -30,11 +30,6 @@ We mount several folders from our host to these services:
    1. for building Sphinx documentation (See `Documentation <#documentation>`__)
    2. for testing *Python* code (See `Python Tests <#python>`__)
 
-Python development
-=========================================
-
-The project comes with a Python starter package called ``{{ cookiecutter.package_name }}``, which is located at ``./src/``. The package is ``pip`` installed to the *Jupyter docker* service in **editable** mode, while `the Docker stack is being built <#setup>`_.
-
 Makefile
 =========================================
 
@@ -43,6 +38,11 @@ Makefile
 .. code:: bash
 
    make help
+
+Python development
+=========================================
+
+The project comes with a Python starter package called ``{{ cookiecutter.package_name }}``, which is located at ``./src/``. The package is ``pip`` installed to the *Jupyter docker* service in **editable** mode, while `the Docker stack is being built <#setup>`_.
 
 *****************************************
 Setup
@@ -124,7 +124,11 @@ The project comes with a basic documentation, which is located at ``{{ cookiecut
 
    make sphinx-html
 
-The above command builds a docker image called ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/sphinx`` and starts a container from the image, which -in turn- builds the documentation. Then, you can then access the documentation by opening ``./docs/_build/html/index.html`` on your browser.
+The above command builds a docker image called ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/sphinx`` and starts a container from the image, which -in turn- renders the documentation (including automatic Python API documentation from docstrings). Then, you can then access the documentation by opening ``./docs/_build/html/index.html`` on your browser.
+
+.. note::
+
+   By default, ``{{ cookiecutter.package_name }}`` follow the `numpy docstring style <https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard>`__. If you would like to use `Google style docstrings <https://google.github.io/styleguide/pyguide.html#Comments>`__ instead, please reverse the ``napoleon_google_docstring`` and ``napoleon_numpy_docstring`` variables inside ``{{ cookiecutter.repo_slug }}/docs/conf.py``.
 
 *****************************************
 Testing

@@ -1,8 +1,3 @@
-.. cookiecutter-ds-docker documentation master file, created by
-   sphinx-quickstart on Fri May  8 15:23:16 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 cookiecutter-ds-docker
 ==================================================
 
@@ -46,11 +41,11 @@ In a terminal, run the following:
    :maxdepth: 2
    :caption: Contents:
 
-   cookiecutter
-   project
-   license
-   credits
-   changelog
+   01_cookiecutter
+   02_project
+   03_license
+   04_credits
+   05_changelog
 
 .. Indices and tables
    ==================

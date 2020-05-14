@@ -21,8 +21,6 @@ BUILDKIT = 1
 DOCKER_USERNAME = sertansenturk
 
 MAKEFILE_DIR = $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
-VERSION := $(shell cat VERSION)
-AUTHORS := $(shell cut -f1 AUTHORS | awk 1 ORS=', ' | head -c -2)
 
 CUT_BASE_FOLDER = ..
 CUT_TMP_FOLDER = tmp
@@ -37,7 +35,7 @@ COOKIECUTTER_IMAGE = $(DOCKER_USERNAME)/cookiecutter:$(COOKIECUTTER_VERSION)
 DOCS_FOLDER = docs
 SPHINX_VERSION = 3.0.3
 SPHINX_IMAGE = $(DOCKER_USERNAME)/sphinx:$(SPHINX_VERSION)
-SPHINX_OPTS := -nWT -b linkcheck
+SPHINX_OPTS := -nWT -b linkcheck --keep-going
 
 TRAVIS_JOB =
 TRAVIS_TOKEN =
@@ -63,7 +61,8 @@ help:
 	@printf "======= Documentation ======\n"
 	@printf "$(pretty_command): builds sphinx docker image\n" sphinx-build
 	@printf "$(pretty_command): \"quickstarts\" sphinx documentation\n" sphinx-quickstart
-	@printf "$(pretty_command): builds sphinx html docs\n" sphinx-html
+	@printf "$(pretty_command): cleans the documentation at \"./docs/_build/\"\n" sphinx-clean
+	@printf "$(pretty_command): builds sphinx html docs at \"./docs/_build/html\"\n" sphinx-html
 	@printf "$(padded_str)SPHINX_OPTS, options to pass to sphinx (default: $(SPHINX_OPTS))\n"
 	@printf "$(pretty_command): tests sphinx html build\n" sphinx-html-test
 	@printf "\n"
@@ -83,7 +82,7 @@ clean-$(DOCS_FOLDER):
 	rm -rf $(DOCS_FOLDER)
 
 cookiecutter-build:
-	DOCKER_BUILDKIT=${BUILDKIT} \
+	DOCKER_BUILDKIT=$(BUILDKIT) \
 	docker build . \
 		-f ./docker/cookiecutter/Dockerfile \
 		-t $(COOKIECUTTER_IMAGE)
@@ -108,7 +107,7 @@ test: sphinx-html-test clean-test cut
 	$(MAKE) clean-test
 
 sphinx-build:
-	DOCKER_BUILDKIT=${BUILDKIT} \
+	DOCKER_BUILDKIT=$(BUILDKIT) \
 	docker build \
 		--build-arg SPHINX_VERSION=$(SPHINX_VERSION) \
 		. \
@@ -117,14 +116,21 @@ sphinx-build:
 
 sphinx-quickstart: sphinx-build
 	mkdir -p $(DOCS_FOLDER)
-	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs $(SPHINX_IMAGE) sphinx-quickstart \
-		-q \
-		-p cookiecutter-ds-docker \
-		-a "$(AUTHORS)" \
-		-v $(VERSION)
+	docker run -it --rm\
+		-v $(MAKEFILE_DIR):/repo/ $(SPHINX_IMAGE) \
+		sphinx-quickstart
 
-sphinx-html: sphinx-build
-	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs -e SPHINX_OPTS="$(SPHINX_OPTS)" $(SPHINX_IMAGE)
+sphinx-clean: sphinx-build
+	docker run -it --rm \
+		-v $(MAKEFILE_DIR):/repo/ \
+		$(SPHINX_IMAGE) \
+		make clean
+
+sphinx-html: sphinx-clean
+	docker run -it --rm \
+		-v $(MAKEFILE_DIR):/repo/ \
+		-e SPHINX_OPTS="$(SPHINX_OPTS)" \
+		$(SPHINX_IMAGE)
 
 sphinx-html-test: SPHINX_OPTS:=$(SPHINX_OPTS) -b dummy
 sphinx-html-test: sphinx-html
