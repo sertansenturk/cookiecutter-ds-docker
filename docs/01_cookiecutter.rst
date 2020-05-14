@@ -76,7 +76,7 @@ To "cut" a new project from the template, run on the terminal:
 
 Afterward, the project will be created in ``/{ base_folder }/{{ cookiecutter.repo_slug }}``.
 
-For additional command line options, please refer to the `advanced options <https://cookiecutter.readthedocs.io/en/latest/advanced/cli_options.html#command-line-options>`__ in the official cookiecutter documentation.
+For additional command-line options, please refer to the `advanced options <https://cookiecutter.readthedocs.io/en/latest/advanced/cli_options.html#command-line-options>`__ in the official cookiecutter documentation.
 
 *****************************************
 Local Usage

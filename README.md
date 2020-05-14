@@ -22,7 +22,7 @@ The template consists of a docker-compose stack with the services below:
 2. An [mlflow](https://mlflow.org/) tracking server to store experiments
 3. A [postgresql](https://www.postgresql.org/) database, which stores mlflow tracking information
 
-The template also includes two standalone *Docker* image below for local usage:
+The template also comes with two standalone *Docker* image below for local usage:
 
 1. *Python* test and development
 2. Building *Sphinx* documentation

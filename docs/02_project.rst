@@ -14,7 +14,7 @@ Overview
 
 A project cut from ``cookiecutter-ds-docker`` consists of a docker-compose stack with the services below:
 
-1. A customized `Jupyter <https://jupyter.org/>`__ service with a starter Python package installed. Comes with *Python 3.7*.
+1. A customized `Jupyter <https://jupyter.org/>`__ service with a starter Python package installed. Uses on *Python 3.7*.
 2. An `mlflow <https://mlflow.org/>`__ tracking server to log experiments.
 3. A `postgresql <https://www.postgresql.org/>`__ database, which stores *mlflow* tracking information.
 
@@ -118,7 +118,7 @@ If you want to use classic *Jupyter* notebooks, run instead:
 Documentation
 *****************************************
 
-The project comes with a basic documentation, which is located at ``{{ cookiecutter.repo_slug }}/docs``. You can use `Sphinx <https://www.sphinx-doc.org>`__ to build the documentation locally by running:
+The project comes with basic documentation, which is located at ``{{ cookiecutter.repo_slug }}/docs``. You can use `Sphinx <https://www.sphinx-doc.org>`__ to build the documentation locally by running:
 
 .. code:: bash
 
@@ -180,7 +180,7 @@ To host the project in *Github*, follow the steps below:
 
       Your *Github Username* and *Repository Name* should match ``{{ cookiecutter.github_username }}`` and ``{{ cookiecutter.repo_slug }}``, respectively.
 
-2. Initialize git and make a first commit, e.g.:
+2. Initialize git and make the first commit, e.g.:
 
    .. code::
 
@@ -208,7 +208,9 @@ Travis CI
 
 Please follow the `official Travis CI documentation <https://docs.travis-ci.com/user/tutorial/>`_ for instructions to grant *Travis CI* access to the repository.
 
-Once enabled, Travis CI runs `all of the tests mentioned above <#testing>`__ automatically after each push. You can view the results at: ``https://travis-ci.com/github/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}``
+Once enabled, Travis CI runs `all of the tests mentioned above <#testing>`__ automatically after each push. You can view the results at:
+
+``https://travis-ci.com/github/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}``
 
 Travis CI also generates code coverage reports for the starter Python package, which can be viewed at *codecov*: 
 
