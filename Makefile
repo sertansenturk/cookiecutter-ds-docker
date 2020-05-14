@@ -37,7 +37,7 @@ COOKIECUTTER_IMAGE = $(DOCKER_USERNAME)/cookiecutter:$(COOKIECUTTER_VERSION)
 DOCS_FOLDER = docs
 SPHINX_VERSION = 3.0.3
 SPHINX_IMAGE = $(DOCKER_USERNAME)/sphinx:$(SPHINX_VERSION)
-SPHINX_OPTS := -nWT -b linkcheck
+SPHINX_OPTS := -nWT -b linkcheck --keep-going
 
 TRAVIS_JOB =
 TRAVIS_TOKEN =
@@ -63,7 +63,8 @@ help:
 	@printf "======= Documentation ======\n"
 	@printf "$(pretty_command): builds sphinx docker image\n" sphinx-build
 	@printf "$(pretty_command): \"quickstarts\" sphinx documentation\n" sphinx-quickstart
-	@printf "$(pretty_command): builds sphinx html docs\n" sphinx-html
+	@printf "$(pretty_command): cleans the documentation at \"./docs/_build/\"\n" sphinx-clean
+	@printf "$(pretty_command): builds sphinx html docs at \"./docs/_build/html\"\n" sphinx-html
 	@printf "$(padded_str)SPHINX_OPTS, options to pass to sphinx (default: $(SPHINX_OPTS))\n"
 	@printf "$(pretty_command): tests sphinx html build\n" sphinx-html-test
 	@printf "\n"
@@ -117,13 +118,17 @@ sphinx-build:
 
 sphinx-quickstart: sphinx-build
 	mkdir -p $(DOCS_FOLDER)
-	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs $(SPHINX_IMAGE) sphinx-quickstart \
-		-q \
-		-p cookiecutter-ds-docker \
-		-a "$(AUTHORS)" \
-		-v $(VERSION)
+	docker run -it --rm\
+		-v $(MAKEFILE_DIR):/repo/ $(SPHINX_IMAGE) \
+		sphinx-quickstart
 
-sphinx-html: sphinx-build
+sphinx-clean: sphinx-build
+	docker run -it --rm \
+		-v $(MAKEFILE_DIR):/repo/ \
+		$(SPHINX_IMAGE) \
+		make clean
+
+sphinx-html: sphinx-clean
 	docker run -it --rm \
 		-v $(MAKEFILE_DIR):/repo/ \
 		-e SPHINX_OPTS="$(SPHINX_OPTS)" \

@@ -6,6 +6,7 @@
 *.synctex.gz
 
 data/
+test-project/
 *.pyc
 *.*~
 .*

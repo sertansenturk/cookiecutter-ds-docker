@@ -11,4 +11,4 @@ USER sphinxuser
 
 WORKDIR /repo/docs
 
-CMD make clean; make html SPHINXOPTS:=$SPHINX_OPTS
+CMD make html SPHINXOPTS:=$SPHINX_OPTS
