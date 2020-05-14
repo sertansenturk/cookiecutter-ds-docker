@@ -40,15 +40,15 @@ In a terminal, run the following:
    :maxdepth: 2
    :caption: Contents
    
-   overview
-   setup
-   run
-   documentation
-   test
-   services
-   license
-   credits
-   changelog
+   01_overview
+   02_setup
+   03_run
+   04_documentation
+   05_test
+   06_services
+   07_license
+   08_credits
+   09_changelog
 
 .. toctree::
    :maxdepth: 2

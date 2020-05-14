@@ -30,11 +30,6 @@ We mount several folders from our host to these services:
    1. for building Sphinx documentation (See `Documentation <#documentation>`__)
    2. for testing *Python* code (See `Python Tests <#python>`__)
 
-Python development
-=========================================
-
-The project comes with a Python starter package called ``{{ cookiecutter.package_name }}``, which is located at ``./src/``. The package is ``pip`` installed to the *Jupyter docker* service in **editable** mode, while `the Docker stack is being built <#setup>`_.
-
 Makefile
 =========================================
 
@@ -43,6 +38,11 @@ Makefile
 .. code:: bash
 
    make help
+
+Python development
+=========================================
+
+The project comes with a Python starter package called ``{{ cookiecutter.package_name }}``, which is located at ``./src/``. The package is ``pip`` installed to the *Jupyter docker* service in **editable** mode, while `the Docker stack is being built <#setup>`_.
 
 *****************************************
 Setup

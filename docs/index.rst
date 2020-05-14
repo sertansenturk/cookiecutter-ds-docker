@@ -46,11 +46,11 @@ In a terminal, run the following:
    :maxdepth: 2
    :caption: Contents:
 
-   cookiecutter
-   project
-   license
-   credits
-   changelog
+   01_cookiecutter
+   02_project
+   03_license
+   04_credits
+   05_changelog
 
 .. Indices and tables
    ==================
