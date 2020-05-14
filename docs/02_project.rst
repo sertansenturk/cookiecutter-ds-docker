@@ -124,7 +124,11 @@ The project comes with a basic documentation, which is located at ``{{ cookiecut
 
    make sphinx-html
 
-The above command builds a docker image called ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/sphinx`` and starts a container from the image, which -in turn- builds the documentation. Then, you can then access the documentation by opening ``./docs/_build/html/index.html`` on your browser.
+The above command builds a docker image called ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/sphinx`` and starts a container from the image, which -in turn- renders the documentation (including automatic Python API documentation from docstrings). Then, you can then access the documentation by opening ``./docs/_build/html/index.html`` on your browser.
+
+.. note::
+
+   By default, ``{{ cookiecutter.package_name }}`` follow the `numpy docstring style <https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard>`__. If you would like to use `Google style docstrings <https://google.github.io/styleguide/pyguide.html#Comments>`__ instead, please reverse the ``napoleon_google_docstring`` and ``napoleon_numpy_docstring`` variables inside ``{{ cookiecutter.repo_slug }}/docs/conf.py``.
 
 *****************************************
 Testing
