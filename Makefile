@@ -22,7 +22,7 @@ DOCKER_USERNAME = sertansenturk
 
 MAKEFILE_DIR = $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 VERSION := $(shell cat VERSION)
-AUTHORS := $(shell cut -f1 AUTHORS | awk 1 ORS=', ' | head -c -2)
+AUTHORS := Sertan Şentürk
 
 CUT_BASE_FOLDER = ..
 CUT_TMP_FOLDER = tmp
@@ -124,7 +124,10 @@ sphinx-quickstart: sphinx-build
 		-v $(VERSION)
 
 sphinx-html: sphinx-build
-	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs -e SPHINX_OPTS="$(SPHINX_OPTS)" $(SPHINX_IMAGE)
+	docker run -it --rm \
+		-v $(MAKEFILE_DIR):/repo/ \
+		-e SPHINX_OPTS="$(SPHINX_OPTS)" \
+		$(SPHINX_IMAGE)
 
 sphinx-html-test: SPHINX_OPTS:=$(SPHINX_OPTS) -b dummy
 sphinx-html-test: sphinx-html

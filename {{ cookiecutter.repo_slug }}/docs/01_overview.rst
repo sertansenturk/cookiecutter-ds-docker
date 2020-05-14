@@ -26,11 +26,11 @@ We mount several folders from our host to these services:
 Python
 =========================================
 
-The project comes with a Python package called ``{{ cookiecutter.package_name }}``, which is located at ``./src/``. The package is ``pip`` installed to the *Jupyter docker* service in **editable** mode.
+The code is organized in a *Python* package called ``{{ cookiecutter.package_name }}``, which is located at ``./src/``. The package is ``pip`` installed to the *Jupyter docker* service in **editable** mode.
 
 .. note::
 
-   ``{{ cookiecutter.package_name }}`` follows the `numpy docstring style <https://numpydoc.readthedocs.io/en/latest/format.html>`__.
+   ``{{ cookiecutter.package_name }}`` docstrings follow the `numpy style <https://numpydoc.readthedocs.io/en/latest/format.html>`__.
 
 Please refer to the `Python API <modules>`__ for package documentation.
 
