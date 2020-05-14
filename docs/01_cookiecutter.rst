@@ -118,7 +118,9 @@ If you would like to build the documentation locally, you need to run:
 
    make sphinx-html
 
-The above command builds a docker image called ``sertansenturk/sphinx``. It then runs a container from the image and renders the documentation using *Sphinx*. You can access the documentation by opening ``./docs/_build/html/index.html`` on your browser.
+The above command builds a docker image called ``sertansenturk/sphinx``. It then runs a container from the image and renders the documentation using *Sphinx*. 
+
+Afterward, you can access the documentation by opening ``./docs/_build/html/index.html`` on your browser.
 
 To validate the documentation without building, run:
 
