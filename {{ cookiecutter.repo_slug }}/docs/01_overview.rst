@@ -7,7 +7,7 @@ Docker
 
 ``{{ cookiecutter.repo_slug }}`` consists of a docker-compose stack with the services below:
 
-1. A customized `Jupyter <https://jupyter.org/>`__ service with a starter Python package installed. Comes with *Python 3.7*.
+1. A customized `Jupyter <https://jupyter.org/>`__ service with a starter Python package installed. It runs on *Python 3.7*.
 2. An `mlflow <https://mlflow.org/>`__ tracking server to log experiments.
 3. A `postgresql <https://www.postgresql.org/>`__ database, which stores *mlflow* tracking information.
 

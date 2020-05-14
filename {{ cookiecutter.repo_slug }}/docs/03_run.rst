@@ -16,7 +16,7 @@ For convenience, the above command stops running stacks (if exist), cleans, (re)
 
 .. note:: **Accessing mlflow UI**
 
-   You can reach the *mlflow* UI at ``http://localhost:5000``. For a simple example on how to track a run, please refer to `notebooks/mlflow\_example.ipynb <https://github.com/sertansenturk/cookiecutter-ds-docker/blob/master/%7B%7B%20cookiecutter.repo_slug%20%7D%7D/notebooks/mlflow_example.ipynb>`__.
+   You can reach the *mlflow* UI at ``http://localhost:5000``. For a simple example of how to track a run, please refer to `notebooks/mlflow\_example.ipynb <https://github.com/sertansenturk/cookiecutter-ds-docker/blob/master/%7B%7B%20cookiecutter.repo_slug%20%7D%7D/notebooks/mlflow_example.ipynb>`__.
 
    For in-depth tutorials, please refer to the `official mlflow documentation <https://mlflow.org/docs/latest/tutorials-and-examples/index.html>`__.
 

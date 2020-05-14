@@ -20,7 +20,7 @@ The above command will build these images:
 
 .. note::
 
-   The version tag of docker images is read from the ``VERSION`` variable in ``.env`` file.
+   The version tag of docker images is read from the ``VERSION`` variable in the ``.env`` file.
 
 If you need to make a clean start:
 

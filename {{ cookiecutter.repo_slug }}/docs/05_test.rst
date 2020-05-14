@@ -6,13 +6,13 @@ Testing
 Python
 =========================================
 
-Build, code style, linting checks and unittests of the Python package are automated using ``tox`` in a docker environment. You can run these tests by:
+Build, code style, linting checks, and unittests of the Python package are automated using ``tox`` in a docker environment. You can run these tests by:
 
 .. code:: bash
 
    make tox
 
-This command builds a *docker* image called ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/python-dev``, and starts a container from the image, which -in turn- runs the Python tests.
+This command builds a *docker* image called ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/python-dev``. It then starts a container from the image and runs the Python tests.
 
 Docker Stack
 =========================================

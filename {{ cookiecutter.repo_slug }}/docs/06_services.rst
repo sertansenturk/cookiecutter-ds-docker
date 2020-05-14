@@ -20,7 +20,7 @@ Github
 
          Your *Github Username* and *Repository Name* should match ``{{ cookiecutter.github_username }}`` and ``{{ cookiecutter.repo_slug }}``, respectively.
 
-   2. Initialize git and make a first commit, e.g.:
+   2. Initialize git and make the first commit, e.g.:
 
       .. code::
 
@@ -28,7 +28,7 @@ Github
          git add .
          git commit -m "First commit"
 
-   2. Push the project to *Github*, e.g. using *https* connection:
+   2. Push the project to *Github*, e.g., using *https* connection:
 
       .. code::
 
@@ -63,7 +63,7 @@ Travis CI
 
 .. note::
 
-   Please refer to the `official user documentation <https://docs.travis-ci.com/>`__ to how to work with *Travis CI*.
+   Please refer to the `official user documentation <https://docs.travis-ci.com/>`__ on how to work with *Travis CI*.
 
 *Travis CI* also generates code coverage reports for the `Python package <01_overview.html/#python>`__, which can be viewed at *codecov* https://codecov.io/gh/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}.
 
@@ -83,8 +83,8 @@ You can reach the up-to-date documentation online at https://{{ cookiecutter.rep
    .. important::
       Once the service is enabled, remove this block.
 
-   You may want to host the `Sphinx documentation <04_documentation.html>`__ online, e.g. at `Read the Docs <https://readthedocs.io>`__ or `Github Pages <https://pages.github.com/>`__. Typically, these services offer effortless integration with *Github*. Please refer to these services to learn how.
+   You may want to host the `Sphinx documentation <04_documentation.html>`__ online, e.g., at `Read the Docs <https://readthedocs.io>`__ or `Github Pages <https://pages.github.com/>`__. Typically, these services offer effortless integration with *Github*. Please refer to these services to learn how.
 
    .. note::
 
-      We assume that you will host the documentation at ``https://{{ cookiecutter.repo_slug}}.readthedocs.io``. Please modify the URLs in the project ``README`` and documentation, if you would like to host it elsewhere.
+      We assume that you will host the documentation at ``https://{{ cookiecutter.repo_slug}}.readthedocs.io``. Please modify the URLs in the project ``README`` and documentation if you would like to host it elsewhere.

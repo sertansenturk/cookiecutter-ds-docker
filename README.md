@@ -18,7 +18,7 @@ This repo hosts a personalized, *Docker*-based [cookiecutter](https://cookiecutt
 
 The template consists of a docker-compose stack with the services below:
 
-1. A customized [Jupyter](https://jupyter.org/) service with a starter *Python* package installed
+1. A customized [Jupyter](https://jupyter.org/) service with a starter *Python* package installed.
 2. An [mlflow](https://mlflow.org/) tracking server to store experiments
 3. A [postgresql](https://www.postgresql.org/) database, which stores mlflow tracking information
 

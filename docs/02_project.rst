@@ -14,7 +14,7 @@ Overview
 
 A project cut from ``cookiecutter-ds-docker`` consists of a docker-compose stack with the services below:
 
-1. A customized `Jupyter <https://jupyter.org/>`__ service with a starter Python package installed. Uses on *Python 3.7*.
+1. A customized `Jupyter <https://jupyter.org/>`__ service with a starter Python package installed. It runs on *Python 3.7*.
 2. An `mlflow <https://mlflow.org/>`__ tracking server to log experiments.
 3. A `postgresql <https://www.postgresql.org/>`__ database, which stores *mlflow* tracking information.
 
@@ -124,7 +124,7 @@ The project comes with basic documentation, which is located at ``{{ cookiecutte
 
    make sphinx-html
 
-The above command builds a docker image called ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/sphinx`` and starts a container from the image, which -in turn- renders the documentation (including automatic Python API documentation from docstrings). Then, you can then access the documentation by opening ``./docs/_build/html/index.html`` on your browser.
+The above command builds a docker image called ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/sphinx``. It then starts a container from the image and renders the documentation (including automatic Python API documentation from docstrings). You can access the documentation by opening ``./docs/_build/html/index.html`` on your browser.
 
 .. note::
 
@@ -143,7 +143,7 @@ Build, code style, linting checks and unittests of the starter Python package ar
 
    make tox
 
-This command builds a *docker* image called ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/python-dev``, and starts a container from the image, which -in turn- runs the Python tests.
+This command builds a *docker* image called ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/python-dev``. It then starts a container from the image and runs the Python tests.
 
 Docker Stack
 =========================================
