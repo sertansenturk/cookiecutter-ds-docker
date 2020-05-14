@@ -21,8 +21,6 @@ BUILDKIT = 1
 DOCKER_USERNAME = sertansenturk
 
 MAKEFILE_DIR = $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
-VERSION := $(shell cat VERSION)
-AUTHORS := Sertan Şentürk
 
 CUT_BASE_FOLDER = ..
 CUT_TMP_FOLDER = tmp
@@ -84,7 +82,7 @@ clean-$(DOCS_FOLDER):
 	rm -rf $(DOCS_FOLDER)
 
 cookiecutter-build:
-	DOCKER_BUILDKIT=${BUILDKIT} \
+	DOCKER_BUILDKIT=$(BUILDKIT) \
 	docker build . \
 		-f ./docker/cookiecutter/Dockerfile \
 		-t $(COOKIECUTTER_IMAGE)
@@ -109,7 +107,7 @@ test: sphinx-html-test clean-test cut
 	$(MAKE) clean-test
 
 sphinx-build:
-	DOCKER_BUILDKIT=${BUILDKIT} \
+	DOCKER_BUILDKIT=$(BUILDKIT) \
 	docker build \
 		--build-arg SPHINX_VERSION=$(SPHINX_VERSION) \
 		. \
