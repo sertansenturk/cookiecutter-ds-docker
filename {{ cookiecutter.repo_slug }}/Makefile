@@ -89,7 +89,7 @@ help:
 	@printf "\n"
 	@printf "======= Documentation ======\n"
 	@printf "$(pretty_command): builds sphinx docker image\n" sphinx-build
-	@printf "$(pretty_command): creates automatic rst documentation of the python package\n" sphinx-apidoc
+	@printf "$(pretty_command): creates rst documentation from python docstring\n" sphinx-apidoc
 	@printf "$(pretty_command): builds sphinx html docs\n" sphinx-html
 	@printf "$(padded_str)SPHINX_OPTS, options to pass to sphinx (default: $(SPHINX_OPTS))\n"
 	@printf "$(pretty_command): tests sphinx html build\n" sphinx-html-test

@@ -6,7 +6,7 @@ Testing
 Python
 =========================================
 
-Build, code style, linting checks and unittests of the starter Python package are automated using ``tox`` in a docker environment. You can run these tests by:
+Build, code style, linting checks and unittests of the Python package are automated using ``tox`` in a docker environment. You can run these tests by:
 
 .. code:: bash
 

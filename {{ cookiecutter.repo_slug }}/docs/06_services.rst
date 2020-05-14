@@ -2,63 +2,89 @@
 Online Services
 *****************************************
 
-.. attention::
-
-   Once you enable these services, you can remove this page from the documentation.
-
 Github
 =========================================
 
-To host the project in *Github*, follow the steps below:
+.. attention::
 
-1. Create an **empty** repository (**do not** initialize *readme*, *license*, or *.gitignore* files). See the `official Github documentation <https://help.github.com/en/github/getting-started-with-github/create-a-repo>`__ for detailed instructions.
+   **Setup Instructions**
 
-   .. note::
+   .. important::
+      Once the service is enabled, remove this block.
 
-      Your *Github Username* and *Repository Name* should match ``{{ cookiecutter.github_username }}`` and ``{{ cookiecutter.repo_slug }}``, respectively.
+   To host the project in *Github*, follow the steps below:
 
-2. Initialize git and make a first commit, e.g.:
+   1. Create an **empty** repository (**do not** initialize *readme*, *license*, or *.gitignore* files). See the `official Github documentation <https://help.github.com/en/github/getting-started-with-github/create-a-repo>`__ for detailed instructions.
 
-   .. code::
+      .. note::
 
-      git init
-      git add .
-      git commit -m "First commit"
+         Your *Github Username* and *Repository Name* should match ``{{ cookiecutter.github_username }}`` and ``{{ cookiecutter.repo_slug }}``, respectively.
 
-2. Push the project to *Github*, e.g. using *https* connection:  
+   2. Initialize git and make a first commit, e.g.:
 
-   .. code::
+      .. code::
 
-      git remote add origin https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}.git
-      git push -u origin master
+         git init
+         git add .
+         git commit -m "First commit"
 
-For more information on *Github ecosystem*, please refer to the official `help <https://help.github.com/en>`__ and `guides <https://guides.github.com/>`__.
+   2. Push the project to *Github*, e.g. using *https* connection:
+
+      .. code::
+
+         git remote add origin https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}.git
+         git push -u origin master
+
+``{{ cookiecutter.repo_slug }}`` is hosted at https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}.
+
+.. note::
+
+   For more information on the *Github ecosystem*, please refer to the `official guides <https://guides.github.com/>`__.
 
 Travis CI
 =========================================
 
-*Travis CI* is a continuous integration service to build and test projects hosted in *Github*. ``{{ cookiecutter.repo_slug}}`` comes with a pre-made *Travis CI* configuration located at ``.travis.yml``.
+.. attention::
 
-.. important::
+   **Setup Instructions**
 
-   You need to `host the project in Github <#github>`__ to use Travis CI. 
+   .. important::
+      Once the service is enabled, remove this block.
 
-Please follow the `official Travis CI documentation <https://docs.travis-ci.com/user/tutorial/>`_ for instructions to grant *Travis CI* access to the repository.
+   .. important::
 
-Once enabled, Travis CI runs `all of the tests <test.html>`__ automatically after each push. You can view the results at ``https://travis-ci.com/github/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}``.
+      You need to `host the project in Github <#github>`__ to use *Travis CI*.
 
-Travis CI also generates code coverage reports for the starter Python package, which can be viewed at *codecov* ``https://codecov.io/gh/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}``.
+   Please follow the `official Travis CI documentation <https://docs.travis-ci.com/user/tutorial/>`_ for instructions to grant *Travis CI* access to the repository.
+
+``{{ cookiecutter.repo_slug}}`` comes with *Travis CI*, a continuous integration service to build and test projects hosted in *Github*. The configuration is located at ``.travis.yml``.
+
+*Travis CI* runs `all of the tests <test.html>`__ automatically after each push. You can view the results at https://travis-ci.com/github/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}.
 
 .. note::
 
-   Please refer to the `official guide <https://docs.codecov.io/docs>`__ to how to quick-start and use *codecov*.
+   Please refer to the `official user documentation <https://docs.travis-ci.com/>`__ to how to work with *Travis CI*.
 
+*Travis CI* also generates code coverage reports for the `Python package <01_overview.html/#python>`__, which can be viewed at *codecov* https://codecov.io/gh/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}.
+
+.. note::
+
+   Please refer to the `official guide <https://docs.codecov.io/docs>`__ to how to use *codecov*.
 
 Online Documentation
 =========================================
 
-You may want to host the `Sphinx documentation <documentation.html>`__ online, e.g. at `Read the Docs <https://readthedocs.io>`__ or `Github Pages <https://pages.github.com/>`__. Typically, these services offer effortless integration with *Github*. Please refer to these services to learn how.
+You can reach the up-to-date documentation online at https://{{ cookiecutter.repo_slug}}.readthedocs.io.
 
-.. note::
+.. attention::
 
-   We assume that you will host the documentation at ``https://{{ cookiecutter.repo_slug}}.readthedocs.io``. Please modify the URLs in the project ``README`` and documentation, if you would like to host it elsewhere.
+   **Setup Instructions**
+
+   .. important::
+      Once the service is enabled, remove this block.
+
+   You may want to host the `Sphinx documentation <documentation.html>`__ online, e.g. at `Read the Docs <https://readthedocs.io>`__ or `Github Pages <https://pages.github.com/>`__. Typically, these services offer effortless integration with *Github*. Please refer to these services to learn how.
+
+   .. note::
+
+      We assume that you will host the documentation at ``https://{{ cookiecutter.repo_slug}}.readthedocs.io``. Please modify the URLs in the project ``README`` and documentation, if you would like to host it elsewhere.
