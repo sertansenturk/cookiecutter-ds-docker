@@ -13,6 +13,7 @@ Contributors
 Halil Erdoğan - herdoganturkey@gmail.com 🌷
 
 - Mac OSX integration (`Issue #28 <https://github.com/sertansenturk/cookiecutter-ds-docker/issues/28>`__, `Pull Request #31 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/31>`__)
+- Animated GIF for Quickstart (`PR #48 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/48>`__)
 
 Contributor Code of Conduct
 ---------------------------
