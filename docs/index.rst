@@ -43,6 +43,8 @@ In a terminal, run the following:
    # mlflow UI is at http://localhost:5000/
 
 .. image:: ./images/installation.gif
+  :width: 400
+  :alt: Quick Start
 
 .. toctree::
    :maxdepth: 2
