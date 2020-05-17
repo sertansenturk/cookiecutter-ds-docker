@@ -49,6 +49,8 @@ cd /{ base_folder }/{{ cookiecutter.repo_slug }}
 make
 ```
 
+![quickstart](./docs/images/installation.gif)
+
 ## 4. License
 
 The source code hosted in this repository is licensed under [Affero GPL version 3](https://www.gnu.org/licenses/agpl-3.0.en.html). Any data (features, models,  figures, results, documentation, etc.) in this repository are licensed under [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
