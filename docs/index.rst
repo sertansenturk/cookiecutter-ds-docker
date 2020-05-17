@@ -54,3 +54,7 @@ Sertan Şentürk - contact@sertansenturk.com
    * :ref:`genindex`
    * :ref:`modindex`
    * :ref:`search`
+
+. image:: https://user-images.githubusercontent.com/34948815/81512374-6f136500-9320-11ea-9b66-aa9e77315971.gif
+  :width: 400
+  :alt: Installation
