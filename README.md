@@ -49,7 +49,7 @@ cd /{ base_folder }/{{ cookiecutter.repo_slug }}
 make
 ```
 
-![alt text](./docs/images/installation.gif)
+![quickstart](./docs/images/installation.gif)
 
 ## 4. License
 
