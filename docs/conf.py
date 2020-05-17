@@ -22,10 +22,10 @@ copyright = '2020, Sertan Şentürk'
 author = 'Sertan Şentürk'
 
 # The short X.Y version
-version = '0.9.0'
+version = '0.10.0'
 
 # The full version, including alpha/beta/rc tags
-release = '0.9.0'
+release = '0.10.0'
 
 # -- General configuration ---------------------------------------------------
 
