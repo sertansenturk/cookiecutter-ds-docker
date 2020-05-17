@@ -48,6 +48,7 @@ To build and start the Docker stack, run:
 cd /{ base_folder }/{{ cookiecutter.repo_slug }}
 make
 ```
+![alt text](./docs/images/installation.gif)
 
 ## 4. License
 

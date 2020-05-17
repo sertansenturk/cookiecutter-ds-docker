@@ -58,3 +58,5 @@ In a terminal, run the following:
    * :ref:`genindex`
    * :ref:`modindex`
    * :ref:`search`
+
+.. image:: ./images/installation.gif
