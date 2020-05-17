@@ -42,6 +42,8 @@ In a terminal, run the following:
    #
    # mlflow UI is at http://localhost:5000/
 
+.. image:: ./images/installation.gif
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
@@ -59,4 +61,3 @@ In a terminal, run the following:
    * :ref:`modindex`
    * :ref:`search`
 
-.. image:: ./images/installation.gif
