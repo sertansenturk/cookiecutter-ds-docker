@@ -8,7 +8,7 @@ Changelog
 v0.9.0
 ------
 
--  Add Sphinx documentation (Pull Requests `#36 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/36>`__, `#41 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/41>`__, `#45 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/45>`__, `#46 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/46>`__)
+-  Add Sphinx documentation (Pull Requests `#36 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/36>`__, `#41 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/41>`__, `#45 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/45>`__, `#46 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/46>`__, `#49 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/49>`__)
 -  Create online documentation at `Read the Docs <https://readthedocs.org/projects/cookiecutter-ds-docker/>`__
 -  Create Sphinx docker image for local build and test (Pull Request `#43 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/43>`__)
 -  Create cookiecutter docker image for local development (Pull Request `#39 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/39>`__)
