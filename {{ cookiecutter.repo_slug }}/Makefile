@@ -8,6 +8,7 @@ SHELL := /bin/bash
 	prune build \
 	up run down down-all \
 	python-dev-build tox \
+	sphinx-build sphinx-clean sphinx-apidoc sphinx-html sphinx-html-test \
 	find-port-usage debug-travis
 
 HELP_PADDING = 28
@@ -32,6 +33,9 @@ UP_OPTS =
 RUN_OPTS =
 
 PYTHON_DEV_CMD =
+
+DOCS_FOLDER = docs
+SPHINX_OPTS := -nWT -b linkcheck --keep-going
 
 CHK_PORT = ${MLFLOW_TRACKING_SERVER_PORT}
 
@@ -63,7 +67,7 @@ help:
 	@printf "\n"
 	@printf "======= Cleanup ======\n"
 	@printf "$(pretty_command): run \"down\" and \"prune\"\n" clean
-	@printf "$(pretty_command): run \"down-all\", \"prune\" and \"clean-stores\"\n" clean-all
+	@printf "$(pretty_command): run \"down-all\", \"prune\", \"clean-python\" and \"clean-stores\"\n" clean-all
 	@printf "$(pretty_command): remove local folders mounted as volumes in docker-compose\n" clean-stores
 	@printf "$(pretty_command): clean python-related artifacts\n" clean-python
 	@printf "$(pretty_command): alias of \"clean-all\"\n" purge
@@ -82,6 +86,14 @@ help:
 	@printf "$(pretty_command): docker-compose down with \"${DOWN_ALL_OPTS}\"\n" down-all
 	@printf "$(pretty_command): build \"python-dev\" image\n" python-dev-build
 	@printf "$(pretty_command): run automated checks inside \"python-dev\" using tox\n" tox
+	@printf "\n"
+	@printf "======= Documentation ======\n"
+	@printf "$(pretty_command): builds sphinx docker image\n" sphinx-build
+	@printf "$(pretty_command): cleans documentation at \"./docs/_build/\"\n" sphinx-clean
+	@printf "$(pretty_command): creates rst documentation from python docstring\n" sphinx-apidoc
+	@printf "$(pretty_command): builds sphinx html docs at \"./docs/_build/html\"\n" sphinx-html
+	@printf "$(padded_str)SPHINX_OPTS, options to pass to sphinx (default: $(SPHINX_OPTS))\n"
+	@printf "$(pretty_command): tests sphinx html build\n" sphinx-html-test
 	@printf "\n"
 	@printf "========= Misc =======\n"
 	@printf "$(pretty_command): create the local mlflow artifact store\n" ${MLFLOW_ARTIFACT_STORE}
@@ -200,6 +212,35 @@ python-dev-build:
 tox: PYTHON_DEV_CMD := tox
 tox: python-dev-build
 	docker run -it ${IMAGE_OWNER}/${PYTHON_DEV_IMAGE_NAME}:${VERSION} ${PYTHON_DEV_CMD}
+
+sphinx-build:
+	DOCKER_BUILDKIT=${BUILDKIT} \
+	docker build \
+		--build-arg SPHINX_VERSION=${SPHINX_VERSION} \
+		. \
+		-f ./docker/sphinx/Dockerfile \
+		-t ${IMAGE_OWNER}/${SPHINX_IMAGE_NAME}:${SPHINX_VERSION}
+
+sphinx-clean: sphinx-build
+	docker run -it --rm \
+		-v ${MAKEFILE_DIR}:/{{ cookiecutter.repo_slug }}/ \
+		${IMAGE_OWNER}/${SPHINX_IMAGE_NAME}:${SPHINX_VERSION} \
+		make clean
+
+sphinx-apidoc: sphinx-build
+	docker run -it --rm \
+		-v ${MAKEFILE_DIR}:/{{ cookiecutter.repo_slug }}/ \
+		${IMAGE_OWNER}/${SPHINX_IMAGE_NAME}:${SPHINX_VERSION} \
+		sphinx-apidoc -f -o ./ ../src/{{ cookiecutter.package_name }}
+
+sphinx-html: sphinx-clean sphinx-apidoc
+	docker run -it --rm \
+		-v ${MAKEFILE_DIR}:/{{ cookiecutter.repo_slug }}/ \
+		-e SPHINX_OPTS="${SPHINX_OPTS}" \
+		${IMAGE_OWNER}/${SPHINX_IMAGE_NAME}:${SPHINX_VERSION}
+
+sphinx-html-test: SPHINX_OPTS:=${SPHINX_OPTS} -b dummy
+sphinx-html-test: sphinx-html
 
 find-port-usage:
 	sudo lsof -i -P -n | grep ${CHK_PORT}

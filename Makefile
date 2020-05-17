@@ -2,9 +2,10 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := default
 .PHONY: \
 	help default cut \
-	install test \
-	clean clean-test clean-clean-$(VENV_NAME) clean-$(DOCS_FOLDER) \
-	sphinx-build sphinx-quickstart sphinx-html \
+	clean clean-test clean-$(DOCS_FOLDER) \
+	test sphinx-html-test \
+	cookiecutter-build sphinx-build \
+	sphinx-quickstart sphinx-html \
 	debug-travis
 
 HELP_PADDING = 28
@@ -20,18 +21,21 @@ BUILDKIT = 1
 DOCKER_USERNAME = sertansenturk
 
 MAKEFILE_DIR = $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
-VERSION := $(shell cat VERSION)
-AUTHORS := $(shell cut -f1 AUTHORS | awk 1 ORS=', ' | head -c -2)
 
 CUT_BASE_FOLDER = ..
-CUT_OPTS := --output-dir $(CUT_BASE_FOLDER)
+CUT_TMP_FOLDER = tmp
+CUT_OPTS :=
 
 TEST_BASE_FOLDER = .
 TEST_FOLDER = test-project
 
+COOKIECUTTER_VERSION = latest
+COOKIECUTTER_IMAGE = $(DOCKER_USERNAME)/cookiecutter:$(COOKIECUTTER_VERSION)
+
 DOCS_FOLDER = docs
 SPHINX_VERSION = 3.0.3
 SPHINX_IMAGE = $(DOCKER_USERNAME)/sphinx:$(SPHINX_VERSION)
+SPHINX_OPTS := -nWT -b linkcheck --keep-going
 
 TRAVIS_JOB =
 TRAVIS_TOKEN =
@@ -41,7 +45,7 @@ help:
 	@printf "$(pretty_command): alias of \"make cut\" (see below)\n" \(default\)
 	@printf "$(pretty_command): cut a new project\n" cut
 	@printf "$(padded_str)CUT_OPTS, cookiecutter options (default: $(CUT_OPTS))\n"
-	@printf "$(pretty_command): run cookiecutter and template tests\n" test
+	@printf "$(pretty_command): run cookiecutter, template, and documentation tests\n" test
 	@printf "\n"
 	@printf "======= Setup =======\n"
 	@printf "$(pretty_command): create a python virtualenv called $(VENV_NAME)\n" $(VENV_NAME)
@@ -57,7 +61,10 @@ help:
 	@printf "======= Documentation ======\n"
 	@printf "$(pretty_command): builds sphinx docker image\n" sphinx-build
 	@printf "$(pretty_command): \"quickstarts\" sphinx documentation\n" sphinx-quickstart
-	@printf "$(pretty_command): builds sphinx html docs\n" sphinx-html	
+	@printf "$(pretty_command): cleans the documentation at \"./docs/_build/\"\n" sphinx-clean
+	@printf "$(pretty_command): builds sphinx html docs at \"./docs/_build/html\"\n" sphinx-html
+	@printf "$(padded_str)SPHINX_OPTS, options to pass to sphinx (default: $(SPHINX_OPTS))\n"
+	@printf "$(pretty_command): tests sphinx html build\n" sphinx-html-test
 	@printf "\n"
 	@printf "========= Misc =======\n"
 	@printf "$(pretty_command): send a job debug request to travis\n" debug-travis
@@ -66,52 +73,67 @@ help:
 
 default: cut
 
-$(VENV_NAME):
-	virtualenv -p $(VENV_INTERP) $(VENV_NAME)
-
-install: $(VENV_NAME)
-	source $(VENV_NAME)/bin/activate ; \
-	pip install --upgrade pip ; \
-	pip install cookiecutter
-
-cut: install
-	source $(VENV_NAME)/bin/activate ; \
-	cookiecutter ./ $(CUT_OPTS)
-
-test: CUT_OPTS:=--no-input --output-dir $(TEST_BASE_FOLDER) repo_slug=$(TEST_FOLDER)
-test: clean-test cut
-	cd $(TEST_FOLDER) ; \
-	make test ; \
-	make tox
-	$(MAKE) clean-test
-
 clean: clean-$(VENV_NAME) clean-test clean-$(DOCS_FOLDER)
 
 clean-test:
 	rm -rf $(TEST_FOLDER)
 
-clean-$(VENV_NAME):
-	rm -rf $(VENV_NAME)
-
 clean-$(DOCS_FOLDER):
 	rm -rf $(DOCS_FOLDER)
 
-sphinx-build:
-	DOCKER_BUILDKIT=${BUILDKIT} \
+cookiecutter-build:
+	DOCKER_BUILDKIT=$(BUILDKIT) \
 	docker build . \
+		-f ./docker/cookiecutter/Dockerfile \
+		-t $(COOKIECUTTER_IMAGE)
+
+cut: cookiecutter-build
+	mkdir -p $(CUT_TMP_FOLDER)
+	docker run \
+		-it --rm \
+		-v $(MAKEFILE_DIR):/project \
+		-e CUT_OPTS="$(CUT_OPTS)" \
+		$(COOKIECUTTER_IMAGE)
+	find $(CUT_TMP_FOLDER)/ -maxdepth 1 -type d -not -name $(CUT_TMP_FOLDER) \
+		-exec mv {} $(CUT_BASE_FOLDER)/ \;
+	rm -rf $(CUT_TMP_FOLDER)
+
+test: CUT_BASE_FOLDER:=$(TEST_BASE_FOLDER)
+test: CUT_OPTS:=--no-input repo_slug=$(TEST_FOLDER)
+test: sphinx-html-test clean-test cut
+	cd $(TEST_FOLDER) ; \
+	make test ; \
+	make tox
+	$(MAKE) clean-test
+
+sphinx-build:
+	DOCKER_BUILDKIT=$(BUILDKIT) \
+	docker build \
+		--build-arg SPHINX_VERSION=$(SPHINX_VERSION) \
+		. \
 		-f ./docker/sphinx/Dockerfile \
 		-t $(SPHINX_IMAGE)
 
 sphinx-quickstart: sphinx-build
 	mkdir -p $(DOCS_FOLDER)
-	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs $(SPHINX_IMAGE) sphinx-quickstart \
-		-q \
-		-p cookiecutter-ds-docker \
-		-a "$(AUTHORS)" \
-		-v $(VERSION)
+	docker run -it --rm\
+		-v $(MAKEFILE_DIR):/repo/ $(SPHINX_IMAGE) \
+		sphinx-quickstart
 
-sphinx-html: sphinx-build
-	docker run -it --rm -v $(MAKEFILE_DIR)$(DOCS_FOLDER):/docs $(SPHINX_IMAGE)
+sphinx-clean: sphinx-build
+	docker run -it --rm \
+		-v $(MAKEFILE_DIR):/repo/ \
+		$(SPHINX_IMAGE) \
+		make clean
+
+sphinx-html: sphinx-clean
+	docker run -it --rm \
+		-v $(MAKEFILE_DIR):/repo/ \
+		-e SPHINX_OPTS="$(SPHINX_OPTS)" \
+		$(SPHINX_IMAGE)
+
+sphinx-html-test: SPHINX_OPTS:=$(SPHINX_OPTS) -b dummy
+sphinx-html-test: sphinx-html
 
 debug-travis:
 	curl -s -X POST \

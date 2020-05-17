@@ -1,8 +1,14 @@
-FROM sphinxdoc/sphinx
+ARG SPHINX_VERSION
+FROM sphinxdoc/sphinx:${SPHINX_VERSION}
+
+ENV SPHINX_OPTS=
 
 RUN useradd -ms /bin/bash sphinxuser && \
-    chown -R sphinxuser /docs && \
+    mkdir /repo && \
+    chown -R sphinxuser /repo && \
     pip install sphinx_rtd_theme
 USER sphinxuser
 
-CMD make clean; make html
+WORKDIR /repo/docs
+
+CMD make html SPHINXOPTS:=$SPHINX_OPTS

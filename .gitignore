@@ -6,16 +6,18 @@
 *.synctex.gz
 
 data/
+test-project/
 *.pyc
 *.*~
 .*
 !.gitignore
 !.travis.yml
 !.codeclimate.yml
+!*.env
+!.pylintrc
+!.github
+!*.dockerignore
 *.pkl
-
-# cookiecutter test project folder
-test-project/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -98,7 +100,6 @@ ipython_config.py
 .python-version
 
 # Environments
-.env
 .venv
 env/
 venv/
