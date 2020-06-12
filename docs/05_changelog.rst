@@ -8,6 +8,11 @@ Changelog
 v0.10.0
 -------
 
+v0.9.1
+------
+
+- Fix pip install Python package in editable mode
+- `make clean-python` cleans `ipynb_checkpoints` folder(s)
 
 v0.9.0
 ------
