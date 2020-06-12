@@ -123,7 +123,7 @@ pyspark: JUPYTER_BASE_VERSION=${JUPYTER_PYSPARK_VERSION}
 pyspark: default
 
 test: JUPYTER_TARGET:=${JUPYTER_TEST_TARGET}
-test: RUN_OPTS:=jupyter start.sh ./run_pytest.sh ${MLFLOW_IMAGE_NAME} ${MLFLOW_TRACKING_SERVER_PORT} ${WAIT_FOR_IT_TIMEOUT}
+test: RUN_OPTS:=jupyter start.sh ./run_tests.sh ${MLFLOW_IMAGE_NAME} ${MLFLOW_TRACKING_SERVER_PORT} ${WAIT_FOR_IT_TIMEOUT}
 test: JUPYTER_CHOWN_EXTRA:="/${DATA_DIR},/tests"
 test: clean build run chk-store-permissions
 	$(MAKE) down
