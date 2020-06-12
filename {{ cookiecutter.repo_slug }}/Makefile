@@ -37,7 +37,7 @@ PYTHON_DEV_CMD =
 DOCS_FOLDER = docs
 SPHINX_OPTS := -nWT -b linkcheck --keep-going
 
-CHK_PORT = ${MLFLOW_TRACKING_SERVER_PORT}
+PORT = ${POSTGRES_PORT}
 
 HOST_USERNAME := $(shell id -u -n)
 
@@ -98,8 +98,8 @@ help:
 	@printf "========= Misc =======\n"
 	@printf "$(pretty_command): create the local mlflow artifact store\n" ${MLFLOW_ARTIFACT_STORE}
 	@printf "$(pretty_command): create the local posgres store\n" ${POSTGRES_STORE}
-	@printf "$(pretty_command): identify applications, which are bound to the given port. Useful for freeing ports from phantom tasks\n" find-port-usage
-	@printf "$(padded_str)CHK_PORT, Port to check (default: $(CHK_PORT))\n"
+	@printf "$(pretty_command): kill applications, which are bound to the given port. Useful for freeing ports from phantom tasks\n" free-port
+	@printf "$(padded_str)PORT, Port to check (default: $(PORT))\n"
 	@printf "$(pretty_command): send a job debug request to travis\n" debug-travis
 	@printf "$(padded_str)TRAVIS_TOKEN, travis api token (default: $(TRAVIS_TOKEN))\n"
 	@printf "$(padded_str)TRAVIS_JOB, travis job id (default: $(TRAVIS_JOB))\n"
@@ -244,8 +244,8 @@ sphinx-html: sphinx-clean sphinx-apidoc
 sphinx-html-test: SPHINX_OPTS:=${SPHINX_OPTS} -b dummy
 sphinx-html-test: sphinx-html
 
-find-port-usage:
-	sudo lsof -i -P -n | grep ${CHK_PORT}
+free-port:
+	sudo lsof -i -P -n | grep ${PORT} | awk '{ print $$2 }' | xargs sudo kill
 
 debug-travis:
 	curl -s -X POST \
