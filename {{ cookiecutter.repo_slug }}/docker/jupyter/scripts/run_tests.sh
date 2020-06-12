@@ -5,6 +5,5 @@ set -e
     echo "Running pytest as $USER with uid $UID" && \
     pytest -vv "$(pwd)/docker"
 
-# test if the package is installed in editable mode
-# i.e. the {{ cookiecutter.package_name}}.egg-link is in site-packages
-ls /opt/conda/lib/python3.7/site-packages/{{ cookiecutter.package_name}}.egg-link
+echo "Testing if {{ cookiecutter.package_name.replace('_', '-') }} is installed in editable mode"
+ls /opt/conda/lib/python3.7/site-packages/{{ cookiecutter.package_name.replace('_', '-') }}.egg-link
