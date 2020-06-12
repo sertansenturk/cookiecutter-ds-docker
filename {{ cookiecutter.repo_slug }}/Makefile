@@ -9,7 +9,7 @@ SHELL := /bin/bash
 	up run down down-all \
 	python-dev-build tox \
 	sphinx-build sphinx-clean sphinx-apidoc sphinx-html sphinx-html-test \
-	find-port-usage debug-travis
+	free-port debug-travis
 
 HELP_PADDING = 28
 bold := $(shell tput bold)
