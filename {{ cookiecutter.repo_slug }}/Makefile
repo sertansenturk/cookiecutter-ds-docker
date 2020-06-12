@@ -3,7 +3,7 @@ SHELL := /bin/bash
 .PHONY: \
 	help default lab notebook \
 	scipy tensorflow pyspark \
-	test chk-store-permissions all \
+	test test-store-permissions all \
 	purge clean clean-all clean-stores clean-python \
 	prune build \
 	up run down down-all \
@@ -123,14 +123,14 @@ pyspark: JUPYTER_BASE_VERSION=${JUPYTER_PYSPARK_VERSION}
 pyspark: default
 
 test: JUPYTER_TARGET:=${JUPYTER_TEST_TARGET}
-test: RUN_OPTS:=jupyter start.sh ./run_tests.sh ${MLFLOW_IMAGE_NAME} ${MLFLOW_TRACKING_SERVER_PORT} ${WAIT_FOR_IT_TIMEOUT}
+test: RUN_OPTS:=jupyter start.sh ./run_docker_tests.sh ${MLFLOW_IMAGE_NAME} ${MLFLOW_TRACKING_SERVER_PORT} ${WAIT_FOR_IT_TIMEOUT}
 test: JUPYTER_CHOWN_EXTRA:="/${DATA_DIR},/tests"
-test: clean build run chk-store-permissions
+test: clean build run test-store-permissions
 	$(MAKE) down
 # NOTE: above, `clean` had already called `down` so we had to make
 # an explicit recursive call by `$(MAKE) down` 
 
-chk-store-permissions:
+test-store-permissions:
 	@if [ $(shell find data ! -user ${HOST_USERNAME} | wc -l) -gt 0 ]; then \
 		echo "Found files and/or folders with wrong permission: " ; \
 		echo "=> $(shell find data ! -user ${HOST_USERNAME} -printf '%p (%u) ')" ; \
