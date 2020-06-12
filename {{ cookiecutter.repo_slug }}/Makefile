@@ -225,19 +225,19 @@ sphinx-build:
 
 sphinx-clean: sphinx-build
 	docker run -it --rm \
-		-v ${MAKEFILE_DIR}:/makam_recognition_experiments/ \
+		-v ${MAKEFILE_DIR}:/{{ cookiecutter.repo_slug }}/ \
 		${IMAGE_OWNER}/${SPHINX_IMAGE_NAME}:${SPHINX_VERSION} \
 		make clean
 
 sphinx-apidoc: sphinx-build
 	docker run -it --rm \
-		-v ${MAKEFILE_DIR}:/makam_recognition_experiments/ \
+		-v ${MAKEFILE_DIR}:/{{ cookiecutter.repo_slug }}/ \
 		${IMAGE_OWNER}/${SPHINX_IMAGE_NAME}:${SPHINX_VERSION} \
-		sphinx-apidoc -f -o ./ ../src/mre
+		sphinx-apidoc -f -o ./ ../src/{{ cookiecutter.package_name }}
 
 sphinx-html: sphinx-clean sphinx-apidoc
 	docker run -it --rm \
-		-v ${MAKEFILE_DIR}:/makam_recognition_experiments/ \
+		-v ${MAKEFILE_DIR}:/{{ cookiecutter.repo_slug }}/ \
 		-e SPHINX_OPTS="${SPHINX_OPTS}" \
 		${IMAGE_OWNER}/${SPHINX_IMAGE_NAME}:${SPHINX_VERSION}
 
