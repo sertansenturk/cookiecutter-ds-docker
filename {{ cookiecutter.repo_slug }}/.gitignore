@@ -10,6 +10,8 @@
 *.*~
 .*
 secrets.ini
+!src/{{ cookiecutter.package_name }}/data/
+!tests/python/data/
 !.gitignore
 !.travis.yml
 !.codeclimate.yml
