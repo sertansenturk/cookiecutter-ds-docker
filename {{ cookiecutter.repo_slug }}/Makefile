@@ -152,6 +152,7 @@ clean-python:
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
 	find . -name '__pycache__' -exec rm -fr {} +
+	find . -name '.ipynb_checkpoints' -exec rm -fr {} +
 	rm -rf build/
 	rm -rf dist/
 	rm -rf .eggs/
@@ -169,7 +170,8 @@ prune:
 build:
 	DOCKER_BUILDKIT=${BUILDKIT} COMPOSE_DOCKER_CLI_BUILD=${BUILDKIT} \
 	JUPYTER_BASE_IMAGE=${JUPYTER_BASE_IMAGE} JUPYTER_BASE_VERSION=${JUPYTER_BASE_VERSION} \
-	JUPYTER_TARGET=${JUPYTER_TARGET} MLFLOW_VERSION=${MLFLOW_VERSION} \
+	JUPYTER_TARGET=${JUPYTER_TARGET} JUPYTER_USERNAME=${JUPYTER_USERNAME} \
+	MLFLOW_VERSION=${MLFLOW_VERSION} \
 	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} \
 	docker-compose build ${BUILD_OPTS}
 
@@ -223,19 +225,19 @@ sphinx-build:
 
 sphinx-clean: sphinx-build
 	docker run -it --rm \
-		-v ${MAKEFILE_DIR}:/{{ cookiecutter.repo_slug }}/ \
+		-v ${MAKEFILE_DIR}:/makam_recognition_experiments/ \
 		${IMAGE_OWNER}/${SPHINX_IMAGE_NAME}:${SPHINX_VERSION} \
 		make clean
 
 sphinx-apidoc: sphinx-build
 	docker run -it --rm \
-		-v ${MAKEFILE_DIR}:/{{ cookiecutter.repo_slug }}/ \
+		-v ${MAKEFILE_DIR}:/makam_recognition_experiments/ \
 		${IMAGE_OWNER}/${SPHINX_IMAGE_NAME}:${SPHINX_VERSION} \
-		sphinx-apidoc -f -o ./ ../src/{{ cookiecutter.package_name }}
+		sphinx-apidoc -f -o ./ ../src/mre
 
 sphinx-html: sphinx-clean sphinx-apidoc
 	docker run -it --rm \
-		-v ${MAKEFILE_DIR}:/{{ cookiecutter.repo_slug }}/ \
+		-v ${MAKEFILE_DIR}:/makam_recognition_experiments/ \
 		-e SPHINX_OPTS="${SPHINX_OPTS}" \
 		${IMAGE_OWNER}/${SPHINX_IMAGE_NAME}:${SPHINX_VERSION}
 

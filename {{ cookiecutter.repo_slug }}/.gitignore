@@ -5,10 +5,11 @@
 *.tex.backup
 *.synctex.gz
 
-data/
+./data/
 *.pyc
 *.*~
 .*
+secrets.ini
 !.gitignore
 !.travis.yml
 !.codeclimate.yml
