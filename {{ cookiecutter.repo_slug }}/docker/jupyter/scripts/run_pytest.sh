@@ -7,4 +7,4 @@ set -e
 
 # test if the package is installed in editable mode
 # i.e. if the {{ cookiecutter.repo_slug}}.egg-link is in site-packages
-ls /opt/conda/lib/python3.7/site-packages/mre.egg-linkd
+ls /opt/conda/lib/python3.7/site-packages/mre.egg-link
