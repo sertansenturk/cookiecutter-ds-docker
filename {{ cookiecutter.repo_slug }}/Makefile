@@ -40,6 +40,8 @@ SPHINX_OPTS := -nWT -b linkcheck --keep-going
 PORT = ${POSTGRES_PORT}
 
 HOST_USERNAME := $(shell id -u -n)
+HOST_UID := $(shell id -u)
+HOST_GID := $(shell id -g)
 
 JUPYTER_BASE_IMAGE := ${JUPYTER_SCIPY_IMAGE}
 JUPYTER_BASE_VERSION := ${JUPYTER_SCIPY_VERSION}
@@ -50,6 +52,9 @@ JUPYTER_USERNAME := $(shell id -u -n)
 
 POSTGRES_UID := $(shell id -u)
 POSTGRES_GID := $(shell id -g)
+
+PYTHON_DEV_UID := $(shell id -u)
+PYTHON_DEV_GID := $(shell id -g)
 
 TRAVIS_JOB =
 TRAVIS_TOKEN =
@@ -208,12 +213,16 @@ python-dev-build:
 	DOCKER_BUILDKIT=${BUILDKIT} \
 	docker build . \
 		-f ./docker/python-dev/Dockerfile \
+		--build-arg UID=${PYTHON_DEV_UID} --build-arg GID=${PYTHON_DEV_GID} \
 		-t ${IMAGE_OWNER}/${PYTHON_DEV_IMAGE_NAME}:${VERSION} \
 		${BUILD_OPTS}
 
 tox: PYTHON_DEV_CMD := tox
 tox: python-dev-build
-	docker run -it ${IMAGE_OWNER}/${PYTHON_DEV_IMAGE_NAME}:${VERSION} ${PYTHON_DEV_CMD}
+	docker run -it --rm \
+		-v ${MAKEFILE_DIR}:/{{ cookiecutter.repo_slug }}/ \
+		${IMAGE_OWNER}/${PYTHON_DEV_IMAGE_NAME}:${VERSION} \
+		${PYTHON_DEV_CMD}
 
 sphinx-build:
 	DOCKER_BUILDKIT=${BUILDKIT} \
