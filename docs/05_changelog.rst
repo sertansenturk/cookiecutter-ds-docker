@@ -5,8 +5,9 @@
 Changelog
 =========
 
-v0.10.0
--------
+v0.9.2
+------
+- Document permission issue when mounting NTFS drives in Linux (Pull Request `#55 <https://github.com/sertansenturk/cookiecutter-ds-docker/pull/55>`__)
 
 v0.9.1
 ------
