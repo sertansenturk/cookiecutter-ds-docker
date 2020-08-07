@@ -190,7 +190,7 @@ To host the project in *Github*, follow the steps below:
       git add .
       git commit -m "First commit"
 
-2. Push the project to *Github*, e.g. using *https* connection:  
+3. Push the project to *Github*, e.g. using *https* connection:  
 
    .. code::
 
