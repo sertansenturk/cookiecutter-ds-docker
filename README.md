@@ -9,8 +9,9 @@ A Docker-based Data Science cookiecutter (for myself)
 - [1. Introduction](#1-introduction)
 - [2. Documentation](#2-documentation)
 - [3. Quickstart](#3-quickstart)
-- [4. License](#4-license)
-- [5. Authors](#5-authors)
+- [4. Known Issues](#4-known-issues)
+- [5. License](#5-license)
+- [6. Authors](#6-authors)
 
 ## 1. Introduction
 
@@ -51,11 +52,15 @@ make
 
 ![quickstart](./docs/images/installation.gif)
 
-## 4. License
+## 4. Known Issues
+
+1. In Linux, if `DATA_DIR` (defined in the [template](https://github.com/sertansenturk/cookiecutter-ds-docker/blob/dev/%7B%7B%20cookiecutter.repo_slug%20%7D%7D/.env)) is in a drive formatted in NTFS, you might have permission issues when mounting the folder to the docker containers (See [Issue #56](https://github.com/sertansenturk/cookiecutter-ds-docker/issues/56)). We suggest you to cut the project into a drive, which is formatted in a native Linux filesystem.
+
+## 5. License
 
 The source code hosted in this repository is licensed under [Affero GPL version 3](https://www.gnu.org/licenses/agpl-3.0.en.html). Any data (features, models,  figures, results, documentation, etc.) in this repository are licensed under [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
 
-## 5. Authors
+## 6. Authors
 
 Sertan Şentürk  
 contact@sertansenturk.com

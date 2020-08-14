@@ -45,9 +45,10 @@ In a terminal, run the following:
    04_documentation
    05_test
    06_services
-   07_license
-   08_credits
-   09_changelog
+   07_known_issues
+   08_license
+   09_credits
+   10_changelog
 
 .. toctree::
    :maxdepth: 2
