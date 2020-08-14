@@ -214,6 +214,9 @@ tox: python-dev-build
 		${IMAGE_OWNER}/${PYTHON_DEV_IMAGE_NAME}:${VERSION} \
 		${PYTHON_DEV_CMD}
 
+pytest: PYTHON_DEV_CMD := tox -e py37
+pytest: tox
+
 sphinx-build:
 	DOCKER_BUILDKIT=${BUILDKIT} \
 	docker build \
