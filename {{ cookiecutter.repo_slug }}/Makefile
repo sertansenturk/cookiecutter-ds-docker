@@ -210,7 +210,7 @@ python-dev-build:
 
 python-dev-run: python-dev-build
 	docker run -it --rm \
-		-v ${MAKEFILE_DIR}:/makam_recognition_experiments/ \
+		-v ${MAKEFILE_DIR}:/{{ cookiecutter.repo_slug }}/ \
 		${IMAGE_OWNER}/${PYTHON_DEV_IMAGE_NAME}:${VERSION} \
 		${PYTHON_DEV_CMD}
 
