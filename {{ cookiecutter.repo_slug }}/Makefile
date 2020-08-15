@@ -7,7 +7,7 @@ SHELL := /bin/bash
 	purge clean clean-all clean-stores clean-python \
 	prune build \
 	up run down down-all \
-	python-dev-build tox \
+	python-dev-build python-dev-run tox pytest \
 	sphinx-build sphinx-clean sphinx-apidoc sphinx-html sphinx-html-test \
 	free-port debug-travis
 
@@ -83,6 +83,7 @@ help:
 	@printf "$(pretty_command): docker-compose down with \"${DOWN_ALL_OPTS}\"\n" down-all
 	@printf "$(pretty_command): build \"python-dev\" image\n" python-dev-build
 	@printf "$(pretty_command): run automated checks inside \"python-dev\" using tox\n" tox
+	@printf "$(pretty_command): run pytest inside \"python-dev\" using tox\n" pytest
 	@printf "\n"
 	@printf "======= Documentation ======\n"
 	@printf "$(pretty_command): builds sphinx docker image\n" sphinx-build
@@ -207,15 +208,17 @@ python-dev-build:
 		-t ${IMAGE_OWNER}/${PYTHON_DEV_IMAGE_NAME}:${VERSION} \
 		${BUILD_OPTS}
 
-tox: PYTHON_DEV_CMD := tox
-tox: python-dev-build
+python-dev-run: python-dev-build
 	docker run -it --rm \
-		-v ${MAKEFILE_DIR}:/{{ cookiecutter.repo_slug }}/ \
+		-v ${MAKEFILE_DIR}:/makam_recognition_experiments/ \
 		${IMAGE_OWNER}/${PYTHON_DEV_IMAGE_NAME}:${VERSION} \
 		${PYTHON_DEV_CMD}
 
+tox: PYTHON_DEV_CMD := tox
+tox: python-dev-run
+
 pytest: PYTHON_DEV_CMD := tox -e py37
-pytest: tox
+pytest: python-dev-run
 
 sphinx-build:
 	DOCKER_BUILDKIT=${BUILDKIT} \
