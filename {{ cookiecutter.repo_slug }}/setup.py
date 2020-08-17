@@ -86,6 +86,8 @@ setup(
     },
     python_requires="==3.7.*",
     install_requires=[
+        "mlflow==1.8.*",
+        "pandas>=1.0.*",
     ],
     extras_require={
         "development": [
