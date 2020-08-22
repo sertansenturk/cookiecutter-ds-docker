@@ -6,7 +6,7 @@ ARG GID=1000
 
 # install git; needed for pip if the repo has git dependencies
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends git && \
+    apt-get install -y --no-install-recommends git build-essential && \
     apt-get purge -y --auto-remove && \
     rm -rf /var/lib/apt/lists/*
 
