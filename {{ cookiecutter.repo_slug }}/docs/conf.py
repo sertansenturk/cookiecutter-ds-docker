@@ -65,3 +65,14 @@ html_context = {
 
 # Sphinx master doc
 master_doc = 'index'
+
+# modules ignored by nitpicky mode
+nitpick_ignore = [
+    ("py:class", "logging.Logger"),
+    ("py:class", "optional"),
+    ("py:class", "pandas.core.series.Series"),
+    ("py:class", "pd.Series"),
+    ("py:class", "pandas.core.frame.DataFrame"),
+    ("py:class", "pd.DataFrame"),
+    ("py:class", "configparser.ConfigParser"),
+]
