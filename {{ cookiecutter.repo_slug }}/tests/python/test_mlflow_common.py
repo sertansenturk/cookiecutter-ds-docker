@@ -91,3 +91,100 @@ class TestMlflow:
         # THEN
         expected = pd.Series(mock_run_dict)
         assert_series_equal(result, expected, check_names=False)
+
+    @mock.patch("mlflow.start_run")
+    @mock.patch("mlflow.set_experiment")
+    def test_log_existing_run(self,
+                              mock_mlflow_set_experiment,
+                              mock_mlflow_start_run):
+        # GIVEN
+        experiment_name = "exp_name"
+        run_name = "run_name"
+        artifact_dir = "tmp_dir"
+        tags = {"key1": "val1"}
+        mock_run = pd.DataFrame([{"run_id": "rid"}])
+
+        # WHEN; THEN
+        with mock.patch("{{ cookiecutter.package_name }}.mlflow_common.get_run_by_name",
+                        return_value=mock_run):
+            with pytest.raises(ValueError):
+                {{ cookiecutter.package_name }}.mlflow_common.log(
+                    experiment_name=experiment_name,
+                    run_name=run_name,
+                    artifact_dir=artifact_dir,
+                    tags=tags
+                )
+
+            mock_mlflow_set_experiment.assert_not_called()
+            mock_mlflow_start_run.assert_not_called()
+
+    @mock.patch("mlflow.log_artifacts")
+    @mock.patch("mlflow.set_tags")
+    @mock.patch("mlflow.start_run")
+    @mock.patch("mlflow.set_experiment")
+    def test_log_no_run(self,
+                        mock_mlflow_set_experiment,
+                        mock_mlflow_start_run,
+                        mock_mlflow_set_tags,
+                        mock_mlflow_log_artifacts,
+                        mock_experiment):
+        # GIVEN
+        experiment_name = "exp_name"
+        run_name = "run_name"
+        artifact_dir = "tmp_dir"
+        tags = {"key1": "val1"}
+        mock_run = pd.DataFrame(columns=["run_id"])  # empty
+
+        # WHEN; THEN
+        with mock.patch('mlflow.get_experiment_by_name',
+                        autospec=True,
+                        return_value=mock_experiment):
+            with mock.patch('mlflow.search_runs',
+                            autospec=True,
+                            return_value=mock_run):
+                {{ cookiecutter.package_name }}.mlflow_common.log(
+                    experiment_name=experiment_name,
+                    run_name=run_name,
+                    artifact_dir=artifact_dir,
+                    tags=tags
+                )
+
+                mock_mlflow_set_experiment.assert_called_once()
+                mock_mlflow_start_run.assert_called_once()
+
+                mock_mlflow_set_tags.assert_called_once()
+                mock_mlflow_log_artifacts.assert_called_once_with(
+                    artifact_dir)
+
+    @mock.patch("mlflow.log_artifacts")
+    @mock.patch("mlflow.set_tags")
+    @mock.patch("mlflow.start_run")
+    @mock.patch("mlflow.set_experiment")
+    def test_log_no_experiment(self,
+                               mock_mlflow_set_experiment,
+                               mock_mlflow_start_run,
+                               mock_mlflow_set_tags,
+                               mock_mlflow_log_artifacts):
+        # GIVEN
+        experiment_name = "exp_name"
+        run_name = "run_name"
+        artifact_dir = "tmp_dir"
+        tags = {"key1": "val1"}
+
+        # WHEN; THEN
+        with mock.patch('mlflow.get_experiment_by_name',
+                        autospec=True,
+                        return_value=None):
+            {{ cookiecutter.package_name }}.mlflow_common.log(
+                experiment_name=experiment_name,
+                run_name=run_name,
+                artifact_dir=artifact_dir,
+                tags=tags
+            )
+
+            mock_mlflow_set_experiment.assert_called_once()
+            mock_mlflow_start_run.assert_called_once()
+
+            mock_mlflow_set_tags.assert_called_once()
+            mock_mlflow_log_artifacts.assert_called_once_with(
+                artifact_dir)

@@ -1,5 +1,7 @@
 import logging
 
+from typing import Dict, Optional
+
 import mlflow
 import pandas as pd
 
@@ -51,3 +53,22 @@ def get_run_by_name(experiment_name: str, run_name: str) -> pd.Series:
 
     logger.warning("Experiment %s does not exist.", experiment_name)
     return None
+
+
+def log(experiment_name: str,
+        run_name: str,
+        artifact_dir: Optional[str] = None,
+        tags: Optional[Dict] = None):
+
+    mlflow_run = get_run_by_name(experiment_name, run_name)
+    if mlflow_run is not None:
+        raise ValueError(
+            "There is already a run for %s:%s. Overwriting is not "
+            "permitted. Please delete the run manually if you want "
+            "to log the annotations again."
+            % (run_name, mlflow_run.run_id))
+
+    mlflow.set_experiment(experiment_name)
+    with mlflow.start_run(run_name=run_name):
+        mlflow.set_tags(tags)
+        mlflow.log_artifacts(artifact_dir)
