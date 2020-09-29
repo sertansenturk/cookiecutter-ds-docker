@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 from unittest import mock
 
 from {{ cookiecutter.package_name }}.config import config
@@ -16,7 +16,7 @@ class TestRead:
 
 def test_get_config_filepath():
     # WHEN
-    path = config._get_config_filepath()
+    path: Path = config._get_config_filepath()
 
     # THEN
-    assert os.path.exists(path)
+    assert path.exists()

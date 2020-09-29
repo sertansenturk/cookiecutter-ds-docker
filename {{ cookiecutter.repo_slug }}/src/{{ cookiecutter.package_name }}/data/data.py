@@ -1,8 +1,11 @@
 import abc
 import logging
 from pathlib import Path
+from typing import List
 
-from ..mlflow_common import log
+import mlflow
+
+from ..mlflow_common import get_run_by_name, log
 
 logger = logging.Logger(__name__)  # pylint: disable-msg=C0103
 logger.setLevel(logging.INFO)
@@ -13,6 +16,7 @@ class Data(abc.ABC):
     """
     EXPERIMENT_NAME = None
     RUN_NAME = None
+    FILE_EXTENSION = '.ext'  # dummy extension
 
     def __init__(self):
         """instantiates an Audio object
@@ -30,9 +34,34 @@ class Data(abc.ABC):
         """
         return Path(self.tmp_dir.name)
 
-    @abc.abstractmethod
-    def from_mlflow(self):
-        pass
+    @classmethod
+    def from_mlflow(cls) -> List[str]:
+        """return artifact file paths from the relevant mlflow run
+        Returns
+        -------
+        List[Path]
+            path of the artifacts logged in mlflow
+        Raises
+        ------
+        ValueError
+            if the run does not exist
+        """
+        mlflow_run = get_run_by_name(cls.EXPERIMENT_NAME, cls.RUN_NAME)
+        if mlflow_run is None:
+            raise ValueError("Artifacts are not logged in mlflow")
+
+        client = mlflow.tracking.MlflowClient()
+        artifacts = client.list_artifacts(mlflow_run.run_id)
+        artifact_names = [ff.path for ff in artifacts
+                          if ff.path.endswith(cls.FILE_EXTENSION)]
+
+        artifact_paths = [client.download_artifacts(mlflow_run.run_id, an)
+                          for an in artifact_names]
+
+        logger.info("Returning the paths of %d artifacts.",
+                    len(artifact_paths))
+
+        return artifact_paths
 
     def log(self):
         """Logs the artifacts to an mlflow run with appropriate tags

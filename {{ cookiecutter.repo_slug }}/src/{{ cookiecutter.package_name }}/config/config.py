@@ -1,5 +1,5 @@
 import configparser
-import os
+from pathlib import Path
 
 
 def read() -> configparser.ConfigParser:
@@ -17,12 +17,12 @@ def read() -> configparser.ConfigParser:
     return cfg
 
 
-def _get_config_filepath() -> str:
+def _get_config_filepath() -> Path:
     """returns the path of the mr{{ cookiecutter.package_name }}e configuration file
 
     Returns
     -------
-    str
+    pathlib.Path
         path of the {{ cookiecutter.package_name }} configuration file
     """
-    return os.path.join(os.path.dirname(__file__), 'config.ini')
+    return Path(Path(__file__).parent, 'config.ini')

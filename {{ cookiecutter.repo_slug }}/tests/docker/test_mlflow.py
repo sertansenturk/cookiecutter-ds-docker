@@ -1,6 +1,7 @@
 import mlflow
 import pytest
-import os
+
+from pathlib import Path
 
 
 RUN_IDS = {}
@@ -122,7 +123,7 @@ def test_mlflow_get_artifact(artifact):
 
     # WHEN
     artifact_dir = mlflow_get_run(run_id).info.artifact_uri
-    artifact_file = os.path.join(artifact_dir, artifact)
+    artifact_file = Path(artifact_dir, artifact)
 
     # THEN
-    assert os.path.isfile(artifact_file)
+    assert artifact_file.is_file()
