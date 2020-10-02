@@ -5,27 +5,30 @@ from typing import List
 
 import mlflow
 
+from ..config import config
 from ..mlflow_common import get_run_by_name, log
 
 logger = logging.Logger(__name__)  # pylint: disable-msg=C0103
 logger.setLevel(logging.INFO)
 
+cfg = config.read()
+
 
 class Data(abc.ABC):
     """abstract class to extract-transform-load data
     """
-    EXPERIMENT_NAME = None
+    EXPERIMENT_NAME = cfg.get("mlflow", "data_processing_experiment_name")
     RUN_NAME = None
     FILE_EXTENSION = '.ext'  # dummy extension
 
     def __init__(self):
         """instantiates an Audio object
         """
-        self.tmp_dir = None
+        self.tmp_dir: Option[Path] = None
 
     def _tmp_dir_path(self) -> Path:
-        """returns the path of the temporary directory, where the audio files
-        are downloaded
+        """returns the path of the temporary directory, where the artifact
+        files are stored
 
         Returns
         -------
@@ -33,6 +36,12 @@ class Data(abc.ABC):
             path of the temporary directory
         """
         return Path(self.tmp_dir.name)
+
+    def _cleanup(self):
+        """deletes the temporary directory, where the artifact files are
+        stored
+        """
+        self.tmp_dir.cleanup()
 
     @classmethod
     def from_mlflow(cls) -> List[str]:
@@ -83,10 +92,10 @@ class Data(abc.ABC):
 
     @abc.abstractmethod
     def _mlflow_tags(self):
-        pass
+        """returns tags to log onto a mlflow run
 
-    def _cleanup(self):
-        """deletes the temporary directory, where the audio files are
-        downloaded
+        Returns
+        -------
+        Dict
+            tags to log
         """
-        self.tmp_dir.cleanup()
