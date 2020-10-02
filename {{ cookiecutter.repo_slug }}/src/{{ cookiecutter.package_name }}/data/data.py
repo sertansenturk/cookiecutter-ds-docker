@@ -1,7 +1,7 @@
 import abc
 import logging
 from pathlib import Path
-from typing import Option, List
+from typing import Optional, List
 
 import mlflow
 
@@ -24,7 +24,7 @@ class Data(abc.ABC):
     def __init__(self):
         """instantiates an Audio object
         """
-        self.tmp_dir: Option[Path] = None
+        self.tmp_dir: Optional[Path] = None
 
     def _tmp_dir_path(self) -> Path:
         """returns the path of the temporary directory, where the artifact
