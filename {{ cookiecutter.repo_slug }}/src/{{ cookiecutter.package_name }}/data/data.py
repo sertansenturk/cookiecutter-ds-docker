@@ -1,7 +1,7 @@
 import abc
 import logging
 from pathlib import Path
-from typing import List
+from typing import Option, List
 
 import mlflow
 
