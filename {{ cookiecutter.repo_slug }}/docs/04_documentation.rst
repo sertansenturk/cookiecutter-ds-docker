@@ -11,4 +11,4 @@ The project comes with basic documentation, which is located at ``{{ cookiecutte
 
 The above command builds a docker image called ``{{ cookiecutter.github_username }}/{{ cookiecutter.repo_slug }}/sphinx``. It then starts a container from the image and renders the documentation (including automatic Python API documentation from docstrings).
 
-Afterward, you can access the documentation by opening ``./docs/_build/html/index.html`` on your browser.
+Afterward, you can access the documentation by opening `./docs/_build/html/index.html <index.html>`__ on your browser.

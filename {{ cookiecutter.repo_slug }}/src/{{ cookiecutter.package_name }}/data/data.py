@@ -22,7 +22,7 @@ class Data(abc.ABC):
     FILE_EXTENSION = '.ext'  # dummy extension
 
     def __init__(self):
-        """instantiates an Audio object
+        """instantiates a Data object
         """
         self.tmp_dir: Optional[Path] = None
 
