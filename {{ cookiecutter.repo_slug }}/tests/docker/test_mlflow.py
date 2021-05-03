@@ -1,6 +1,7 @@
 import mlflow
 import pytest
-import os
+
+from pathlib import Path
 
 
 RUN_IDS = {}
@@ -76,19 +77,19 @@ def test_mlflow_log_to_backend(logs):
 
 @pytest.mark.dependency(depends=["test_mlflow_log_to_backend"])
 def test_mlflow_get_params(logs):
-    # GIVEN 
+    # GIVEN
     run_id = RUN_IDS["test_mlflow_log_to_backend"]
 
     # WHEN
     data = mlflow_get_run(run_id).data
 
-    #THEN
+    # THEN
     assert data.params == logs["parameters"]
 
 
 @pytest.mark.dependency(depends=["test_mlflow_log_to_backend"])
 def test_mlflow_get_metric(logs):
-    # GIVEN 
+    # GIVEN
     run_id = RUN_IDS["test_mlflow_log_to_backend"]
 
     # WHEN
@@ -96,8 +97,10 @@ def test_mlflow_get_metric(logs):
     metric_vals = [mm.value for mm in metric]
     metric_steps = [mm.step for mm in metric]
 
-    #THEN
-    assert (metric_vals == logs["metric"]["val"]) and (metric_steps == logs["metric"]["step"])
+    # THEN
+    assert (
+        (metric_vals == logs["metric"]["val"]) and
+        (metric_steps == logs["metric"]["step"]))
 
 
 @pytest.mark.dependency()
@@ -115,12 +118,12 @@ def test_mlflow_log_artifact(artifact):
 
 @pytest.mark.dependency(depends=["test_mlflow_log_artifact"])
 def test_mlflow_get_artifact(artifact):
-    # GIVEN 
+    # GIVEN
     run_id = RUN_IDS["test_mlflow_log_artifact"]
 
     # WHEN
     artifact_dir = mlflow_get_run(run_id).info.artifact_uri
-    artifact_file = os.path.join(artifact_dir, artifact)
+    artifact_file = Path(artifact_dir, artifact)
 
-    #THEN
-    assert os.path.isfile(artifact_file)
+    # THEN
+    assert artifact_file.is_file()

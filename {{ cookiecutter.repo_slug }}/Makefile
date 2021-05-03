@@ -7,7 +7,7 @@ SHELL := /bin/bash
 	purge clean clean-all clean-stores clean-python \
 	prune build \
 	up run down down-all \
-	python-dev-build tox \
+	python-dev-build python-dev-run tox pytest \
 	sphinx-build sphinx-clean sphinx-apidoc sphinx-html sphinx-html-test \
 	free-port debug-travis
 
@@ -40,16 +40,13 @@ SPHINX_OPTS := -nWT -b linkcheck --keep-going
 PORT = ${POSTGRES_PORT}
 
 HOST_USERNAME := $(shell id -u -n)
+HOST_UID := $(shell id -u)
+HOST_GID := $(shell id -g)
 
 JUPYTER_BASE_IMAGE := ${JUPYTER_SCIPY_IMAGE}
 JUPYTER_BASE_VERSION := ${JUPYTER_SCIPY_VERSION}
 
 JUPYTER_CHOWN_EXTRA := "/${DATA_DIR}"
-JUPYTER_UID := $(shell id -u)
-JUPYTER_USERNAME := $(shell id -u -n)
-
-POSTGRES_UID := $(shell id -u)
-POSTGRES_GID := $(shell id -g)
 
 TRAVIS_JOB =
 TRAVIS_TOKEN =
@@ -86,6 +83,7 @@ help:
 	@printf "$(pretty_command): docker-compose down with \"${DOWN_ALL_OPTS}\"\n" down-all
 	@printf "$(pretty_command): build \"python-dev\" image\n" python-dev-build
 	@printf "$(pretty_command): run automated checks inside \"python-dev\" using tox\n" tox
+	@printf "$(pretty_command): run pytest inside \"python-dev\" using tox\n" pytest
 	@printf "\n"
 	@printf "======= Documentation ======\n"
 	@printf "$(pretty_command): builds sphinx docker image\n" sphinx-build
@@ -170,9 +168,9 @@ prune:
 build:
 	DOCKER_BUILDKIT=${BUILDKIT} COMPOSE_DOCKER_CLI_BUILD=${BUILDKIT} \
 	JUPYTER_BASE_IMAGE=${JUPYTER_BASE_IMAGE} JUPYTER_BASE_VERSION=${JUPYTER_BASE_VERSION} \
-	JUPYTER_TARGET=${JUPYTER_TARGET} JUPYTER_USERNAME=${JUPYTER_USERNAME} \
+	JUPYTER_TARGET=${JUPYTER_TARGET} \
 	MLFLOW_VERSION=${MLFLOW_VERSION} \
-	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} \
+	HOST_USERNAME=${HOST_USERNAME} HOST_UID=${HOST_UID} HOST_GID=${HOST_GID} \
 	docker-compose build ${BUILD_OPTS}
 
 ${MLFLOW_ARTIFACT_STORE}:
@@ -185,18 +183,16 @@ up: ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
 	JUPYTER_BASE_IMAGE=${JUPYTER_BASE_IMAGE} JUPYTER_BASE_VERSION=${JUPYTER_BASE_VERSION} \
 	JUPYTER_TARGET=${JUPYTER_TARGET} \
 	JUPYTER_CHOWN_EXTRA=${JUPYTER_CHOWN_EXTRA} \
-	JUPYTER_UID=${JUPYTER_UID} JUPYTER_USERNAME=${JUPYTER_USERNAME} \
 	JUPYTER_ENABLE_LAB=${JUPYTER_ENABLE_LAB} \
-	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} \
+	HOST_USERNAME=${HOST_USERNAME} HOST_UID=${HOST_UID} HOST_GID=${HOST_GID} \
 	docker-compose up ${UP_OPTS}
 
 run: ${MLFLOW_ARTIFACT_STORE} ${POSTGRES_STORE}
 	JUPYTER_BASE_IMAGE=${JUPYTER_BASE_IMAGE} JUPYTER_BASE_VERSION=${JUPYTER_BASE_VERSION} \
 	JUPYTER_TARGET=${JUPYTER_TARGET} \
 	JUPYTER_CHOWN_EXTRA=${JUPYTER_CHOWN_EXTRA} \
-	JUPYTER_UID=${JUPYTER_UID} JUPYTER_USERNAME=${JUPYTER_USERNAME} \
 	JUPYTER_ENABLE_LAB=${JUPYTER_ENABLE_LAB} \
-	POSTGRES_UID=${POSTGRES_UID} POSTGRES_GID=${POSTGRES_GID} \
+	HOST_USERNAME=${HOST_USERNAME} HOST_UID=${HOST_UID} HOST_GID=${HOST_GID} \
 	docker-compose run ${RUN_OPTS}
 
 down:
@@ -208,12 +204,21 @@ python-dev-build:
 	DOCKER_BUILDKIT=${BUILDKIT} \
 	docker build . \
 		-f ./docker/python-dev/Dockerfile \
+		--build-arg UID=${HOST_UID} --build-arg GID=${HOST_GID} \
 		-t ${IMAGE_OWNER}/${PYTHON_DEV_IMAGE_NAME}:${VERSION} \
 		${BUILD_OPTS}
 
+python-dev-run: python-dev-build
+	docker run -it --rm \
+		-v ${MAKEFILE_DIR}:/{{ cookiecutter.repo_slug }}/ \
+		${IMAGE_OWNER}/${PYTHON_DEV_IMAGE_NAME}:${VERSION} \
+		${PYTHON_DEV_CMD}
+
 tox: PYTHON_DEV_CMD := tox
-tox: python-dev-build
-	docker run -it ${IMAGE_OWNER}/${PYTHON_DEV_IMAGE_NAME}:${VERSION} ${PYTHON_DEV_CMD}
+tox: python-dev-run
+
+pytest: PYTHON_DEV_CMD := tox -e py37
+pytest: python-dev-run
 
 sphinx-build:
 	DOCKER_BUILDKIT=${BUILDKIT} \

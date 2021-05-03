@@ -11,7 +11,7 @@ services:
         - MLFLOW_VERSION=${MLFLOW_VERSION}
         - JUPYTER_BASE_IMAGE=${JUPYTER_BASE_IMAGE}
         - JUPYTER_BASE_VERSION=${JUPYTER_BASE_VERSION}
-        - JUPYTER_USERNAME=${JUPYTER_USERNAME}
+        - JUPYTER_USERNAME=${HOST_USERNAME}
     image: ${IMAGE_OWNER}/${REPO_SLUG}/${JUPYTER_TARGET}:${VERSION}
     ports:
       - "${JUPYTER_PORT}:${JUPYTER_PORT}"
@@ -20,14 +20,14 @@ services:
     environment: 
       MLFLOW_TRACKING_URI: ${MLFLOW_TRACKING_URI}
       JUPYTER_ENABLE_LAB: ${JUPYTER_ENABLE_LAB}
-      NB_USER: ${JUPYTER_USERNAME}
-      NB_UID: ${JUPYTER_UID}
+      NB_USER: ${HOST_USERNAME}
+      NB_UID: ${HOST_UID}
       CHOWN_HOME: "yes"
       CHOWN_HOME_OPTS: '-R'
       CHOWN_EXTRA: ${JUPYTER_CHOWN_EXTRA}
       CHOWN_EXTRA_OPTS: '-R'
     volumes:
-      - ./:/home/${JUPYTER_USERNAME}/work
+      - ./:/home/${HOST_USERNAME}/work
       - ./${MLFLOW_ARTIFACT_STORE}:/${MLFLOW_ARTIFACT_STORE}
   mlflow:
     build:
@@ -54,7 +54,7 @@ services:
     volumes:
       - ./${MLFLOW_ARTIFACT_STORE}:/${MLFLOW_ARTIFACT_STORE}
   postgres:
-    user: "${POSTGRES_UID}:${POSTGRES_GID}"
+    user: "${HOST_UID}:${HOST_GID}"
     build:
       context: ./docker/postgres
     image: ${IMAGE_OWNER}/${REPO_SLUG}/${POSTGRES_IMAGE_NAME}:${VERSION}

@@ -16,9 +16,9 @@ def get_version():
     Returns:
         str -- value of __version__ as defined in __init__.py
     """
-    version_file2 = os.path.join(
+    version_file = os.path.join(
         HERE, EXP_DIR, "{{ cookiecutter.package_name }}", "__init__.py")
-    with open(version_file2) as f:
+    with open(version_file) as f:
         init_contents = f.read().strip()
 
         exp = r"^__version__ = ['\"]([^'\"]*)['\"]"
@@ -81,9 +81,13 @@ setup(
     ),
     packages=find_packages(EXP_DIR),
     package_dir={"": EXP_DIR},
-    include_package_data=True,
+    package_data={
+        "": ["*.ini"],
+    },
     python_requires="==3.7.*",
     install_requires=[
+        "mlflow==1.8.*",
+        "pandas>=1.0.*",
     ],
     extras_require={
         "development": [
